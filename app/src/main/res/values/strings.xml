@@ -4,4 +4,9 @@
     <string name="signup">Регистрация</string>
     <string name="email">E-mail</string>
     <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="i_have_account">У меня уже есть аккаунт</string>
 </resources>

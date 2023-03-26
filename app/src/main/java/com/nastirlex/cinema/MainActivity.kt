@@ -9,6 +9,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.sign_up)
     }
 }

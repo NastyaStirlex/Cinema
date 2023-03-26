@@ -1,6 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ScrollView
+        android:id="@+id/registrationScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideInset"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:letterSpacing="0"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:singleLine="true"
+                android:textColor="@color/vivid_red"
+                android:textColorHint="@color/gray_light"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/surnameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/surname"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:letterSpacing="0"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:singleLine="true"
+                android:textColor="@color/vivid_red"
+                android:textColorHint="@color/gray_light"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:letterSpacing="0"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:singleLine="true"
+                android:textColor="@color/vivid_red"
+                android:textColorHint="@color/gray_light"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:letterSpacing="0"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:singleLine="true"
+                android:textColor="@color/vivid_red"
+                android:textColorHint="@color/gray_light"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/repeatPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/repeat_password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:letterSpacing="0"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:singleLine="true"
+                android:textColor="@color/vivid_red"
+                android:textColorHint="@color/gray_light"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="207dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="77dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/filled_button_background"
+        android:fontFamily="@font/roboto_bold"
+        android:letterSpacing="0"
+        android:lineHeight="18sp"
+        android:text="@string/register"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/haveAccountYetButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/haveAccountYetButton"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/empty_button_background"
+        android:fontFamily="@font/roboto_bold"
+        android:letterSpacing="0"
+        android:lineHeight="18sp"
+        android:text="@string/i_have_account"
+        android:textAllCaps="false"
+        android:textColor="@color/vivid_red"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
