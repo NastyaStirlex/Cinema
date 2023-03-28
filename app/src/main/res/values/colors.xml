@@ -9,7 +9,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#150D0B</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="vivid_red">#EF3A01</color>
     <color name="gray">#A8A8A8</color>
     <color name="gray_light">#AFAFAF</color>
+    <color name="bottom_nav_bar_background">#1C1A19</color>
+    <color name="bottom_nav_bar_item">#757575</color>
 </resources>
