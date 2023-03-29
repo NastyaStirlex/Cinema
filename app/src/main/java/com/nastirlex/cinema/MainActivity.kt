@@ -2,7 +2,6 @@ package com.nastirlex.cinema
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,11 +17,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //setSupportActionBar(binding.myToolbar)
+        setSupportActionBar(binding.myToolbar)
 
-        //binding.container.layoutParams.layoutAnimationParameters
+        binding.container.layoutParams.layoutAnimationParameters
 
-        //val navView: BottomNavigationView = binding.navView
+        val navView: BottomNavigationView = binding.navView
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -39,13 +38,8 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        //navView.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
 
 
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
