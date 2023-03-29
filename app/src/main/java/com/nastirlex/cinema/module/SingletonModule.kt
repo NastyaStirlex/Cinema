@@ -56,7 +56,7 @@ class SingletonModule {
     @Provides
     fun provideRetrofitBuilder(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://107684.web.hosting-russia.ru:8000/api/swagger/")
+            .baseUrl("http://107684.web.hosting-russia.ru:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
