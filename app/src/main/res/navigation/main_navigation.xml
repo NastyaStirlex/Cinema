@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_main">
+
+    <fragment
+        android:id="@+id/navigation_main"
+        android:name="com.nastirlex.cinema.presentation.main.MainFragment"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.nastirlex.cinema.presentation.ProfileFragment"
+        tools:layout="@layout/fragment_collections" />
+    <fragment
+        android:id="@+id/navigation_compilation"
+        android:name="com.nastirlex.cinema.presentation.CompilationFragment"
+        tools:layout="@layout/fragment_compilation" />
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="com.nastirlex.cinema.presentation.CollectionsFragment"
+        tools:layout="@layout/fragment_collections" />
+</navigation>
