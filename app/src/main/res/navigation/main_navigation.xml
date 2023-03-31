@@ -19,6 +19,6 @@
         tools:layout="@layout/fragment_compilation" />
     <fragment
         android:id="@+id/navigation_collections"
-        android:name="com.nastirlex.cinema.presentation.CollectionsFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.CollectionsFragment"
         tools:layout="@layout/fragment_collections" />
 </navigation>
