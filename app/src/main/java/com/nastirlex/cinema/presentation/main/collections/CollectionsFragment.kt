@@ -10,15 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nastirlex.cinema.databinding.FragmentCollectionsBinding
 import com.nastirlex.cinema.utils.SpacesItemDecoration
+import com.nastirlex.cinema.utils.dpToPixel
 
 class CollectionsFragment : Fragment() {
     private lateinit var _binding: FragmentCollectionsBinding
 
     private val binding get() = _binding
-
-    fun Context.dpToPixel(dp: Float): Float {
-        return dp * (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
