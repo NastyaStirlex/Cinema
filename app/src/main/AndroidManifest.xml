@@ -15,11 +15,11 @@
         android:theme="@style/Theme.Cinema"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".CollectionActivity"
+            android:name=".presentation.main.collections.collection_info.CollectionInfoActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.AuthorizationActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
