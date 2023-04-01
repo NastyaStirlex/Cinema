@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/posterImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/collection_film_example" />
+
+    <TextView
+        android:id="@+id/nameFilmTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/name_example"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/posterImageView"
+        app:layout_constraintTop_toTopOf="@+id/posterImageView" />
+
+    <TextView
+        android:id="@+id/descriptionFilmTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="25dp"
+        android:ellipsize="end"
+        android:forceHasOverlappingRendering="false"
+        android:gravity="center_vertical"
+        android:maxLines="5"
+        android:text="@string/description_example"
+        android:textColor="@color/white"
+        android:textFontWeight="400"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/posterImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/posterImageView"
+        app:layout_constraintTop_toBottomOf="@+id/nameFilmTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
