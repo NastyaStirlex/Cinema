@@ -38,4 +38,6 @@
     <string name="create_collection">Создать коллекцию</string>
     <string name="name_collection">Название</string>
     <string name="save">Сохранить</string>
+    <string name="change_collection">Изменить коллекцию</string>
+    <string name="delete">Удалить</string>
 </resources>
