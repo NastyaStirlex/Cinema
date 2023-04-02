@@ -6,4 +6,128 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.collections.collection_change.CollectionChangeActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/collectionChangeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            tools:layout_editor_absoluteX="234dp"
+            tools:layout_editor_absoluteY="18dp" />
+
+        <TextView
+            android:id="@+id/collectionChangeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:fontFamily="casual"
+            android:text="@string/change_collection"
+            android:textColor="@color/white"
+            android:textFontWeight="500"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="252dp"
+            tools:layout_editor_absoluteY="18dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/collectionChangeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/collection_edit_text_background"
+        android:inputType="text"
+        android:minHeight="40dp"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
+        android:textCursorDrawable="@drawable/edit_text_cursor"
+        android:textFontWeight="400"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/collectionChangeToolbar" />
+
+    <ImageView
+        android:id="@+id/collectonIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collectionChangeEditText"
+        app:srcCompat="@drawable/ic_heart" />
+
+    <Button
+        android:id="@+id/selectIconButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="17dp"
+        android:background="@drawable/empty_button_background"
+        android:letterSpacing="0"
+        android:minHeight="44dp"
+        android:text="@string/select_icon"
+        android:textAllCaps="false"
+        android:textColor="@color/vivid_red"
+        android:textFontWeight="600"
+        android:textSize="14sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/collectonIconImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/collectonIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/collectonIconImageView" />
+
+    <Button
+        android:id="@+id/collectionSaveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/filled_button_background"
+        android:letterSpacing="0"
+        android:minHeight="44dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        android:textSize="14sp"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collectonIconImageView" />
+
+    <Button
+        android:id="@+id/collectionDeletebutton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/empty_button_background"
+        android:letterSpacing="0"
+        android:text="@string/delete"
+        android:textAllCaps="false"
+        android:textColor="@color/vivid_red"
+        android:textFontWeight="600"
+        android:textSize="14sp"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collectionSaveButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
