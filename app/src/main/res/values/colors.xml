@@ -15,4 +15,5 @@
     <color name="gray_light">#AFAFAF</color>
     <color name="bottom_nav_bar_background">#1C1A19</color>
     <color name="bottom_nav_bar_item">#757575</color>
+    <color name="tundora">#484848</color>
 </resources>

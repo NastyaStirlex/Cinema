@@ -32,4 +32,8 @@
 
     <!-- Collections fragment -->
     <string name="collections">Коллекции</string>
+    <string name="create_collection">Создать коллекцию</string>
+    <string name="name_collection">Название</string>
+    <string name="select_icon">Выбрать иконку</string>
+    <string name="save">Сохранить</string>
 </resources>

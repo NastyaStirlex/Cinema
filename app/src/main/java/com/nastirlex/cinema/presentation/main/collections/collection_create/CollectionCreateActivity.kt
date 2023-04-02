@@ -3,10 +3,16 @@ package com.nastirlex.cinema.presentation.main.collections.collection_create
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.databinding.ActivityCollectionCreateBinding
 
 class CollectionCreateActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCollectionCreateBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_collection_create)
+
+        binding = ActivityCollectionCreateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
     }
 }
