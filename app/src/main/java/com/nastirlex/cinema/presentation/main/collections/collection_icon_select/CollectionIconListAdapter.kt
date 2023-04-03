@@ -2,12 +2,10 @@ package com.nastirlex.cinema.presentation.main.collections.collection_icon_selec
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.ItemCollectionIconListBinding
-import com.nastirlex.cinema.presentation.main.collections.CollectionsListAdapter
 
 class CollectionIconListAdapter(private val onIconClick: (Int) -> Unit) :
     RecyclerView.Adapter<CollectionIconListAdapter.CollectionIconSelectViewHolder>() {

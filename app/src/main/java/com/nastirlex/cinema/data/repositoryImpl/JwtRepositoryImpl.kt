@@ -1,9 +1,8 @@
 package com.nastirlex.cinema.data.repositoryImpl
 
 import android.content.Context
-import javax.inject.Inject
 
-class JwtRepositoryImpl @Inject constructor() {
+class JwtRepositoryImpl {
 
     // ACCESS TOKEN
 

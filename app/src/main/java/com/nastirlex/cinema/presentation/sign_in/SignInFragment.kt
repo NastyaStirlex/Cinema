@@ -9,9 +9,7 @@ import com.nastirlex.cinema.R
 import androidx.fragment.app.viewModels
 import com.nastirlex.cinema.data.dto.LoginBodyDto
 import com.nastirlex.cinema.databinding.FragmentSignInBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
     private val signInViewModel by viewModels<SignInViewModel>()
@@ -34,12 +32,12 @@ class SignInFragment : Fragment() {
 
     private fun onLoginButtonClick() {
         binding.loginButton.setOnClickListener {
-            signInViewModel.onClickLogin(
-                LoginBodyDto(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString()
-                )
-            )
+//            signInViewModel.onClickLogin(
+//                LoginBodyDto(
+//                    email = binding.emailEditText.text.toString(),
+//                    password = binding.passwordEditText.text.toString()
+//                )
+//            )
         }
     }
 

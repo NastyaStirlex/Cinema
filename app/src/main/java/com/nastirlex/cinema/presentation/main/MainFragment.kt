@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.FragmentMainBinding
+import com.nastirlex.cinema.presentation.main.adapters.ForYouListAdapter
+import com.nastirlex.cinema.presentation.main.adapters.FreshListAdapter
+import com.nastirlex.cinema.presentation.main.adapters.TrendListAdapter
 
 class MainFragment : Fragment() {
 

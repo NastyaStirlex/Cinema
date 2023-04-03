@@ -18,7 +18,44 @@
         android:name="com.nastirlex.cinema.presentation.CompilationFragment"
         tools:layout="@layout/fragment_compilation" />
     <fragment
-        android:id="@+id/navigation_collections"
-        android:name="com.nastirlex.cinema.presentation.main.collections.CollectionsFragment"
-        tools:layout="@layout/fragment_collections" />
+
+    <navigation android:id="@+id/navigation2"
+        app:startDestination="@id/navigation_collections">
+        <fragment
+            android:id="@+id/navigation_collections"
+            android:name="com.nastirlex.cinema.presentation.main.collections.CollectionsFragment"
+            tools:layout="@layout/fragment_collections">
+            <action
+                android:id="@+id/action_navigation_collections_to_collectionCreateFragment3"
+                app:destination="@id/collectionCreateFragment3" />
+            <action
+                android:id="@+id/action_navigation_collections_to_collectionInfoFragment3"
+                app:destination="@id/collectionInfoFragment3" />
+        </fragment>
+        <fragment
+            android:id="@+id/collectionCreateFragment3"
+            android:name="com.nastirlex.cinema.presentation.main.collections.collection_create.CollectionCreateFragment"
+            android:label="CollectionCreateFragment">
+            <action
+                android:id="@+id/action_collectionCreateFragment3_to_collectionIconSelectFragment2"
+                app:destination="@id/collectionIconSelectFragment2" />
+        </fragment>
+        <fragment
+            android:id="@+id/collectionInfoFragment3"
+            android:name="com.nastirlex.cinema.presentation.main.collections.collection_info.CollectionInfoFragment"
+            android:label="CollectionInfoFragment">
+            <action
+                android:id="@+id/action_collectionInfoFragment3_to_collectionChangeFragment2"
+                app:destination="@id/collectionChangeFragment2" />
+        </fragment>
+        <fragment
+            android:id="@+id/collectionChangeFragment2"
+            android:name="com.nastirlex.cinema.presentation.main.collections.collection_change.CollectionChangeFragment"
+            android:label="CollectionChangeFragment" />
+        <fragment
+            android:id="@+id/collectionIconSelectFragment2"
+            android:name="com.nastirlex.cinema.presentation.main.collections.collection_icon_select.CollectionIconSelectFragment"
+            android:label="CollectionIconSelectFragment" />
+    </navigation>
+
 </navigation>
