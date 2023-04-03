@@ -23,9 +23,6 @@
             android:name=".presentation.episode.EpisodeActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.movie_info.MovieInfoActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.AuthorizationActivity"
             android:exported="true" />
         <activity
