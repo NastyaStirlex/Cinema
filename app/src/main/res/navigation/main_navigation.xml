@@ -15,8 +15,8 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_compilation"
-        android:name="com.nastirlex.cinema.presentation.movie.MovieFragment"
-        tools:layout="@layout/fragment_movie" />
+        android:name="com.nastirlex.cinema.presentation.CompilationFragment"
+        tools:layout="@layout/fragment_compilation" />
     <fragment
         android:id="@+id/navigation_collections"
         android:name="com.nastirlex.cinema.presentation.CollectionsFragment"

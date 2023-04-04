@@ -76,4 +76,9 @@ dependencies {
 
     // FlexboxLayout
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // ExoPlayer
+    def media3_version = "1.0.0"
+    implementation "androidx.media3:media3-exoplayer:$media3_version"
+
 }

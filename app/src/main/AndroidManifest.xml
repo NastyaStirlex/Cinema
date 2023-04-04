@@ -20,9 +20,6 @@
             android:name=".presentation.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.episode.EpisodeActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.AuthorizationActivity"
             android:exported="true" />
         <activity
