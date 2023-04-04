@@ -10,17 +10,14 @@ import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
-
-    private lateinit var _binding: FragmentMainBinding
-
-    private val binding get() = _binding
+    private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
 
         // TODO: add padding (decoration) for each recuclerView
         binding.trendRecyclerView.layoutManager =
@@ -35,9 +32,6 @@ class MainFragment : Fragment() {
             LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         binding.forYouRecyclerView.adapter = ForYouListAdapter()
 
-
-        val root = binding.root
-
-        return root
+        return binding.root
     }
 }

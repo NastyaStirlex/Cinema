@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/episodeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:forceHasOverlappingRendering="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/episodes_lise_example" />
+
+    <TextView
+        android:id="@+id/episodeNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="casual"
+        android:text="Нелегальная магия"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/episodeImageView"
+        app:layout_constraintTop_toTopOf="@+id/episodeImageView" />
+
+    <TextView
+        android:id="@+id/episodeDescTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="6dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:text="Вдохновение приходит не так уж часто, и порой заканчивается там, где этого совсем не ожидаешь. Неразлучные друзья Крош и Ёжик попадают в трудную ситуацию. Чтоб..."
+        android:textColor="@color/gray_light"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/yearTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/episodeImageView"
+        app:layout_constraintTop_toBottomOf="@+id/episodeNameTextView" />
+
+    <TextView
+        android:id="@+id/yearTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="2015"
+        android:textColor="@color/gray_light"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/episodeImageView"
+        app:layout_constraintStart_toEndOf="@+id/episodeImageView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
