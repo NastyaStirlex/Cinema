@@ -4,17 +4,14 @@ import android.content.Context
 import com.nastirlex.cinema.data.di.ApiService
 import com.nastirlex.cinema.data.dto.LoginBodyDto
 import com.nastirlex.cinema.data.repository.AuthRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
 import java.net.SocketException
 import java.net.UnknownHostException
-import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl(
     private val apiService: ApiService,
     private val jwtRepositoryImpl: JwtRepositoryImpl,
-    @ApplicationContext application: Context
-
+    application: Context
 ) : AuthRepository {
 
     val context = application

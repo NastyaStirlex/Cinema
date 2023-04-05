@@ -1,17 +1,13 @@
 package com.nastirlex.cinema.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.ActivityAuthorizationBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class AuthorizationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizationBinding
 
