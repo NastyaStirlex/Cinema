@@ -15,7 +15,7 @@ import retrofit2.Response
 class MovieRepositoryImpl: MovieRepository {
     private var callGetCover: Call<CoverDto>? = null
 
-    private var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgwNjgwNTMwLCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.w5FGs9719yUYfItsHFWLcLFh3MtdzmeDalP9Po8xWso"
+    private var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgwNjg2NzkwLCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.mAZaKxyg6TIrf4JlghHLFtIJqQLe6r4D_C5U5Ba-BiQ"
 
     override fun getCover(callback: GetCoverCallback<CoverDto>) {
         callGetCover = ApiClient.movieApiService.getCover(token = "Bearer $token")

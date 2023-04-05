@@ -45,4 +45,8 @@ object ApiClient {
         retrofit.create(MovieService::class.java)
     }
 
+    val collectionsApiService: CollectionsService by lazy {
+        retrofit.create(CollectionsService::class.java)
+    }
+
 }
