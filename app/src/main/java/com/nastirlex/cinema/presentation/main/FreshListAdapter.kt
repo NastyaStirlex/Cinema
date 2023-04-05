@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemFreshListBinding
 
-class FreshListAdapter : RecyclerView.Adapter<FreshListAdapter.FreshListViewHolder>() {
-    val images = arrayOf(
-        R.drawable.fresh_example
-    )
+class FreshListAdapter(private val fresh: List<MovieDto>) : RecyclerView.Adapter<FreshListAdapter.FreshListViewHolder>() {
 
     class FreshListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemFreshListBinding.bind(view)
 
-        fun bind(image: Int) {
-            viewBinding.imageView3.setImageResource(image)
+        fun bind(image: String) {
+            Glide.with(viewBinding.root).load(image).into(viewBinding.freshImageView)
         }
     }
 
@@ -27,10 +26,10 @@ class FreshListAdapter : RecyclerView.Adapter<FreshListAdapter.FreshListViewHold
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return fresh.size
     }
 
     override fun onBindViewHolder(holder: FreshListViewHolder, position: Int) {
-        holder.bind(images[0])
+        holder.bind(fresh[position].poster)
     }
 }

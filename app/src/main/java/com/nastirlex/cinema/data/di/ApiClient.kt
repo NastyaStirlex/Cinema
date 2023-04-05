@@ -1,15 +1,25 @@
 package com.nastirlex.cinema.data.di
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    fun baseUrl() = "https://react-midterm.kreosoft.space/"
+    private const val BASE_URL = "http://107684.web.hosting-russia.ru:8000/api/"
 
-    fun getApiService(baseUrl: String): ApiService =
+    private fun interceptor(): HttpLoggingInterceptor {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        return loggingInterceptor
+    }
+
+
+    private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(BASE_URL)
             .addConverterFactory(
                 GsonConverterFactory.create(
                     //GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
@@ -18,13 +28,21 @@ object ApiClient {
             //.addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(
                 OkHttpClient.Builder()
-//                    .connectTimeout(15, TimeUnit.SECONDS)
-//                    .readTimeout(60, TimeUnit.SECONDS)
-//                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .addInterceptor(interceptor())
                     .build()
             )
             .build()
-            .create(ApiService::class.java)
+    }
+
+    val authApiService: AuthService by lazy {
+        retrofit.create(AuthService::class.java)
+    }
+
+    val movieApiService: MovieService by lazy {
+        retrofit.create(MovieService::class.java)
+    }
 
 }

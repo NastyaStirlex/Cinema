@@ -4,19 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemTrendListBinding
 
-class TrendListAdapter : RecyclerView.Adapter<TrendListAdapter.TrendListViewHolder>() {
-    val images = arrayOf(
-        R.drawable.trend
-    )
-
+class TrendListAdapter(private var trends: List<MovieDto>) : RecyclerView.Adapter<TrendListAdapter.TrendListViewHolder>() {
     class TrendListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemTrendListBinding.bind(view)
 
-        fun bind(image: Int) {
-            viewBinding.imageView2.setImageResource(image)
+        fun bind(image: String) {
+            Glide.with(viewBinding.root).load(image).into(viewBinding.posterImageView)
         }
     }
 
@@ -27,10 +25,10 @@ class TrendListAdapter : RecyclerView.Adapter<TrendListAdapter.TrendListViewHold
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return trends.size
     }
 
     override fun onBindViewHolder(holder: TrendListViewHolder, position: Int) {
-        holder.bind(images[0])
+        holder.bind(trends[position].poster)
     }
 }

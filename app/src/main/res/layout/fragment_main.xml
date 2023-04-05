@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:foreground="@drawable/tint"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -145,11 +145,28 @@
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/filled_button_background"
+                android:fontFamily="casual"
+                android:letterSpacing="0"
                 android:text="@string/interests"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
                 app:backgroundTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/forYouRecyclerView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/viewedGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="filmNameTextView,viewedFilmImageView,viewedTextView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/forYouGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="forYouRecyclerView,forYouTextView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

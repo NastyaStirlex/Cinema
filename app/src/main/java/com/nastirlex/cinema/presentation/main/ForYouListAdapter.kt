@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemForYouListBinding
 
-class ForYouListAdapter : RecyclerView.Adapter<ForYouListAdapter.ForYouViewHolder>() {
-    val images = arrayOf(
-        R.drawable.for_you_example
-    )
+class ForYouListAdapter(private val forYou: List<MovieDto>) : RecyclerView.Adapter<ForYouListAdapter.ForYouViewHolder>() {
 
     class ForYouViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemForYouListBinding.bind(view)
 
-        fun bind(image: Int) {
-            viewBinding.forYouImageView.setImageResource(image)
+        fun bind(image: String) {
+            Glide.with(viewBinding.root).load(image).into(viewBinding.forYouImageView)
         }
     }
 
@@ -27,10 +26,10 @@ class ForYouListAdapter : RecyclerView.Adapter<ForYouListAdapter.ForYouViewHolde
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return forYou.size
     }
 
     override fun onBindViewHolder(holder: ForYouViewHolder, position: Int) {
-        holder.bind(images[0])
+        holder.bind(forYou[position].poster)
     }
 }
