@@ -1,4 +1,4 @@
-package com.nastirlex.cinema.presentation
+package com.nastirlex.cinema.presentation.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,6 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        val root = binding.root
-
-        return root
+        return binding.root
     }
 }
