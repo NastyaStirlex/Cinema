@@ -31,12 +31,12 @@ class SignInFragment : Fragment() {
 
     private fun onLoginButtonClick() {
         binding.loginButton.setOnClickListener {
-            signInViewModel.onClickLogin(
-                LoginBodyDto(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString()
-                )
-            )
+//            signInViewModel.onClickLogin(
+//                LoginBodyDto(
+//                    email = binding.emailEditText.text.toString(),
+//                    password = binding.passwordEditText.text.toString()
+//                )
+//            )
         }
     }
 
