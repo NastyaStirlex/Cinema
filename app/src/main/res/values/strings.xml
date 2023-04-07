@@ -22,8 +22,6 @@
     <string name="title_compilation">Подборка</string>
     <string name="title_collections">Коллекции</string>
     <string name="title_profile">Профиль</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Profile fragment -->
     <string name="change_avatar">Изменить</string>
@@ -41,4 +39,15 @@
     <string name="error_incorrect_fields">Неверный email или пароль</string>
     <string name="error_repeat_user">Такой пользователь уже существует</string>
     <string name="error_invalid_field">Некорректные поля</string>
+
+    <!-- Collections fragment -->
+    <string name="collections">Коллекции</string>
+    <string name="select_icon">Выбрать иконку</string>
+    <string name="description_example">Eliot is in his happy place, unaware that he is being possessed by the Monster. To have control over his body, Eliot must travel to the place that contains his greatest regret: turning down Quentin when he suggests he and Eliot should be together after their memories are restored of their life in past-Fillory, happily living together and raising a family. Iris tasks Julia to trap the Monster and will kill her if she fails. Alice sends Plover to the Poison Room and reunites with Quentin. At the park, Eliot takes over his body and tells Quentin that he is alive. The Monster takes control back. Iris appears and kills Shoshana. Before she can kill Julia for failing, the Monster kills her. Alice diverts the plan to save Quentin. Meanwhile, Fillory is having new problems. Penny-23 is kidnapped.</string>
+    <string name="name_example">Jessica Jones</string>
+    <string name="create_collection">Создать коллекцию</string>
+    <string name="name_collection">Название</string>
+    <string name="save">Сохранить</string>
+    <string name="change_collection">Изменить коллекцию</string>
+    <string name="delete">Удалить</string>
 </resources>

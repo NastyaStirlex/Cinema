@@ -95,7 +95,6 @@
             android:textColor="@color/gray_light"
             android:textFontWeight="400"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/filmImageView"
             app:layout_constraintStart_toEndOf="@+id/filmImageView"
             app:layout_constraintTop_toBottomOf="@+id/seasonsTextView" />
 
