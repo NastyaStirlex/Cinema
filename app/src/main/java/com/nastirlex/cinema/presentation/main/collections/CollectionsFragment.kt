@@ -5,18 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.CollectionDto
+import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionsBinding
 import com.nastirlex.cinema.presentation.main.collections.adapter.CollectionsListAdapter
-import com.nastirlex.cinema.utils.SpacesItemDecoration
+import com.nastirlex.cinema.utils.CollectionsListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
 
 class CollectionsFragment : Fragment() {
     private lateinit var binding: FragmentCollectionsBinding
+
+    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+    private val collectionsViewModel by lazy { CollectionsViewModel(collectionsRepositoryImpl) }
 
 //    private val action =
 //        CollectionsFragmentDirections.actionCollectionsFragmentToCollectionInfoActivity("")
@@ -29,14 +33,35 @@ class CollectionsFragment : Fragment() {
     ): View {
         binding = FragmentCollectionsBinding.inflate(inflater, container, false)
 
-        //setSupportActionBar(binding.myToolbar)
+        binding.addButton.setOnClickListener {
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(R.id.action_mainFragment_to_collections_nested_nav_graph)
+        }
 
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getCollections()
+    }
+
+    private fun getCollections() {
+        val collectionsObserver: Observer<List<CollectionDto>> = Observer {
+            setupCollectionsRecyclerView(collections = it)
+        }
+
+        collectionsViewModel.collections.observe(viewLifecycleOwner, collectionsObserver)
+    }
+
+    private fun setupCollectionsRecyclerView(collections: List<CollectionDto>) {
         binding.collectionsRecyclerView.layoutManager =
             LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
 
-        binding.collectionsRecyclerView.adapter = CollectionsListAdapter()
         binding.collectionsRecyclerView.addItemDecoration(
-            SpacesItemDecoration(
+            CollectionsListSpacesItemDecoration(
                 topFirst = this.requireContext().dpToPixel(24f).toInt(),
                 leftFirst = this.requireContext().dpToPixel(16f).toInt(),
                 bottomFirst = this.requireContext().dpToPixel(32f).toInt(),
@@ -50,19 +75,7 @@ class CollectionsFragment : Fragment() {
             )
         )
 
-        binding.addButton.setOnClickListener {
-            val navController = Navigation.findNavController(binding.root)
-            navController.navigate(R.id.action_collectionsFragment_to_collectionCreateFragment)
-        }
-
-
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navController = Navigation.findNavController(binding.root)
-        super.onViewCreated(view, savedInstanceState)
+        binding.collectionsRecyclerView.adapter = CollectionsListAdapter(collections = collections)
     }
 
 }

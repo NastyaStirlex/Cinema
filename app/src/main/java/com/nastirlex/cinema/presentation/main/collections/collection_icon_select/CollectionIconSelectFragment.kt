@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.FragmentCollectionIconSelectBinding
@@ -21,14 +22,20 @@ class CollectionIconSelectFragment : Fragment() {
     ): View {
         binding = FragmentCollectionIconSelectBinding.inflate(inflater, container, false)
 
-        binding.iconsRecyclerView.layoutManager = GridLayoutManager(this.requireContext(), 4)
+        binding.backImageButton.setOnClickListener {
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigateUp()
+        }
 
+        binding.iconsRecyclerView.layoutManager = GridLayoutManager(this.requireContext(), 4)
         /* pass item dato to activity / fragment when clicked */
         binding.iconsRecyclerView.adapter = CollectionIconListAdapter { position ->
             Toast.makeText(
                 this.context,
                 "item $position clicked",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
         }
 

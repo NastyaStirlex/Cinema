@@ -4,7 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class SpacesItemDecoration(
+class CollectionsListSpacesItemDecoration(
     var topFirst: Int,
     var leftFirst: Int,
     var bottomFirst: Int,

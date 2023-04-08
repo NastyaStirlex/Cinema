@@ -5,4 +5,6 @@ import com.nastirlex.cinema.data.dto.CollectionDto
 
 interface CollectionsRepository {
     fun getCollections(callback: GetCollectionsCallback<List<CollectionDto>>)
+
+    fun createCollection()
 }

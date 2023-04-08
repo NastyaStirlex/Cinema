@@ -5,14 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.databinding.ItemCollectionsListBinding
 
-class CollectionsListAdapter :
+class CollectionsListAdapter(private val collections: List<CollectionDto>) :
     RecyclerView.Adapter<CollectionsListAdapter.CollectionsListViewHolder>() {
     class CollectionsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val viewBinding = ItemCollectionsListBinding.bind(view)
 
-        fun bind() {}
+        fun bind(name: String) {
+            viewBinding.collectionNameTextView.text = name
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionsListViewHolder {
@@ -23,10 +26,10 @@ class CollectionsListAdapter :
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return collections.size
     }
 
     override fun onBindViewHolder(holder: CollectionsListViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(collections[position].name)
     }
 }

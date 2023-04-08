@@ -17,13 +17,19 @@
         <activity
             android:name=".presentation.chat.ChatActivity"
             android:exported="false" />
+
         <activity
             android:name=".presentation.AuthorizationActivity"
             android:exported="true" >
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+            <nav-graph android:value="@navigation/app_nav_graph"/>
+            <nav-graph android:value="@navigation/main_nav_graph"/>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

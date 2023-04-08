@@ -56,8 +56,8 @@ class CollectionIconListAdapter(private val onIconClick: (Int) -> Unit) :
         private var viewBinding = ItemCollectionIconListBinding.bind(view)
 
         fun bind(position: Int, image: Int, onClickListener: (Int) -> Unit) {
-            viewBinding.iconImageView.setImageResource(image)
-            viewBinding.iconImageView.setOnClickListener {
+            viewBinding.collectionIconSelectImageView.setImageResource(image)
+            viewBinding.collectionIconSelectImageView.setOnClickListener {
                 onClickListener.invoke(position)
             }
         }

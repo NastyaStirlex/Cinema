@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collections_nested_nav_graph"
+    app:startDestination="@id/collectionCreateFragment">
+
+    <fragment
+        android:id="@+id/collectionCreateFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_create.CollectionCreateFragment"
+        android:label="CollectionCreateFragment"
+        tools:layout="@layout/fragment_collection_create">
+        <action
+            android:id="@+id/action_collectionCreateFragment_to_collectionIconSelectFragment"
+            app:destination="@id/collectionIconSelectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/collectionChangeFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_change.CollectionChangeFragment"
+        android:label="CollectionChangeFragment"
+        tools:layout="@layout/fragment_collection_change">
+    </fragment>
+
+    <fragment
+        android:id="@+id/collectionIconSelectFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_icon_select.CollectionIconSelectFragment"
+        android:label="CollectionIconSelectFragment"
+        tools:layout="@layout/fragment_collection_icon_select"/>
+
+    <fragment
+        android:id="@+id/collectionInfoFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_info.CollectionInfoFragment"
+        android:label="CollectionInfoFragment"
+        tools:layout="@layout/fragment_collection_info">
+    </fragment>
+</navigation>

@@ -13,7 +13,7 @@ import retrofit2.Response
 class CollectionsRepositoryImpl : CollectionsRepository {
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgwNjgwNTMwLCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.w5FGs9719yUYfItsHFWLcLFh3MtdzmeDalP9Po8xWso"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgwODc1MjcxLCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.dt7mrAUMU3KE8kjwdCOfAQ4jXdvDKXC2qao_lDjd2cw"
 
 
     private var callGetCollections: Call<List<CollectionDto>>? = null
@@ -60,5 +60,9 @@ class CollectionsRepositoryImpl : CollectionsRepository {
                 }
             }
         )
+    }
+
+    override fun createCollection() {
+
     }
 }

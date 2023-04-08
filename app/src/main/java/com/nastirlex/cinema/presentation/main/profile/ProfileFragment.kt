@@ -1,4 +1,4 @@
-package com.nastirlex.cinema.presentation.profile
+package com.nastirlex.cinema.presentation.main.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

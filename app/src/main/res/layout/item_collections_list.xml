@@ -6,15 +6,15 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/iconImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/collectionIconSelectImageView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:src="@drawable/ic_heart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/collectionNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -23,9 +23,9 @@
         android:textColor="@color/white"
         android:textFontWeight="600"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iconImageView"
-        app:layout_constraintStart_toEndOf="@+id/iconImageView"
-        app:layout_constraintTop_toTopOf="@+id/iconImageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/collectionIconSelectImageView"
+        app:layout_constraintStart_toEndOf="@+id/collectionIconSelectImageView"
+        app:layout_constraintTop_toTopOf="@+id/collectionIconSelectImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

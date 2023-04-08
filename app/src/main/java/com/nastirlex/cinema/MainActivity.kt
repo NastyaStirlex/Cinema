@@ -3,40 +3,34 @@ package com.nastirlex.cinema
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.myToolbar)
+        //setSupportActionBar(binding.myToolbar)
 
-        val navView: BottomNavigationView = binding.navView
+        //val navView: BottomNavigationView = binding.navView
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        //val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.activity_main_fragment_nav_host) as NavHostFragment
+        //val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_main,
-                R.id.navigation_compilation,
-                R.id.navigation_collections,
-                R.id.navigation_profile
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.activity_main_fragment_nav_host) as NavHostFragment
+        //val navController = navHostFragment.navController
+        //val navController = this.findNavController(R.id.activity_main_fragment_nav_host)
+
+        //val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
+
+        //navController.graph = navGraph
+
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        //navView.setupWithNavController(navController)
         //setupNavigation()
 
 
