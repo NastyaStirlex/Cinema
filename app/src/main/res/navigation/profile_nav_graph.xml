@@ -8,5 +8,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.nastirlex.cinema.presentation.main.profile.ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+
 </navigation>

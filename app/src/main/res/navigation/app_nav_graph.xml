@@ -5,15 +5,26 @@
     android:id="@+id/app_navigation"
     app:startDestination="@id/mainFragment">
 
-
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.nastirlex.cinema.presentation.main.MainFragment"
         tools:layout="@layout/fragment_main">
+
         <action
             android:id="@+id/action_mainFragment_to_collections_nested_nav_graph"
             app:destination="@id/collections_nested_nav_graph" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_authorization_nav_graph"
+            app:destination="@id/authorization_nav_graph"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <include app:graph="@navigation/collections_nested_nav_graph"/>
+
+    <include app:graph="@navigation/authorization_nav_graph" />
+
 </navigation>

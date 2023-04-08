@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.nastirlex.cinema.data.dto.LoginBodyDto
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentSignInBinding
@@ -51,6 +53,7 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupOnLoginButtonClick()
+        setupOnToRegisterButtonClick()
     }
 
     private fun setupOnLoginButtonClick() {
@@ -64,9 +67,9 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun onToRegisterButtonClick() {
-        binding.signupButton.setOnClickListener {
-
+    private fun setupOnToRegisterButtonClick() {
+        binding.toRegisterButton.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/authorization_navigation"
-    app:startDestination="@id/signUpFragment">
+    android:id="@+id/authorization_nav_graph"
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -10,7 +10,8 @@
         android:label="SignInFragment" >
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+/>
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"

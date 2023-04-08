@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
@@ -51,6 +54,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupOnRegisterButtonClick()
+        setupOnToLoginButtonClick()
     }
 
     private fun setupOnRegisterButtonClick() {
@@ -63,6 +67,12 @@ class SignUpFragment : Fragment() {
                     lastName = binding.surnameEditText.text.toString()
                 )
             )
+        }
+    }
+
+    private fun setupOnToLoginButtonClick() {
+        binding.toLoginButton.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 }
