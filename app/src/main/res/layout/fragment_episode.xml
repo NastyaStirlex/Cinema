@@ -10,12 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView5"
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/episodeStyledPlayerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/episode_player_example"
+            android:layout_height="250dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/episodeTextView"
+            android:id="@+id/episodeTitleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -47,17 +46,17 @@
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            app:layout_constraintTop_toBottomOf="@+id/episodeStyledPlayerView" />
 
         <ImageView
-            android:id="@+id/filmImageView"
+            android:id="@+id/episodeFilmImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/episode_film_example"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/episodeTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/episodeTitleTextView" />
 
         <TextView
             android:id="@+id/episodeFilmNameTextView"
@@ -69,8 +68,8 @@
             android:textColor="@color/white"
             android:textFontWeight="700"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/filmImageView"
-            app:layout_constraintTop_toTopOf="@+id/filmImageView" />
+            app:layout_constraintStart_toEndOf="@+id/episodeFilmImageView"
+            app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
 
         <TextView
             android:id="@+id/seasonsTextView"
@@ -82,7 +81,8 @@
             android:text="5 сезонов"
             android:textColor="@color/gray_light"
             android:textFontWeight="400"
-            app:layout_constraintStart_toEndOf="@+id/filmImageView"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/episodeFilmImageView"
             app:layout_constraintTop_toBottomOf="@+id/episodeFilmNameTextView" />
 
         <TextView
@@ -95,7 +95,7 @@
             android:textColor="@color/gray_light"
             android:textFontWeight="400"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/filmImageView"
+            app:layout_constraintStart_toEndOf="@+id/episodeFilmImageView"
             app:layout_constraintTop_toBottomOf="@+id/seasonsTextView" />
 
         <ImageButton
@@ -105,9 +105,9 @@
             android:layout_marginEnd="16dp"
             android:background="@color/transparent"
             android:src="@drawable/ic_comments"
-            app:layout_constraintBottom_toBottomOf="@+id/filmImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
             app:layout_constraintEnd_toStartOf="@+id/addImageButton"
-            app:layout_constraintTop_toTopOf="@+id/filmImageView" />
+            app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
 
         <ImageButton
             android:id="@+id/addImageButton"
@@ -116,9 +116,19 @@
             android:layout_marginEnd="16dp"
             android:background="@color/transparent"
             android:src="@drawable/ic_plus"
-            app:layout_constraintBottom_toBottomOf="@+id/filmImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
             app:layout_constraintEnd_toStartOf="@+id/likeImageButton"
-            app:layout_constraintTop_toTopOf="@+id/filmImageView" />
+            app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
+
+        <Spinner
+            android:id="@+id/collectionsSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/commentsImageButton"
+            app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
 
         <ImageButton
             android:id="@+id/likeImageButton"
@@ -126,10 +136,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@color/transparent"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintBottom_toBottomOf="@+id/filmImageView"
+            android:src="@drawable/ic_heart_empty"
+            app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/filmImageView" />
+            app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
 
         <TextView
             android:id="@+id/descriptionTitleTextView"
@@ -143,7 +153,7 @@
             android:textFontWeight="700"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filmImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/episodeFilmImageView" />
 
         <TextView
             android:id="@+id/descriptionTextView"

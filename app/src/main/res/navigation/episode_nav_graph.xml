@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/episode_nav_graph"
+    app:startDestination="@id/episodeFragment">
+
+    <fragment
+        android:id="@+id/episodeFragment"
+        android:name="com.nastirlex.cinema.presentation.episode.EpisodeFragment"
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode" >
+        <argument
+            android:name="episodeId"
+            app:argType="string" />
+        <argument
+            android:name="episodeName"
+            app:argType="string" />
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+        <argument
+            android:name="movieName"
+            app:argType="string" />
+        <argument
+            android:name="filePath"
+            app:argType="string" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+
+    </fragment>
+</navigation>

@@ -9,12 +9,19 @@ import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemTrendListBinding
 
-class TrendListAdapter(private var trends: List<MovieDto>) : RecyclerView.Adapter<TrendListAdapter.TrendListViewHolder>() {
+class TrendListAdapter(
+    private var trends: List<MovieDto>,
+    private val onMovieClick: (MovieDto) -> Unit
+) :
+    RecyclerView.Adapter<TrendListAdapter.TrendListViewHolder>() {
     class TrendListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemTrendListBinding.bind(view)
 
-        fun bind(image: String) {
-            Glide.with(viewBinding.root).load(image).into(viewBinding.posterImageView)
+        fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
+            Glide.with(viewBinding.root).load(movie.poster).into(viewBinding.trendPosterImageView)
+            viewBinding.trendPosterImageView.setOnClickListener {
+                onClickListener.invoke(movie)
+            }
         }
     }
 
@@ -29,6 +36,6 @@ class TrendListAdapter(private var trends: List<MovieDto>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: TrendListViewHolder, position: Int) {
-        holder.bind(trends[position].poster)
+        holder.bind(movie = trends[position], onClickListener = { onMovieClick.invoke(trends[position]) })
     }
 }

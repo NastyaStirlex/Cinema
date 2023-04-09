@@ -5,6 +5,7 @@ import com.nastirlex.cinema.data.callbacks.GetCollectionCallback
 import com.nastirlex.cinema.data.callbacks.GetCollectionsCallback
 import com.nastirlex.cinema.data.callbacks.GetMoviesCallback
 import com.nastirlex.cinema.data.di.ApiClient
+import com.nastirlex.cinema.data.dto.CollectionAbbreviateDto
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repository.CollectionsRepository
@@ -18,7 +19,7 @@ import java.net.UnknownHostException
 class CollectionsRepositoryImpl : CollectionsRepository {
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgwNjgwNTMwLCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.w5FGs9719yUYfItsHFWLcLFh3MtdzmeDalP9Po8xWso"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxMDQ4MDM2LCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.2Vb2uDoxpahQJwMsQBWr7ZbT0W1a0bhG4MlgUMHfdcw"
 
 
     private var callGetCollections: Call<List<CollectionDto>>? = null
@@ -68,8 +69,15 @@ class CollectionsRepositoryImpl : CollectionsRepository {
     }
 
     private var callCreateCollection: Call<CollectionDto>? = null
-    override fun createCollection(callback: GetCollectionCallback<CollectionDto>) {
-        callCreateCollection = ApiClient.collectionsApiService.createCollection(token = "Bearer $token")
+    override fun createCollection(
+        collectionAbbreviateDto: CollectionAbbreviateDto,
+        callback: GetCollectionCallback<CollectionDto>
+    ) {
+        callCreateCollection =
+            ApiClient.collectionsApiService.createCollection(
+                token = "Bearer $token",
+                collectionAbbreviateDto = collectionAbbreviateDto
+            )
         callCreateCollection?.enqueue(
             object : Callback<CollectionDto> {
                 override fun onResponse(

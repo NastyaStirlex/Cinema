@@ -9,13 +9,19 @@ import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemFreshListBinding
 
-class FreshListAdapter(private val fresh: List<MovieDto>) : RecyclerView.Adapter<FreshListAdapter.FreshListViewHolder>() {
+class FreshListAdapter(
+    private val fresh: List<MovieDto>,
+    private val onMovieClick: (MovieDto) -> Unit
+) : RecyclerView.Adapter<FreshListAdapter.FreshListViewHolder>() {
 
     class FreshListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemFreshListBinding.bind(view)
 
-        fun bind(image: String) {
-            Glide.with(viewBinding.root).load(image).into(viewBinding.freshImageView)
+        fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
+            Glide.with(viewBinding.root).load(movie.poster).into(viewBinding.freshImageView)
+            viewBinding.freshImageView.setOnClickListener {
+                onClickListener.invoke(movie)
+            }
         }
     }
 
@@ -30,6 +36,8 @@ class FreshListAdapter(private val fresh: List<MovieDto>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: FreshListViewHolder, position: Int) {
-        holder.bind(fresh[position].poster)
+        holder.bind(
+            movie = fresh[position],
+            onClickListener = { onMovieClick.invoke(fresh[position]) })
     }
 }

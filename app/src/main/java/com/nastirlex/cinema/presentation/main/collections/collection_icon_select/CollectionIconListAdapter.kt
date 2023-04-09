@@ -52,13 +52,12 @@ class CollectionIconListAdapter(private val onIconClick: (Int) -> Unit) :
     class CollectionIconSelectViewHolder(view: View) :
         RecyclerView.ViewHolder(view) {
 
-
         private var viewBinding = ItemCollectionIconListBinding.bind(view)
 
         fun bind(position: Int, image: Int, onClickListener: (Int) -> Unit) {
             viewBinding.collectionIconSelectImageView.setImageResource(image)
             viewBinding.collectionIconSelectImageView.setOnClickListener {
-                onClickListener.invoke(position)
+                onClickListener.invoke(image)
             }
         }
     }
@@ -81,7 +80,7 @@ class CollectionIconListAdapter(private val onIconClick: (Int) -> Unit) :
         holder.bind(
             position = position,
             image = iconsArray[position],
-            onClickListener = { onIconClick.invoke(position) }
+            onClickListener = { onIconClick.invoke(iconsArray[position]) }
         )
     }
 

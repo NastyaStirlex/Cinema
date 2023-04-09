@@ -1,5 +1,6 @@
 package com.nastirlex.cinema.data.di
 
+import com.nastirlex.cinema.data.dto.CollectionAbbreviateDto
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import retrofit2.Call
@@ -17,7 +18,10 @@ interface CollectionsService {
     fun getCollections(@Header("Authorization") token: String): Call<List<CollectionDto>>
 
     @POST("collections")
-    fun createCollection(@Header("Authorization") token: String): Call<CollectionDto>
+    fun createCollection(
+        @Header("Authorization") token: String,
+        @Body collectionAbbreviateDto: CollectionAbbreviateDto
+    ): Call<CollectionDto>
 
     @DELETE("collections/{collectionId}")
     fun deleteCollection(

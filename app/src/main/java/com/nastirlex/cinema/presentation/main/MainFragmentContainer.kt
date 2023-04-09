@@ -1,24 +1,29 @@
 package com.nastirlex.cinema.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CoverDto
+import com.nastirlex.cinema.data.dto.EpisodeDto
+import com.nastirlex.cinema.data.dto.EpisodeViewDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
-import com.nastirlex.cinema.databinding.FragmentMainBinding
 import com.nastirlex.cinema.databinding.FragmentMainContainerBinding
 import com.nastirlex.cinema.presentation.main.adapters.ForYouListAdapter
 import com.nastirlex.cinema.presentation.main.adapters.FreshListAdapter
 import com.nastirlex.cinema.presentation.main.adapters.TrendListAdapter
 import com.nastirlex.cinema.utils.FreshListSpacesItemDecoration
+import com.nastirlex.cinema.utils.TrendListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
 
 class MainFragmentContainer : Fragment() {
@@ -54,6 +59,8 @@ class MainFragmentContainer : Fragment() {
         getViewed()
         getFresh()
         getForYou()
+        setupLastView()
+
     }
 
 
@@ -75,26 +82,95 @@ class MainFragmentContainer : Fragment() {
     }
 
     private fun setupTrendRecyclerView(trends: List<MovieDto>) {
-        binding.trendRecyclerView.layoutManager =
-            LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        binding.trendRecyclerView.adapter = TrendListAdapter(trends = trends)
+        if (trends.isEmpty()) {
+            binding.trendGroup.visibility = View.GONE
+        } else {
+            binding.trendRecyclerView.layoutManager =
+                LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+
+            binding.trendRecyclerView.adapter = TrendListAdapter(trends = trends) { movie ->
+                val action = MainFragmentDirections.actionMainFragmentToMovieNavGraph(
+                    poster = movie.poster,
+                    age = movie.age,
+                    frames = movie.imageUrls.map { it }.toTypedArray(),
+                    description = movie.description,
+                    tags = movie.tags.map { it.tagName }.toTypedArray()
+                )
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.activity_main_fragment_nav_host
+                ).navigate(action)
+            }
+
+            binding.trendRecyclerView.addItemDecoration(
+                TrendListSpacesItemDecoration(
+                    startFirst = requireContext().dpToPixel(16f).toInt(),
+                    bottom = requireContext().dpToPixel(8f).toInt(),
+                    start = requireContext().dpToPixel(8f).toInt(),
+                    end = requireContext().dpToPixel(8f).toInt(),
+                )
+            )
+        }
     }
 
     private fun getViewed() {
-        val viewedObserver: Observer<List<MovieDto>> = Observer {
-            setupViewedImageView(it.firstOrNull()?.poster)
+        val viewedObserver: Observer<List<EpisodeViewDto>> = Observer {
+            setupViewedImageView(it.firstOrNull())
         }
 
-        mainViewModel.viewed.observe(viewLifecycleOwner, viewedObserver)
+        mainViewModel.history.observe(viewLifecycleOwner, viewedObserver)
     }
 
-    private fun setupViewedImageView(poster: String?) {
-        if (poster == null) {
+    private fun setupViewedImageView(episodeView: EpisodeViewDto?) {
+        if (episodeView == null) {
             binding.viewedGroup.visibility = View.GONE
         } else {
-            Glide.with(this).load(poster).into(binding.viewedFilmImageView)
+            Glide.with(this).load(episodeView.preview).into(binding.viewedPosterImageView)
+            binding.viewedNameTextView.text = episodeView.episodeName
+            setupViewedGroupClick(
+                episodeView.episodeId,
+                episodeView.episodeName,
+                episodeView.movieId,
+                episodeView.movieName,
+                episodeView.filePath,
+                episodeView.time
+            )
+        }
+    }
+
+    private fun setupViewedGroupClick(
+        episodeId: String,
+        episodeName: String,
+        movieId: String,
+        movieName: String,
+        filePath: String,
+        position: Int
+    ) {
+        var movieImage: List<MovieDto>?
+        val cc = Observer<List<MovieDto>> {
+            movieImage = it
         }
 
+        mainViewModel.viewed.observe(viewLifecycleOwner, cc)
+        //getEpisodes(movieId)
+        //val episodes = mainViewModel.episodes.value
+        //Toast.makeText(requireContext(), episodes.size.toString(), Toast.LENGTH_LONG).show()
+
+        binding.polygonImageView.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToEpisodeNavGraph(
+                episodeId = episodeId,
+                episodeName = episodeName,
+                movieId = movieId,
+                movieName = movieName,
+                filePath = filePath,
+                position = position
+            )
+
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(action)
+        }
     }
 
     private fun getFresh() {
@@ -108,9 +184,28 @@ class MainFragmentContainer : Fragment() {
     private fun setupFreshRecyclerView(fresh: List<MovieDto>) {
         binding.freshRecyclerView.layoutManager =
             LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        binding.freshRecyclerView.adapter = FreshListAdapter(fresh)
+
+        binding.freshRecyclerView.adapter = FreshListAdapter(fresh) { movie ->
+            val action = MainFragmentDirections.actionMainFragmentToMovieNavGraph(
+                poster = movie.poster,
+                age = movie.age,
+                frames = movie.imageUrls.map { it }.toTypedArray(),
+                description = movie.description,
+                tags = movie.tags.map {
+                    it.tagName
+                }.toTypedArray()
+            )
+            Toast.makeText(requireContext(), "", Toast.LENGTH_LONG).show()
+
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(action)
+        }
+
         binding.freshRecyclerView.addItemDecoration(
             FreshListSpacesItemDecoration(
+                startFirst = requireContext().dpToPixel(16f).toInt(),
                 bottom = requireContext().dpToPixel(8f).toInt(),
                 start = requireContext().dpToPixel(8f).toInt(),
                 end = requireContext().dpToPixel(8f).toInt(),
@@ -127,8 +222,17 @@ class MainFragmentContainer : Fragment() {
     }
 
     private fun setupForYouRecyclerView(forYou: List<MovieDto>) {
-        binding.forYouRecyclerView.layoutManager =
-            LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        binding.forYouRecyclerView.adapter = ForYouListAdapter(forYou)
+        if (forYou.isEmpty()) {
+            binding.forYouGroup.visibility = View.GONE
+        } else {
+            binding.forYouRecyclerView.layoutManager =
+                LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+
+            binding.forYouRecyclerView.adapter = ForYouListAdapter(forYou)
+        }
+    }
+
+    private fun setupLastView() {
+
     }
 }

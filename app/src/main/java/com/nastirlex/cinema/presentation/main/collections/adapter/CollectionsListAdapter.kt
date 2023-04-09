@@ -30,6 +30,6 @@ class CollectionsListAdapter(private val collections: List<CollectionDto>) :
     }
 
     override fun onBindViewHolder(holder: CollectionsListViewHolder, position: Int) {
-        holder.bind(collections[position].name)
+        holder.bind(collections[collections.size - 1 - position].name)
     }
 }

@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.ItemFramesListBinding
 
-class FramesListAdapter : RecyclerView.Adapter<FramesListAdapter.FramesListViewHolder>() {
+class FramesListAdapter(private val frames: Array<String>) :
+    RecyclerView.Adapter<FramesListAdapter.FramesListViewHolder>() {
     class FramesListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemFramesListBinding.bind(view)
 
-        fun bind(image: Int) {
-            viewBinding.frameImageView.setImageResource(image)
+        fun bind(image: String) {
+            Glide.with(viewBinding.root).load(image).into(viewBinding.frameImageView)
         }
     }
 
@@ -24,10 +26,10 @@ class FramesListAdapter : RecyclerView.Adapter<FramesListAdapter.FramesListViewH
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return frames.size
     }
 
     override fun onBindViewHolder(holder: FramesListViewHolder, position: Int) {
-        holder.bind(R.drawable.frames_list_example)
+        holder.bind(frames[position])
     }
 }

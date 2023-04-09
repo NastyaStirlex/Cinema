@@ -40,6 +40,8 @@ class CollectionsFragment : Fragment() {
             ).navigate(R.id.action_mainFragment_to_collections_nested_nav_graph)
         }
 
+        getCollections()
+
         return binding.root
     }
 
@@ -64,14 +66,14 @@ class CollectionsFragment : Fragment() {
             CollectionsListSpacesItemDecoration(
                 topFirst = this.requireContext().dpToPixel(24f).toInt(),
                 leftFirst = this.requireContext().dpToPixel(16f).toInt(),
-                bottomFirst = this.requireContext().dpToPixel(32f).toInt(),
+                bottomFirst = this.requireContext().dpToPixel(16f).toInt(),
                 left = this.requireContext().dpToPixel(
                     22f
                 ).toInt(),
                 right = this.requireContext().dpToPixel(
                     22f
                 ).toInt(),
-                bottom = this.requireContext().dpToPixel(20f).toInt()
+                bottom = this.requireContext().dpToPixel(10f).toInt()
             )
         )
 

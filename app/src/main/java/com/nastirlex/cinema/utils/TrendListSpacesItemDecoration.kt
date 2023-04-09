@@ -4,7 +4,12 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class FreshListSpacesItemDecoration(var startFirst: Int, var bottom: Int, var start: Int, var end: Int) :
+class TrendListSpacesItemDecoration(
+    var startFirst: Int,
+    var bottom: Int,
+    var start: Int,
+    var end: Int
+) :
     RecyclerView.ItemDecoration() {
     @Override
     override fun getItemOffsets(
@@ -25,4 +30,5 @@ class FreshListSpacesItemDecoration(var startFirst: Int, var bottom: Int, var st
             outRect.right = 0
         }
     }
+
 }

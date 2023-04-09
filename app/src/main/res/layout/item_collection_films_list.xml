@@ -6,9 +6,10 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/posterImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/filmPosterImageView"
+        android:layout_width="56dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,8 +24,8 @@
         android:textColor="@color/white"
         android:textFontWeight="600"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/posterImageView"
-        app:layout_constraintTop_toTopOf="@+id/posterImageView" />
+        app:layout_constraintStart_toEndOf="@+id/trendPosterImageView"
+        app:layout_constraintTop_toTopOf="@+id/trendPosterImageView" />
 
     <TextView
         android:id="@+id/descriptionFilmTextView"
@@ -40,8 +41,8 @@
         android:textColor="@color/white"
         android:textFontWeight="400"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/posterImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/trendPosterImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/posterImageView"
+        app:layout_constraintStart_toEndOf="@+id/trendPosterImageView"
         app:layout_constraintTop_toBottomOf="@+id/nameFilmTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

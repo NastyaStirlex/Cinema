@@ -2,7 +2,6 @@ package com.nastirlex.cinema
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
 import com.nastirlex.cinema.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

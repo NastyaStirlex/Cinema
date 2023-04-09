@@ -39,6 +39,7 @@
     <string name="error_incorrect_fields">Неверный email или пароль</string>
     <string name="error_repeat_user">Такой пользователь уже существует</string>
     <string name="error_invalid_field">Некорректные поля</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
 
     <!-- Collections fragment -->
     <string name="collections">Коллекции</string>
@@ -50,6 +51,4 @@
     <string name="save">Сохранить</string>
     <string name="change_collection">Изменить коллекцию</string>
     <string name="delete">Удалить</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

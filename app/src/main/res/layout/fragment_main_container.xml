@@ -17,14 +17,12 @@
                 android:id="@+id/bannerImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:foreground="@drawable/tint"
+                android:foreground="@drawable/gradient_shape"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/banner" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -34,11 +32,29 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="400dp" />
 
+            <Button
+                android:id="@+id/mainWatchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/filled_button_background"
+                android:letterSpacing="0"
+                android:minHeight="44dp"
+                android:paddingHorizontal="32dp"
+                android:text="@string/watch"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
+                android:textSize="14sp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="@id/bannerImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/trendTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/roboto_bold"
                 android:letterSpacing="0"
@@ -52,13 +68,14 @@
                 android:id="@+id/trendRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="17dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trendTextView" />
 
             <TextView
-                android:id="@+id/viewedTextView"
+                android:id="@+id/viewedTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -71,17 +88,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/trendRecyclerView" />
 
             <ImageView
-                android:id="@+id/viewedFilmImageView"
+                android:id="@+id/viewedPosterImageView"
                 android:layout_width="0dp"
                 android:layout_height="240dp"
                 android:layout_marginTop="17dp"
+                android:foreground="@drawable/gradient_shape"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewedTextView"
+                app:layout_constraintTop_toBottomOf="@+id/viewedTitleTextView"
                 app:srcCompat="@drawable/banner" />
 
+            <ImageView
+                android:id="@+id/polygonImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/viewedPosterImageView"
+                app:layout_constraintEnd_toEndOf="@+id/viewedPosterImageView"
+                app:layout_constraintStart_toStartOf="@+id/viewedPosterImageView"
+                app:layout_constraintTop_toTopOf="@+id/viewedPosterImageView"
+                app:srcCompat="@drawable/ic_polygon" />
+
             <TextView
-                android:id="@+id/filmNameTextView"
+                android:id="@+id/viewedNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -90,8 +119,8 @@
                 android:text="Name of film"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/viewedFilmImageView"
-                app:layout_constraintStart_toStartOf="@id/viewedFilmImageView" />
+                app:layout_constraintBottom_toBottomOf="@id/viewedPosterImageView"
+                app:layout_constraintStart_toStartOf="@id/viewedPosterImageView" />
 
             <TextView
                 android:id="@+id/freshTextView"
@@ -104,12 +133,13 @@
                 android:textColor="@color/vivid_red"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewedFilmImageView" />
+                app:layout_constraintTop_toBottomOf="@id/viewedPosterImageView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/freshRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/freshTextView" />
@@ -142,6 +172,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/filled_button_background"
                 android:fontFamily="casual"
                 android:letterSpacing="0"
@@ -150,21 +181,34 @@
                 android:textColor="@color/white"
                 android:textFontWeight="700"
                 app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/forYouRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/forYouRecyclerView" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/viewedGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="filmNameTextView,viewedFilmImageView,viewedTextView" />
+                app:constraint_referenced_ids="viewedNameTextView,viewedPosterImageView,viewedTitleTextView" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/forYouGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="forYouRecyclerView,forYouTextView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/trendGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="trendRecyclerView,trendTextView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/freshGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="freshRecyclerView,freshTextView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

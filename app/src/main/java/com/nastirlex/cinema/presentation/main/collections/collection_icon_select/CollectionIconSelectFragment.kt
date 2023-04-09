@@ -7,14 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionIconSelectBinding
+import com.nastirlex.cinema.presentation.main.collections.collection_create.CollectionCreateViewModel
 import com.nastirlex.cinema.utils.CollectionItemListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
 
 class CollectionIconSelectFragment : Fragment() {
     private lateinit var binding: FragmentCollectionIconSelectBinding
+
+    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+    private val collectionCreateViewModel by lazy {
+        CollectionCreateViewModel(
+            collectionsRepositoryImpl
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,20 +33,16 @@ class CollectionIconSelectFragment : Fragment() {
         binding = FragmentCollectionIconSelectBinding.inflate(inflater, container, false)
 
         binding.backImageButton.setOnClickListener {
-            Navigation.findNavController(
-                requireActivity(),
-                R.id.activity_main_fragment_nav_host
-            ).navigateUp()
+            findNavController().navigateUp()
         }
 
         binding.iconsRecyclerView.layoutManager = GridLayoutManager(this.requireContext(), 4)
-        /* pass item dato to activity / fragment when clicked */
-        binding.iconsRecyclerView.adapter = CollectionIconListAdapter { position ->
-            Toast.makeText(
-                this.context,
-                "item $position clicked",
-                Toast.LENGTH_SHORT
-            ).show()
+
+        /* pass item data to activity / fragment when clicked */
+        binding.iconsRecyclerView.adapter = CollectionIconListAdapter { icon ->
+            collectionCreateViewModel.updateIcon(icon)
+
+            findNavController().popBackStack()
         }
 
         binding.iconsRecyclerView.addItemDecoration(

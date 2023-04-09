@@ -12,7 +12,13 @@
         tools:layout="@layout/fragment_collection_create">
         <action
             android:id="@+id/action_collectionCreateFragment_to_collectionIconSelectFragment"
-            app:destination="@id/collectionIconSelectFragment" />
+            app:destination="@id/collectionIconSelectFragment"
+            app:popUpTo="@id/collectionCreateFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="icon"
+            app:argType="integer"
+            android:defaultValue="2131165363" />
     </fragment>
 
     <fragment

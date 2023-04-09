@@ -21,16 +21,14 @@ class CollectionsListSpacesItemDecoration(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.left = left;
-        outRect.right = right;
-        outRect.bottom = bottom;
-        // Add top margin only for the first item to avoid double space between items
+        outRect.left = left
+        outRect.right = right
+        outRect.bottom = bottom
+        outRect.top = 0
         if (parent.getChildLayoutPosition(view) == 0) {
-            outRect.top = topFirst;
+            outRect.top = 0
             outRect.left = leftFirst
             outRect.bottom = bottomFirst
-        } else {
-            outRect.top = 0;
         }
     }
 }

@@ -7,13 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.ItemTagsListBinding
 
-class TagsListAdapter : RecyclerView.Adapter<TagsListAdapter.TagsListViewHolder>() {
-    val tags = arrayOf(
-        "Фэнтэзи",
-        "Приключения",
-        "США",
-        "Телесериал",
-    )
+class TagsListAdapter(private val tags: Array<String>) :
+    RecyclerView.Adapter<TagsListAdapter.TagsListViewHolder>() {
 
     class TagsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemTagsListBinding.bind(view)
@@ -31,7 +26,7 @@ class TagsListAdapter : RecyclerView.Adapter<TagsListAdapter.TagsListViewHolder>
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return tags.size
     }
 
     override fun onBindViewHolder(holder: TagsListViewHolder, position: Int) {

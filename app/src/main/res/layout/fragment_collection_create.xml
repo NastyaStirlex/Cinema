@@ -41,7 +41,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/collectionCreateEditText"
+        android:id="@+id/collectionCreateNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -67,7 +67,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectionCreateEditText"
+        app:layout_constraintTop_toBottomOf="@+id/collectionCreateNameEditText"
         app:srcCompat="@drawable/ic_heart" />
 
     <Button
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/collectonIconImageView" />
 
     <Button
-        android:id="@+id/collectionSaveButton"
+        android:id="@+id/collectionCreateButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
