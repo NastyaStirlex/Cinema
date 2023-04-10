@@ -9,14 +9,18 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+import com.google.android.exoplayer2.ForwardingPlayer
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentEpisodeBinding
 
@@ -26,12 +30,15 @@ class EpisodeFragment : Fragment() {
 
     private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
     private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+    private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl() }
+
     private val episodeViewModel by lazy {
         EpisodeViewModel(
             args.movieId,
             args.episodeId,
             movieRepositoryImpl,
-            collectionsRepositoryImpl
+            collectionsRepositoryImpl,
+            episodesRepositoryImpl
         )
     }
 
@@ -48,12 +55,15 @@ class EpisodeFragment : Fragment() {
         super.onStart()
         setupEpisodeName()
         setupFilmName()
-        setupPlayer()
+
         setupDescription()
         setupFilmPoster()
         setupYears()
         setupCollectionsObserver()
         setupOnAddToCollectionButton()
+        setupOnVideoClick()
+        setupOnBackButtonClick()
+        setupEpisodeTimeObserver()
     }
 
     private fun setupEpisodeName() {
@@ -65,14 +75,34 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun setupPlayer() {
+
         val exoPlayer = ExoPlayer.Builder(requireContext()).build().apply {
-            setMediaItem(com.google.android.exoplayer2.MediaItem.fromUri("https://drive.google.com/uc?export=view&id=1-EUBpRnIyJNwXLC3sAxVOtkrL0JdnZ5A"))
-            playWhenReady = true
+            setMediaItem(com.google.android.exoplayer2.MediaItem.fromUri(args.filePath))
+            playWhenReady = false
             prepare()
         }
-        binding.episodeStyledPlayerView.apply {
-            player = exoPlayer
 
+        var forwardingPlayer: ForwardingPlayer = object : ForwardingPlayer(exoPlayer) {
+            override fun isCommandAvailable(command: Int): Boolean {
+                if (command == COMMAND_GET_AUDIO_ATTRIBUTES) {
+                    return false
+                }
+                return super.isCommandAvailable(command)
+            }
+
+        }
+
+        //Toast.makeText(requireContext(), exoPlayer.currentPosition.toString(), Toast.LENGTH_SHORT).show()
+        binding.episodeStyledPlayerView.apply {
+            player = forwardingPlayer
+        }
+    }
+
+    private fun setupOnVideoClick() {
+        binding.episodeStyledPlayerView.setOnClickListener {
+            binding.episodeStyledPlayerView.player?.apply {
+                if (isPlaying) stop() else prepare()
+            }
         }
     }
 
@@ -123,34 +153,58 @@ class EpisodeFragment : Fragment() {
 
         binding.collectionsSpinner.adapter = adapter
 
-        binding.collectionsSpinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                binding.collectionsSpinner.visibility = View.INVISIBLE
+        binding.collectionsSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    binding.collectionsSpinner.visibility = View.INVISIBLE
 
-                Toast.makeText(
-                    requireContext(),
-                    "Selected is : " +
-                            "" + collectionsArray[position], Toast.LENGTH_SHORT
-                ).show()
-            }
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Selected is : " +
+//                            "" + collectionsArray[position], Toast.LENGTH_SHORT
+//                ).show()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                binding.collectionsSpinner.visibility = View.INVISIBLE
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    binding.collectionsSpinner.visibility = View.INVISIBLE
+                }
             }
-        }
 
     }
 
     private fun setupOnAddToCollectionButton() {
         binding.addImageButton.setOnClickListener {
-            //binding.collectionsSpinner.visibility = View.VISIBLE
             binding.collectionsSpinner.performClick()
         }
+    }
+
+    private fun setupOnBackButtonClick() {
+        binding.backImageButton.setOnClickListener {
+            episodeViewModel.saveEpisodeTime(
+                binding.episodeStyledPlayerView.player?.currentPosition?.div(1000)?.toInt()
+            )
+            binding.episodeStyledPlayerView.player?.release()
+//            Toast.makeText(
+//                requireContext(), binding.episodeStyledPlayerView.player?.currentPosition?.toInt()
+//                    ?.div(1000).toString(), Toast.LENGTH_SHORT
+//            ).show()
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun setupEpisodeTimeObserver() {
+        val episodeTimeObserver = Observer<Int> {
+            setupPlayer()
+            binding.episodeStyledPlayerView.player?.seekTo((it * 1000).toLong())
+            binding.episodeStyledPlayerView.player?.play()
+        }
+
+        episodeViewModel.episodeTime.observe(viewLifecycleOwner, episodeTimeObserver)
     }
 
 }

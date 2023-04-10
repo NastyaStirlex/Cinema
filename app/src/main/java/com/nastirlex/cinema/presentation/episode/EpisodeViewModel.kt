@@ -5,25 +5,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nastirlex.cinema.data.callbacks.GetCollectionsCallback
+import com.nastirlex.cinema.data.callbacks.GetEpisodeTimeCallback
 import com.nastirlex.cinema.data.callbacks.GetEpisodesCallback
 import com.nastirlex.cinema.data.callbacks.GetMoviesCallback
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.EpisodeDto
+import com.nastirlex.cinema.data.dto.EpisodeTimeDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
 import kotlinx.coroutines.launch
 
 class EpisodeViewModel(
     movieId: String,
-    episodeId: String,
+    private val episodeId: String,
     private var movieRepositoryImpl: MovieRepositoryImpl,
-    private val collectionsRepositoryImpl: CollectionsRepositoryImpl
+    private val collectionsRepositoryImpl: CollectionsRepositoryImpl,
+    private val episodesRepositoryImpl: EpisodesRepositoryImpl
 ) : ViewModel() {
-
-    private var _episodes = MutableLiveData<List<EpisodeDto>>()
-    val episodes: LiveData<List<EpisodeDto>>
-        get() = _episodes
 
     private var _years = MutableLiveData<String>()
     val years: LiveData<String>
@@ -45,6 +45,10 @@ class EpisodeViewModel(
     val runtime: LiveData<Int>
         get() = _runtime
 
+    private var _episodeTime = MutableLiveData<Int>()
+    val episodeTime: LiveData<Int>
+        get() = _episodeTime
+
 
     private val _viewed = MutableLiveData<List<MovieDto>>()
     val viewed: LiveData<List<MovieDto>>
@@ -59,6 +63,7 @@ class EpisodeViewModel(
         getEpisodeDetails(movieId, episodeId)
         getLastView()
         getCollections()
+        getEpisodeTime()
     }
 
     private fun getEpisodeDetails(movieId: String, episodeId: String) = viewModelScope.launch {
@@ -66,7 +71,6 @@ class EpisodeViewModel(
             movieId = movieId,
             object : GetEpisodesCallback<List<EpisodeDto>> {
                 override fun onSuccess(episodes: List<EpisodeDto>) {
-                    _episodes.value = episodes
                     val episode = episodes.find { it.episodeId == episodeId }
                     if (episode != null) {
                         _name.value = episode.name
@@ -104,5 +108,27 @@ class EpisodeViewModel(
                 override fun onError(error: String?) {}
             }
         )
+    }
+
+    fun saveEpisodeTime(time: Int?) = viewModelScope.launch {
+        if (time != null) {
+            episodesRepositoryImpl.saveEpisodeTime(
+                time = EpisodeTimeDto(time),
+                episodeId = episodeId
+            )
+        }
+    }
+
+    private fun getEpisodeTime() = viewModelScope.launch {
+            episodesRepositoryImpl.getEpisodeTime(
+                episodeId = episodeId,
+                object : GetEpisodeTimeCallback<EpisodeTimeDto> {
+                    override fun onSuccess(episodeTime: EpisodeTimeDto) {
+                        _episodeTime.value = episodeTime.time
+                    }
+
+                    override fun onError(error: String?) {}
+                }
+            )
     }
 }

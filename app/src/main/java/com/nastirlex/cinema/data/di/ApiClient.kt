@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
@@ -47,6 +48,10 @@ object ApiClient {
 
     val collectionsApiService: CollectionsService by lazy {
         retrofit.create(CollectionsService::class.java)
+    }
+
+    val episodesApiService: EpisodesService by lazy {
+        retrofit.create(EpisodesService::class.java)
     }
 
 }

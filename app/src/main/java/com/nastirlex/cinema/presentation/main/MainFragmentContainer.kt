@@ -128,6 +128,7 @@ class MainFragmentContainer : Fragment() {
             Glide.with(this).load(episodeView.preview).into(binding.viewedPosterImageView)
             binding.viewedNameTextView.text = episodeView.episodeName
             setupViewedGroupClick(
+                episodeView.preview,
                 episodeView.episodeId,
                 episodeView.episodeName,
                 episodeView.movieId,
@@ -139,6 +140,7 @@ class MainFragmentContainer : Fragment() {
     }
 
     private fun setupViewedGroupClick(
+        preview: String,
         episodeId: String,
         episodeName: String,
         movieId: String,
@@ -146,18 +148,13 @@ class MainFragmentContainer : Fragment() {
         filePath: String,
         position: Int
     ) {
-        var movieImage: List<MovieDto>?
-        val cc = Observer<List<MovieDto>> {
-            movieImage = it
-        }
-
-        mainViewModel.viewed.observe(viewLifecycleOwner, cc)
         //getEpisodes(movieId)
         //val episodes = mainViewModel.episodes.value
         //Toast.makeText(requireContext(), episodes.size.toString(), Toast.LENGTH_LONG).show()
 
         binding.polygonImageView.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToEpisodeNavGraph(
+                preview = preview,
                 episodeId = episodeId,
                 episodeName = episodeName,
                 movieId = movieId,
