@@ -20,6 +20,7 @@ class ForYouListAdapter(
         fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
             Glide.with(viewBinding.root)
                 .load(movie.poster)
+                .placeholder(R.drawable.placeholder_image)
                 .into(viewBinding.forYouImageView)
 
             viewBinding.forYouImageView.setOnClickListener {

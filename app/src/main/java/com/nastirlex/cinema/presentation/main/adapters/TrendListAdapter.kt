@@ -18,7 +18,11 @@ class TrendListAdapter(
         private val viewBinding = ItemTrendListBinding.bind(view)
 
         fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
-            Glide.with(viewBinding.root).load(movie.poster).into(viewBinding.trendPosterImageView)
+            Glide
+                .with(viewBinding.root)
+                .load(movie.poster)
+                .placeholder(R.drawable.placeholder_image)
+                .into(viewBinding.trendPosterImageView)
             viewBinding.trendPosterImageView.setOnClickListener {
                 onClickListener.invoke(movie)
             }
