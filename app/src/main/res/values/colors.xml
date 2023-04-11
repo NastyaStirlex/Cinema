@@ -16,4 +16,8 @@
     <color name="bottom_nav_bar_background">#1C1A19</color>
     <color name="bottom_nav_bar_item">#757575</color>
     <color name="tundora">#484848</color>
+    <color name="shimmer_placeholder">#DDDDDD</color>
+    <color name="chinese_orange">#F26E45</color>
+    <color name="somon">#F4A992</color>
+    <color name="purple_white">#FAD5C9</color>
 </resources>

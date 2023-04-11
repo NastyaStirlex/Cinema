@@ -60,10 +60,10 @@ class EpisodeViewModel(
 
 
     init {
+        getEpisodeTime()
         getEpisodeDetails(movieId, episodeId)
         getLastView()
         getCollections()
-        getEpisodeTime()
     }
 
     private fun getEpisodeDetails(movieId: String, episodeId: String) = viewModelScope.launch {
@@ -77,7 +77,8 @@ class EpisodeViewModel(
                         _description.value = episode.description
                         _filepath.value = episode.filePath
                         _runtime.value = episode.runtime
-                        _years.value = episodes[0].year + " - " + episodes.last().year
+                        _years.value =
+                            episodes.minOfOrNull { it.year } + " - " + episodes.maxOfOrNull { it.year }
                     }
                 }
 
@@ -120,15 +121,15 @@ class EpisodeViewModel(
     }
 
     private fun getEpisodeTime() = viewModelScope.launch {
-            episodesRepositoryImpl.getEpisodeTime(
-                episodeId = episodeId,
-                object : GetEpisodeTimeCallback<EpisodeTimeDto> {
-                    override fun onSuccess(episodeTime: EpisodeTimeDto) {
-                        _episodeTime.value = episodeTime.time
-                    }
-
-                    override fun onError(error: String?) {}
+        episodesRepositoryImpl.getEpisodeTime(
+            episodeId = episodeId,
+            object : GetEpisodeTimeCallback<EpisodeTimeDto> {
+                override fun onSuccess(episodeTime: EpisodeTimeDto) {
+                    _episodeTime.value = episodeTime.time
                 }
-            )
+
+                override fun onError(error: String?) {}
+            }
+        )
     }
 }

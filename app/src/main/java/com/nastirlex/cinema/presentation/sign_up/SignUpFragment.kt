@@ -1,21 +1,19 @@
 package com.nastirlex.cinema.presentation.sign_up
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentSignUpBinding
-import com.nastirlex.cinema.utils.Event
-import com.nastirlex.cinema.utils.Status
+import com.nastirlex.cinema.presentation.main.Event
+import com.nastirlex.cinema.presentation.main.Status
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding

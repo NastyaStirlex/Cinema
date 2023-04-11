@@ -54,10 +54,11 @@
 
         <ImageView
             android:id="@+id/episodeFilmImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="44dp"
+            android:layout_height="64dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/episode_film_example"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/episodeTitleTextView" />

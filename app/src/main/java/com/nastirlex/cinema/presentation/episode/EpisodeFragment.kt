@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,8 +13,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ForwardingPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.MovieDto
@@ -53,6 +50,7 @@ class EpisodeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        setupPlayer()
         setupEpisodeName()
         setupFilmName()
 
@@ -92,7 +90,6 @@ class EpisodeFragment : Fragment() {
 
         }
 
-        //Toast.makeText(requireContext(), exoPlayer.currentPosition.toString(), Toast.LENGTH_SHORT).show()
         binding.episodeStyledPlayerView.apply {
             player = forwardingPlayer
         }
@@ -115,11 +112,11 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun setupFilmPoster() {
-        val filmPosterObserver = Observer<List<MovieDto>> {
-            Glide.with(binding.root).load(it[0].poster).into(binding.episodeFilmImageView)
-        }
+        //val filmPosterObserver = Observer<List<MovieDto>> {
+            Glide.with(binding.root).load(args.moviePoster).into(binding.episodeFilmImageView)
+        //}
 
-        episodeViewModel.viewed.observe(viewLifecycleOwner, filmPosterObserver)
+        //episodeViewModel.viewed.observe(viewLifecycleOwner, filmPosterObserver)
     }
 
     private fun setupYears() {
@@ -162,12 +159,6 @@ class EpisodeFragment : Fragment() {
                     id: Long
                 ) {
                     binding.collectionsSpinner.visibility = View.INVISIBLE
-
-//                Toast.makeText(
-//                    requireContext(),
-//                    "Selected is : " +
-//                            "" + collectionsArray[position], Toast.LENGTH_SHORT
-//                ).show()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -189,17 +180,12 @@ class EpisodeFragment : Fragment() {
                 binding.episodeStyledPlayerView.player?.currentPosition?.div(1000)?.toInt()
             )
             binding.episodeStyledPlayerView.player?.release()
-//            Toast.makeText(
-//                requireContext(), binding.episodeStyledPlayerView.player?.currentPosition?.toInt()
-//                    ?.div(1000).toString(), Toast.LENGTH_SHORT
-//            ).show()
             findNavController().navigateUp()
         }
     }
 
     private fun setupEpisodeTimeObserver() {
         val episodeTimeObserver = Observer<Int> {
-            setupPlayer()
             binding.episodeStyledPlayerView.player?.seekTo((it * 1000).toLong())
             binding.episodeStyledPlayerView.player?.play()
         }

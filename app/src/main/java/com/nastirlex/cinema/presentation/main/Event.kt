@@ -1,4 +1,4 @@
-package com.nastirlex.cinema.utils
+package com.nastirlex.cinema.presentation.main
 
 import androidx.annotation.StringRes
 
@@ -28,4 +28,3 @@ enum class Status {
     LOADING,
     DEFAULT
 }
-

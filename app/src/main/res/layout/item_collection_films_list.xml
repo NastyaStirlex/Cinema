@@ -20,29 +20,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
         android:text="@string/name_example"
         android:textColor="@color/white"
         android:textFontWeight="600"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/trendPosterImageView"
-        app:layout_constraintTop_toTopOf="@+id/trendPosterImageView" />
+        app:layout_constraintStart_toEndOf="@+id/filmPosterImageView"
+        app:layout_constraintTop_toTopOf="@+id/filmPosterImageView" />
 
     <TextView
         android:id="@+id/descriptionFilmTextView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="9dp"
         android:layout_marginEnd="25dp"
         android:ellipsize="end"
+        android:fontFamily="sans-serif"
         android:forceHasOverlappingRendering="false"
         android:gravity="center_vertical"
-        android:maxLines="5"
+        android:maxLines="3"
         android:text="@string/description_example"
         android:textColor="@color/white"
         android:textFontWeight="400"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/trendPosterImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/trendPosterImageView"
+        app:layout_constraintStart_toEndOf="@+id/filmPosterImageView"
         app:layout_constraintTop_toBottomOf="@+id/nameFilmTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

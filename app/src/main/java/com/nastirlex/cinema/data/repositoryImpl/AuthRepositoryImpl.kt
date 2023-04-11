@@ -7,7 +7,7 @@ import com.nastirlex.cinema.data.dto.LoginBodyDto
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repository.AuthRepository
-import com.nastirlex.cinema.utils.Event
+import com.nastirlex.cinema.presentation.main.Event
 import retrofit2.HttpException
 import java.net.SocketException
 import java.net.UnknownHostException

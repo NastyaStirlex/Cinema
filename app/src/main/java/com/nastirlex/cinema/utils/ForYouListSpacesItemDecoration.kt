@@ -4,8 +4,12 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class EpisodesListSpacesItemDecoration(var bottom: Int, var start: Int) :
-    RecyclerView.ItemDecoration() {
+class ForYouListSpacesItemDecoration(
+    var startFirst: Int,
+    var bottom: Int,
+    var start: Int,
+    var end: Int
+) : RecyclerView.ItemDecoration() {
     @Override
     override fun getItemOffsets(
         outRect: Rect,
@@ -16,11 +20,13 @@ class EpisodesListSpacesItemDecoration(var bottom: Int, var start: Int) :
         outRect.top = 0
         outRect.left = start
         outRect.bottom = bottom
+        outRect.right = end
 
         if (parent.getChildLayoutPosition(view) == 0) {
             outRect.top = 0
-            outRect.left = start
-            outRect.bottom = bottom
+            outRect.left = startFirst
+            outRect.bottom = 0
+            outRect.right = 0
         }
     }
 }

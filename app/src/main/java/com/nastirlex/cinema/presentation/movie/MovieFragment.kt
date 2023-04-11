@@ -5,13 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.EpisodeDto
+import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentMovieBinding
+import com.nastirlex.cinema.presentation.main.MainFragmentDirections
 import com.nastirlex.cinema.presentation.movie.adapter.EpisodesListAdapter
 import com.nastirlex.cinema.presentation.movie.adapter.FramesListAdapter
 import com.nastirlex.cinema.presentation.movie.adapter.TagsListAdapter
@@ -24,6 +31,14 @@ class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
     private val args: MovieFragmentArgs by navArgs()
 
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
+    private val movieViewModel by lazy {
+        MovieViewModel(
+            movieId = args.movieId,
+            movieRepositoryImpl = movieRepositoryImpl
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,32 +46,49 @@ class MovieFragment : Fragment() {
     ): View {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
 
-
-        binding.episodesRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.episodesRecyclerView.adapter = EpisodesListAdapter()
-        binding.episodesRecyclerView.addItemDecoration(
-            EpisodesListSpacesItemDecoration(
-                bottom = requireContext().dpToPixel(16f).toInt(),
-                start = requireContext().dpToPixel(16f).toInt()
-            )
-        )
-
-
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        setupOnBackButtonClick()
         setupFramesRecyclerView(args.frames)
         setupTagsRecyclerView(tags = args.tags)
         setupDescription(description = args.description)
         setupAge(args.age)
         setupPoster(args.poster)
+        setupEpisodesObserver()
+        setupFirstEpisodeObserver()
+    }
+
+    private fun setupOnBackButtonClick() {
+        binding.backImageButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setupPoster(poster: String) {
         Glide.with(binding.root).load(poster).into(binding.movieBannerImageView)
+    }
+
+    private fun setupOnWatchButtonClick(
+        preview: String,
+        episodeId: String,
+        episodeName: String,
+        filePath: String
+    ) {
+        binding.movieWatchButton.setOnClickListener {
+            val action = MovieFragmentDirections.actionMovieFragmentToEpisodeNavGraph(
+                preview = preview,
+                episodeId = episodeId,
+                episodeName = episodeName,
+                movieId = args.movieId,
+                movieName = args.movieName,
+                moviePoster = args.poster,
+                filePath = filePath
+            )
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupDescription(description: String) {
@@ -64,6 +96,23 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupAge(age: String) {
+        when (age) {
+            "18+" -> {
+                binding.ageTextView.setTextColor(resources.getColor(R.color.vivid_red))
+            }
+            "16+" -> {
+                binding.ageTextView.setTextColor(resources.getColor(R.color.chinese_orange))
+            }
+            "12+" -> {
+                binding.ageTextView.setTextColor(resources.getColor(R.color.somon))
+            }
+            "6+" -> {
+                binding.ageTextView.setTextColor(resources.getColor(R.color.purple_white))
+            }
+            "0+" -> {
+                binding.ageTextView.setTextColor(resources.getColor(R.color.white))
+            }
+        }
         binding.ageTextView.text = age
     }
 
@@ -93,6 +142,56 @@ class MovieFragment : Fragment() {
                 end = requireContext().dpToPixel(4f).toInt()
             )
         )
+    }
+
+    private fun setupEpisodesObserver() {
+        val episodesObserver = Observer<List<EpisodeDto>> {
+            setupEpisodesRecyclerView(it)
+        }
+
+        movieViewModel.episodes.observe(viewLifecycleOwner, episodesObserver)
+    }
+
+    private fun setupEpisodesRecyclerView(episodes: List<EpisodeDto>) {
+        binding.episodesRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding.episodesRecyclerView.adapter = EpisodesListAdapter(episodes) {
+            val action = MovieFragmentDirections.actionMovieFragmentToEpisodeNavGraph(
+                preview = it.preview,
+                episodeId = it.episodeId,
+                episodeName = it.name,
+                movieId = args.movieId,
+                movieName = args.movieName,
+                moviePoster = args.poster,
+                filePath = it.filePath
+            )
+
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(action)
+        }
+
+        binding.episodesRecyclerView.addItemDecoration(
+            EpisodesListSpacesItemDecoration(
+                bottom = requireContext().dpToPixel(16f).toInt(),
+                start = requireContext().dpToPixel(16f).toInt()
+            )
+        )
+    }
+
+    private fun setupFirstEpisodeObserver() {
+        val firstEpisodeObserver = Observer<EpisodeDto> {
+            setupOnWatchButtonClick(
+                it.preview,
+                it.episodeId,
+                it.name,
+                it.filePath
+            )
+        }
+
+        movieViewModel.firstEpisode.observe(viewLifecycleOwner, firstEpisodeObserver)
     }
 
 

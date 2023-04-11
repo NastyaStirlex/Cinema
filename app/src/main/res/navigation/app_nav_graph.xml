@@ -25,6 +25,13 @@
             android:id="@+id/action_mainFragment_to_movie_nav_graph"
             app:destination="@id/movie_nav_graph"
             app:popUpToInclusive="true">
+
+            <argument
+                android:name="movieId"
+                app:argType="string" />
+            <argument
+                android:name="movieName"
+                app:argType="string" />
             <argument
                 android:name="poster"
                 app:argType="string" />
@@ -61,11 +68,11 @@
                 android:name="movieName"
                 app:argType="string" />
             <argument
-                android:name="filePath"
+                android:name="moviePoster"
                 app:argType="string" />
             <argument
-                android:name="position"
-                app:argType="integer" />
+                android:name="filePath"
+                app:argType="string" />
 
         </action>
 

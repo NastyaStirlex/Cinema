@@ -9,7 +9,7 @@ import com.nastirlex.cinema.data.callbacks.GetCollectionCallback
 import com.nastirlex.cinema.data.dto.CollectionAbbreviateDto
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
-import com.nastirlex.cinema.utils.Event
+import com.nastirlex.cinema.presentation.main.Event
 import kotlinx.coroutines.launch
 
 class CollectionCreateViewModel(private var collectionsRepositoryImpl: CollectionsRepositoryImpl) :

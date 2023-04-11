@@ -18,7 +18,10 @@ class FreshListAdapter(
         private val viewBinding = ItemFreshListBinding.bind(view)
 
         fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
-            Glide.with(viewBinding.root).load(movie.poster).into(viewBinding.freshImageView)
+            Glide.with(viewBinding.root)
+                .load(movie.poster)
+                .into(viewBinding.freshImageView)
+
             viewBinding.freshImageView.setOnClickListener {
                 onClickListener.invoke(movie)
             }

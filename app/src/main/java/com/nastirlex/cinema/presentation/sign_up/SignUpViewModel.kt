@@ -7,7 +7,7 @@ import com.nastirlex.cinema.data.dto.LoginBodyDto
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
-import com.nastirlex.cinema.utils.Event
+import com.nastirlex.cinema.presentation.main.Event
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(private var authRepositoryImpl: AuthRepositoryImpl) : ViewModel() {

@@ -10,6 +10,13 @@
         android:name="com.nastirlex.cinema.presentation.movie.MovieFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_movie" >
+
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+        <argument
+            android:name="movieName"
+            app:argType="string" />
         <argument
             android:name="poster"
             app:argType="string" />
@@ -25,9 +32,35 @@
         <argument
             android:name="tags"
             app:argType="string[]" />
+
         <action
             android:id="@+id/action_movieFragment_to_episode_nav_graph"
-            app:destination="@id/episode_nav_graph" />
+            app:destination="@id/episode_nav_graph">
+
+            <argument
+                android:name="preview"
+                app:argType="string" />
+            <argument
+                android:name="episodeId"
+                app:argType="string" />
+            <argument
+                android:name="episodeName"
+                app:argType="string" />
+            <argument
+                android:name="movieId"
+                app:argType="string" />
+            <argument
+                android:name="movieName"
+                app:argType="string" />
+            <argument
+                android:name="moviePoster"
+                app:argType="string" />
+            <argument
+                android:name="filePath"
+                app:argType="string" />
+
+        </action>
+
     </fragment>
     <include app:graph="@navigation/episode_nav_graph" />
 

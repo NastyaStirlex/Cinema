@@ -9,13 +9,22 @@ import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemForYouListBinding
 
-class ForYouListAdapter(private val forYou: List<MovieDto>) : RecyclerView.Adapter<ForYouListAdapter.ForYouViewHolder>() {
+class ForYouListAdapter(
+    private val forYou: List<MovieDto>,
+    private val onMovieClick: (MovieDto) -> Unit
+) : RecyclerView.Adapter<ForYouListAdapter.ForYouViewHolder>() {
 
     class ForYouViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemForYouListBinding.bind(view)
 
-        fun bind(image: String) {
-            Glide.with(viewBinding.root).load(image).into(viewBinding.forYouImageView)
+        fun bind(movie: MovieDto, onClickListener: (MovieDto) -> Unit) {
+            Glide.with(viewBinding.root)
+                .load(movie.poster)
+                .into(viewBinding.forYouImageView)
+
+            viewBinding.forYouImageView.setOnClickListener {
+                onClickListener.invoke(movie)
+            }
         }
     }
 
@@ -30,6 +39,9 @@ class ForYouListAdapter(private val forYou: List<MovieDto>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ForYouViewHolder, position: Int) {
-        holder.bind(forYou[position].poster)
+        holder.bind(
+            movie = forYou[position],
+            onClickListener = { onMovieClick.invoke(forYou[position]) }
+        )
     }
 }

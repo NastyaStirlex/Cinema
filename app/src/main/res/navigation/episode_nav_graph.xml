@@ -26,11 +26,11 @@
             android:name="movieName"
             app:argType="string" />
         <argument
-            android:name="filePath"
+            android:name="moviePoster"
             app:argType="string" />
         <argument
-            android:name="position"
-            app:argType="integer" />
+            android:name="filePath"
+            app:argType="string" />
 
     </fragment>
 </navigation>

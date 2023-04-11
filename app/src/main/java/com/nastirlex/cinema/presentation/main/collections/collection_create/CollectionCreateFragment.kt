@@ -9,12 +9,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionCreateBinding
-import com.nastirlex.cinema.utils.Event
-import com.nastirlex.cinema.utils.Status
+import com.nastirlex.cinema.presentation.main.Event
+import com.nastirlex.cinema.presentation.main.Status
 
 class CollectionCreateFragment : Fragment() {
     private lateinit var binding: FragmentCollectionCreateBinding

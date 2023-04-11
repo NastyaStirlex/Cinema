@@ -4,18 +4,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.dto.EpisodeDto
+import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemEpisodesListBinding
 
-class EpisodesListAdapter : RecyclerView.Adapter<EpisodesListAdapter.EpisodesListViewHolder>() {
+class EpisodesListAdapter(
+    private val episodes: List<EpisodeDto>,
+    private val onEpisodeClick: (EpisodeDto) -> Unit
+) :
+    RecyclerView.Adapter<EpisodesListAdapter.EpisodesListViewHolder>() {
     class EpisodesListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val viewBinding = ItemEpisodesListBinding.bind(view)
 
-        fun bind(image: Int, name: String, description: String, year: String) {
-            viewBinding.episodeImageView.setImageResource(image)
-            viewBinding.episodeNameTextView.text = name
-            viewBinding.episodeDescTextView.text = description
-            viewBinding.yearTextView.text = year
+        fun bind(
+            episode: EpisodeDto,
+            onClickListener: (EpisodeDto) -> Unit
+        ) {
+            Glide
+                .with(viewBinding.root)
+                .load(episode.preview)
+                .into(viewBinding.episodeImageView)
+
+            viewBinding.episodeNameTextView.text = episode.name
+
+            viewBinding.episodeDescTextView.text = episode.description
+
+            viewBinding.yearTextView.text = episode.year
+
+            viewBinding.constraintLayout.setOnClickListener {
+                onClickListener.invoke(episode)
+            }
         }
     }
 
@@ -27,15 +47,13 @@ class EpisodesListAdapter : RecyclerView.Adapter<EpisodesListAdapter.EpisodesLis
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return episodes.size
     }
 
     override fun onBindViewHolder(holder: EpisodesListViewHolder, position: Int) {
         holder.bind(
-            R.drawable.episodes_lise_example,
-            "Нелегальная магия",
-            "Квентин и Джулия приглашены на тест их волшебных навыков...",
-            "2015"
+            episode = episodes[position],
+            onClickListener = { onEpisodeClick.invoke(episodes[position]) }
         )
     }
 }

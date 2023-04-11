@@ -13,13 +13,13 @@ import com.nastirlex.cinema.data.dto.EpisodeDto
 import com.nastirlex.cinema.data.dto.EpisodeViewDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
-import com.nastirlex.cinema.utils.Event
+import com.nastirlex.cinema.data.utils.Resource
 import kotlinx.coroutines.launch
 
 class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : ViewModel() {
 
-    private val _mainScreenState = MutableLiveData<Event<Any>>()
-    val mainScreenState: LiveData<Event<Any>>
+    private val _mainScreenState = MutableLiveData<Resource<CoverDto>>()
+    val mainScreenState: LiveData<Resource<CoverDto>>
         get() = _mainScreenState
 
     private var _cover = MutableLiveData<CoverDto>()
@@ -30,9 +30,9 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
     val trends: LiveData<List<MovieDto>>
         get() = _trends
 
-    private val _viewed = MutableLiveData<List<MovieDto>>()
-    val viewed: LiveData<List<MovieDto>>
-        get() = _viewed
+    private val _lastView = MutableLiveData<List<MovieDto>>()
+    val lastView: LiveData<List<MovieDto>>
+        get() = _lastView
 
     private val _fresh = MutableLiveData<List<MovieDto>>()
     val fresh: LiveData<List<MovieDto>>
@@ -51,15 +51,16 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
         get() = _episodes
 
     init {
-        getCover()
+        //getCover()
         getTrends()
         getLastView()
+        getHistory()
         getFresh()
         getForYou()
-        getHistory()
     }
 
-    private fun getCover() = viewModelScope.launch {
+    fun getCover() = viewModelScope.launch {
+        _mainScreenState.value = Resource.Loading()
         movieRepositoryImpl.getCover(
             object : GetCoverCallback<CoverDto> {
                 override fun onSuccess(cover: CoverDto) {
@@ -70,6 +71,7 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
 
             }
         )
+        _mainScreenState.value = Resource.Success(CoverDto("", ""))
     }
 
     private fun getTrends() = viewModelScope.launch {
@@ -88,7 +90,7 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
         movieRepositoryImpl.getLastView(
             object : GetMoviesCallback<MovieDto> {
                 override fun onSuccess(movies: List<MovieDto>) {
-                    _viewed.value = movies
+                    _lastView.value = movies
                 }
 
                 override fun onError(error: String?) {}

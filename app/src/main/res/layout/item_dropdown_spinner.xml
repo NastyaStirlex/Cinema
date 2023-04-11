@@ -6,5 +6,6 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:ellipsize="marquee"
     android:maxLines="1"
+    android:fontFamily="sans-serif"
     android:textColor="@color/white"
     android:background="@color/background"/>
