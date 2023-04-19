@@ -15,7 +15,7 @@ import java.net.UnknownHostException
 class EpisodesRepositoryImpl: EpisodesRepository {
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxODI3NjQ0LCJLRVlfQ0xBSU1fVVNFUiI6IjdjNjUzNTZmLWEzZWUtNGRkYy05ZmIxLWZmOGRjMWYyZmQxYSJ9.dkrt457sZrfLU11LtSNMDJkve9KH0VoVIKqfH6D5duw"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxOTMxNTcxLCJLRVlfQ0xBSU1fVVNFUiI6ImI4MTY2ZGNhLTFjMWEtNDlhYi04MDFjLWZiMDA0ZjBhMWY3NCJ9.bcMLhJuxFEdsSL297wL-pTFG56PpMyNksQ4P1opf-T4"
 
 
     override suspend fun saveEpisodeTime(time: EpisodeTimeDto, episodeId: String) {

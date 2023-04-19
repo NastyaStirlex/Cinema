@@ -85,7 +85,8 @@ class MovieFragment : Fragment() {
                 movieId = args.movieId,
                 movieName = args.movieName,
                 moviePoster = args.poster,
-                filePath = filePath
+                filePath = filePath,
+                description = args.description
             )
             findNavController().navigate(action)
         }
@@ -121,6 +122,7 @@ class MovieFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.framesRecyclerView.adapter = FramesListAdapter(frames = frames)
+
         binding.framesRecyclerView.addItemDecoration(
             FramesListSpacesItemDecoration(
                 bottom = requireContext().dpToPixel(16f).toInt(),
@@ -153,32 +155,35 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupEpisodesRecyclerView(episodes: List<EpisodeDto>) {
-        binding.episodesRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        if (episodes.isNotEmpty()) {
+            binding.episodesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        binding.episodesRecyclerView.adapter = EpisodesListAdapter(episodes) {
-            val action = MovieFragmentDirections.actionMovieFragmentToEpisodeNavGraph(
-                preview = it.preview,
-                episodeId = it.episodeId,
-                episodeName = it.name,
-                movieId = args.movieId,
-                movieName = args.movieName,
-                moviePoster = args.poster,
-                filePath = it.filePath
+            binding.episodesRecyclerView.adapter = EpisodesListAdapter(episodes) {
+                val action = MovieFragmentDirections.actionMovieFragmentToEpisodeNavGraph(
+                    preview = it.preview,
+                    episodeId = it.episodeId,
+                    episodeName = it.name,
+                    movieId = args.movieId,
+                    movieName = args.movieName,
+                    moviePoster = args.poster,
+                    filePath = it.filePath,
+                    description = args.description
+                )
+
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.activity_main_fragment_nav_host
+                ).navigate(action)
+            }
+
+            binding.episodesRecyclerView.addItemDecoration(
+                EpisodesListSpacesItemDecoration(
+                    bottom = requireContext().dpToPixel(16f).toInt(),
+                    start = requireContext().dpToPixel(16f).toInt()
+                )
             )
-
-            Navigation.findNavController(
-                requireActivity(),
-                R.id.activity_main_fragment_nav_host
-            ).navigate(action)
         }
-
-        binding.episodesRecyclerView.addItemDecoration(
-            EpisodesListSpacesItemDecoration(
-                bottom = requireContext().dpToPixel(16f).toInt(),
-                start = requireContext().dpToPixel(16f).toInt()
-            )
-        )
     }
 
     private fun setupFirstEpisodeObserver() {

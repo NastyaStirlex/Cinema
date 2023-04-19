@@ -48,7 +48,7 @@ class MainFragmentContainer : Fragment() {
         getInTrend()
         getFresh()
         getForYou()
-        getLastView()
+        getHistory()
     }
 
     override fun onResume() {
@@ -62,9 +62,11 @@ class MainFragmentContainer : Fragment() {
                 is Resource.Loading -> {
                     binding.shimmer.startShimmerAnimation()
                 }
+
                 is Resource.Success -> {
                     setupCover()
                 }
+
                 else -> {}
             }
         }
@@ -137,27 +139,40 @@ class MainFragmentContainer : Fragment() {
         }
     }
 
-    private fun getHistory(moviePoster: String?) {
+    private fun getHistory() {
         val historyObserver: Observer<List<EpisodeViewDto>> = Observer {
-            if (moviePoster != null)
-                setupViewed(moviePoster, it.last())
+            if (it.isNotEmpty()) {
+                getLastView(it.first())
+            } else {
+                binding.viewedGroup.visibility = View.GONE
+            }
         }
 
         mainViewModel.history.observe(viewLifecycleOwner, historyObserver)
     }
 
-    private fun getLastView() {
-        val lastViewObserver = Observer<List<MovieDto>> {
+    private fun getLastView(episodeView: EpisodeViewDto) {
+        val lastViewObserver = Observer<List<MovieDto>> { it ->
             if (it.isEmpty())
                 binding.viewedGroup.visibility = View.GONE
-            else
-                getHistory(it.lastOrNull()?.poster)
+            else {
+                val movie = it.find { it.movieId == episodeView.movieId }
+                setupViewed(
+                    moviePoster = movie!!.poster,
+                    description = movie.description,
+                    episodeView = episodeView
+                )
+            }
         }
 
         mainViewModel.lastView.observe(viewLifecycleOwner, lastViewObserver)
     }
 
-    private fun setupViewed(moviePoster: String, episodeView: EpisodeViewDto?) {
+    private fun setupViewed(
+        moviePoster: String,
+        description: String,
+        episodeView: EpisodeViewDto?
+    ) {
         if (episodeView == null) {
             binding.viewedGroup.visibility = View.GONE
         } else {
@@ -174,6 +189,7 @@ class MainFragmentContainer : Fragment() {
                 episodeView.movieId,
                 episodeView.movieName,
                 moviePoster,
+                description,
                 episodeView.filePath
             )
         }
@@ -186,6 +202,7 @@ class MainFragmentContainer : Fragment() {
         movieId: String,
         movieName: String,
         moviePoster: String,
+        movieDescription: String,
         filePath: String
     ) {
         binding.polygonImageView.setOnClickListener {
@@ -196,7 +213,8 @@ class MainFragmentContainer : Fragment() {
                 movieId = movieId,
                 movieName = movieName,
                 moviePoster = moviePoster,
-                filePath = filePath
+                filePath = filePath,
+                description = movieDescription
             )
 
             Navigation.findNavController(

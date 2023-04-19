@@ -58,10 +58,14 @@
             <argument
                 android:name="filePath"
                 app:argType="string" />
+            <argument
+                android:name="description"
+                app:argType="string" />
 
         </action>
 
     </fragment>
+
     <include app:graph="@navigation/episode_nav_graph" />
 
 </navigation>

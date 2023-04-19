@@ -14,11 +14,9 @@ import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ForwardingPlayer
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.data.dto.CollectionDto
-import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
-import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
-import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
+import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.databinding.FragmentEpisodeBinding
+
 
 class EpisodeFragment : Fragment() {
     private lateinit var binding: FragmentEpisodeBinding
@@ -26,6 +24,7 @@ class EpisodeFragment : Fragment() {
 
     private val episodeViewModel by lazy {
         EpisodeViewModel(
+            requireActivity().application,
             args.movieId,
             args.episodeId
         )
@@ -49,6 +48,7 @@ class EpisodeFragment : Fragment() {
         setupOnAddToCollectionButtonClick()
         setupOnVideoClick()
         setupOnBackButtonClick()
+        setupOnAddToFavouritesButtonClick()
 
         setupEpisodeTimeObserver()
 
@@ -115,27 +115,32 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun setupCollectionsObserver() {
-        val collectionsObserver = Observer<List<CollectionDto>> {
+        val collectionsObserver = Observer<List<Collection>> {
             setupCollectionsSpinner(it)
         }
 
         episodeViewModel.collections.observe(viewLifecycleOwner, collectionsObserver)
     }
 
-    private fun setupCollectionsSpinner(collections: List<CollectionDto>) {
+    private fun setupCollectionsSpinner(collections: List<Collection>) {
         binding.collectionsSpinner.visibility = View.INVISIBLE
 
-        val collectionsArray = collections.map { it.name }.toTypedArray()
+        val collectionsArray =
+            arrayOf("выберите коллекцию...") + collections.map { it.name }.toTypedArray()
 
         val adapter = ArrayAdapter(
-            requireContext(),
+            requireActivity().application,
             R.layout.item_collections_spinner,
             collectionsArray
         )
 
+        //val adapter = SpinnerAdapter(requireActivity().application, collectionsArray)
+        //binding.collectionsSpinner.prompt = "dfghjkjhgfddfghjkjhg"
+
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner)
 
         binding.collectionsSpinner.adapter = adapter
+        binding.collectionsSpinner.setSelection(0)
 
         binding.collectionsSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -145,6 +150,18 @@ class EpisodeFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    if (position != 0) {
+                        episodeViewModel.addFilmToCollection(
+                            poster = args.moviePoster,
+                            name = args.movieName,
+                            description = args.description,
+                            collectionId = collections[position - 1].id,
+                            id = args.movieId
+                        )
+                    }
+
+
+
                     binding.collectionsSpinner.visibility = View.INVISIBLE
                 }
 
@@ -158,6 +175,17 @@ class EpisodeFragment : Fragment() {
     private fun setupOnAddToCollectionButtonClick() {
         binding.addImageButton.setOnClickListener {
             binding.collectionsSpinner.performClick()
+        }
+    }
+
+    private fun setupOnAddToFavouritesButtonClick() {
+        binding.likeImageButton.setOnClickListener {
+            episodeViewModel.addFilmToFavourites(
+                poster = args.moviePoster,
+                name = args.movieName,
+                description = args.description,
+                id = args.movieId
+            )
         }
     }
 
@@ -179,5 +207,6 @@ class EpisodeFragment : Fragment() {
 
         episodeViewModel.episodeTime.observe(viewLifecycleOwner, episodeTimeObserver)
     }
+
 
 }

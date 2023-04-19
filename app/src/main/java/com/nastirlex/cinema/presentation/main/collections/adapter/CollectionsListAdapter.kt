@@ -5,9 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.data.dto.CollectionDto
-import com.nastirlex.cinema.data.dto.EpisodeDto
-import com.nastirlex.cinema.database.Collection
+import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.databinding.ItemCollectionsListBinding
 
 class CollectionsListAdapter(

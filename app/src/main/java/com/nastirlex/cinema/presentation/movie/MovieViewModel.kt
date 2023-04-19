@@ -30,8 +30,10 @@ class MovieViewModel(
             movieId = movieId,
             object : GetEpisodesCallback<List<EpisodeDto>> {
                 override fun onSuccess(episodes: List<EpisodeDto>) {
-                    _episodes.value = episodes
-                    _firstEpisode.value = episodes[0]
+                    if (episodes.isNotEmpty()) {
+                        _episodes.value = episodes
+                        _firstEpisode.value = episodes[0]
+                    }
                 }
 
                 override fun onError(error: String?) {}

@@ -1,30 +1,38 @@
 package com.nastirlex.cinema.presentation.episode
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nastirlex.cinema.data.callbacks.GetCollectionsCallback
 import com.nastirlex.cinema.data.callbacks.GetEpisodeTimeCallback
 import com.nastirlex.cinema.data.callbacks.GetEpisodesCallback
 import com.nastirlex.cinema.data.callbacks.GetMoviesCallback
-import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.dto.EpisodeDto
 import com.nastirlex.cinema.data.dto.EpisodeTimeDto
 import com.nastirlex.cinema.data.dto.MovieDto
-import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.database.repositoryImpl.CollectionDatabaseRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
+import com.nastirlex.cinema.database.entity.Collection
+import com.nastirlex.cinema.database.entity.Film
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EpisodeViewModel(
+    application: Application,
     movieId: String,
     private val episodeId: String
 ) : ViewModel() {
 
     private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
     private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl() }
+
+    private val collectionDatabaseRepositoryImpl by lazy {
+        CollectionDatabaseRepositoryImpl(
+            application
+        )
+    }
 
     private var _years = MutableLiveData<String>()
     val years: LiveData<String>
@@ -55,8 +63,8 @@ class EpisodeViewModel(
     val viewed: LiveData<List<MovieDto>>
         get() = _viewed
 
-    private val _collections = MutableLiveData<List<CollectionDto>>()
-    val collections: LiveData<List<CollectionDto>>
+    private val _collections = MutableLiveData<List<Collection>>()
+    val collections: LiveData<List<Collection>>
         get() = _collections
 
 
@@ -100,16 +108,8 @@ class EpisodeViewModel(
         )
     }
 
-    private fun getCollections() = viewModelScope.launch {
-        collectionsRepositoryImpl.getCollections(
-            object : GetCollectionsCallback<List<CollectionDto>> {
-                override fun onSuccess(collections: List<CollectionDto>) {
-                    _collections.value = collections
-                }
-
-                override fun onError(error: String?) {}
-            }
-        )
+    private fun getCollections() = viewModelScope.launch(Dispatchers.IO) {
+        _collections.postValue(collectionDatabaseRepositoryImpl.getCollections())
     }
 
     fun saveEpisodeTime(time: Int?) = viewModelScope.launch {
@@ -131,6 +131,42 @@ class EpisodeViewModel(
 
                 override fun onError(error: String?) {}
             }
+        )
+    }
+
+    fun addFilmToCollection(
+        poster: String,
+        name: String,
+        description: String,
+        collectionId: Long,
+        id: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        collectionDatabaseRepositoryImpl.insertCollectionFilm(
+            Film(
+                poster = poster,
+                name = name,
+                description = description,
+                collectionId = collectionId,
+                id = id
+            )
+        )
+    }
+
+    fun addFilmToFavourites(
+        poster: String,
+        name: String,
+        description: String,
+        id: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        val favouritesId = collectionDatabaseRepositoryImpl.getFavouritesId()
+        collectionDatabaseRepositoryImpl.insertCollectionFilm(
+            Film(
+                poster = poster,
+                name = name,
+                description = description,
+                collectionId = favouritesId,
+                id = id
+            )
         )
     }
 }

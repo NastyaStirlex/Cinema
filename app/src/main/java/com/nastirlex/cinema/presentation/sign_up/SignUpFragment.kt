@@ -18,9 +18,8 @@ import com.nastirlex.cinema.presentation.main.Status
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
 
-    private val authRepositoryImpl by lazy { AuthRepositoryImpl() }
     private val signUpViewModel by lazy {
-        SignUpViewModel(authRepositoryImpl)
+        SignUpViewModel(requireActivity().application)
     }
 
     override fun onCreateView(

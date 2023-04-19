@@ -22,7 +22,7 @@ class MovieRepositoryImpl : MovieRepository {
     private var callGetCover: Call<CoverDto>? = null
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxOTE0MTczLCJLRVlfQ0xBSU1fVVNFUiI6IjdjNjUzNTZmLWEzZWUtNGRkYy05ZmIxLWZmOGRjMWYyZmQxYSJ9.g9fIQRAGzMJ_lw9rhRjmP2z7NAnZG7IiGIrymf-NdNY"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxOTMxNTcxLCJLRVlfQ0xBSU1fVVNFUiI6ImI4MTY2ZGNhLTFjMWEtNDlhYi04MDFjLWZiMDA0ZjBhMWY3NCJ9.bcMLhJuxFEdsSL297wL-pTFG56PpMyNksQ4P1opf-T4"
 
     override fun getCover(callback: GetCoverCallback<CoverDto>) {
         callGetCover = ApiClient.movieApiService.getCover(token = "Bearer $token")

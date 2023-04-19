@@ -1,10 +1,13 @@
 package com.nastirlex.cinema.database
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.nastirlex.cinema.database.dao.CollectionDao
+import com.nastirlex.cinema.database.dao.FilmDao
+import com.nastirlex.cinema.database.entity.Collection
+import com.nastirlex.cinema.database.entity.Film
 
 @Database(entities = [Collection::class, Film::class], version = 1)
 abstract class CollectionDatabase: RoomDatabase() {
