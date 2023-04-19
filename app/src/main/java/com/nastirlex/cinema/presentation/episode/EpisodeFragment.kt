@@ -24,17 +24,10 @@ class EpisodeFragment : Fragment() {
     private lateinit var binding: FragmentEpisodeBinding
     private val args: EpisodeFragmentArgs by navArgs()
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
-    private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl() }
-
     private val episodeViewModel by lazy {
         EpisodeViewModel(
             args.movieId,
-            args.episodeId,
-            movieRepositoryImpl,
-            collectionsRepositoryImpl,
-            episodesRepositoryImpl
+            args.episodeId
         )
     }
 
@@ -44,23 +37,22 @@ class EpisodeFragment : Fragment() {
     ): View {
         binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
         setupPlayer()
         setupEpisodeName()
         setupFilmName()
-
         setupDescription()
         setupFilmPoster()
         setupYears()
+
         setupCollectionsObserver()
+
         setupOnAddToCollectionButtonClick()
         setupOnVideoClick()
         setupOnBackButtonClick()
+
         setupEpisodeTimeObserver()
+
+        return binding.root
     }
 
     private fun setupEpisodeName() {
@@ -111,11 +103,7 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun setupFilmPoster() {
-        //val filmPosterObserver = Observer<List<MovieDto>> {
-            Glide.with(binding.root).load(args.moviePoster).into(binding.episodeFilmImageView)
-        //}
-
-        //episodeViewModel.viewed.observe(viewLifecycleOwner, filmPosterObserver)
+        Glide.with(binding.root).load(args.moviePoster).into(binding.episodeFilmImageView)
     }
 
     private fun setupYears() {

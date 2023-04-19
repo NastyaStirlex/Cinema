@@ -19,11 +19,12 @@ import kotlinx.coroutines.launch
 
 class EpisodeViewModel(
     movieId: String,
-    private val episodeId: String,
-    private var movieRepositoryImpl: MovieRepositoryImpl,
-    private val collectionsRepositoryImpl: CollectionsRepositoryImpl,
-    private val episodesRepositoryImpl: EpisodesRepositoryImpl
+    private val episodeId: String
 ) : ViewModel() {
+
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
+    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+    private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl() }
 
     private var _years = MutableLiveData<String>()
     val years: LiveData<String>
