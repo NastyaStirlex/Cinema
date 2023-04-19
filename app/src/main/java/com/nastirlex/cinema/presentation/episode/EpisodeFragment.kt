@@ -15,7 +15,6 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ForwardingPlayer
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CollectionDto
-import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
@@ -58,7 +57,7 @@ class EpisodeFragment : Fragment() {
         setupFilmPoster()
         setupYears()
         setupCollectionsObserver()
-        setupOnAddToCollectionButton()
+        setupOnAddToCollectionButtonClick()
         setupOnVideoClick()
         setupOnBackButtonClick()
         setupEpisodeTimeObserver()
@@ -168,14 +167,14 @@ class EpisodeFragment : Fragment() {
 
     }
 
-    private fun setupOnAddToCollectionButton() {
+    private fun setupOnAddToCollectionButtonClick() {
         binding.addImageButton.setOnClickListener {
             binding.collectionsSpinner.performClick()
         }
     }
 
     private fun setupOnBackButtonClick() {
-        binding.backImageButton.setOnClickListener {
+        binding.collectionChangeBackImageButton.setOnClickListener {
             episodeViewModel.saveEpisodeTime(
                 binding.episodeStyledPlayerView.player?.currentPosition?.div(1000)?.toInt()
             )

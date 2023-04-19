@@ -8,21 +8,47 @@
         android:id="@+id/collectionInfoFragment"
         android:name="com.nastirlex.cinema.presentation.main.collections.collection_info.CollectionInfoFragment"
         android:label="CollectionInfoFragment">
-        <action
-            android:id="@+id/action_collectionInfoFragment_to_collectionChangeFragment"
-            app:destination="@id/collectionChangeFragment" />
 
         <argument
             android:name="collectionId"
-            app:argType="string" />
+            app:argType="long" />
 
         <argument
             android:name="collectionName"
             app:argType="string" />
 
+        <argument
+            android:name="collectionIcon"
+            app:argType="reference" />
+        <action
+            android:id="@+id/action_collectionInfoFragment_to_collectionChangeFragment"
+            app:destination="@id/collectionChangeFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/collectionChangeFragment"
         android:name="com.nastirlex.cinema.presentation.main.collections.collection_change.CollectionChangeFragment"
-        android:label="CollectionChangeFragment" />
+        android:label="CollectionChangeFragment" >
+
+        <argument
+            android:name="collectionName"
+            app:argType="string" />
+
+        <argument
+            android:name="collectionId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_collectionChangeFragment_to_collectionIconSelectFragment2"
+            app:destination="@id/collectionIconSelectFragment2" />
+        <argument
+            android:name="collectionIcon"
+            app:argType="reference" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/collectionIconSelectFragment2"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_icon_select.CollectionIconSelectFragment"
+        android:label="CollectionIconSelectFragment" />
 </navigation>

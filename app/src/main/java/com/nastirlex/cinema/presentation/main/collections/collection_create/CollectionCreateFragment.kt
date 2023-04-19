@@ -1,6 +1,7 @@
 package com.nastirlex.cinema.presentation.main.collections.collection_create
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,17 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.databinding.FragmentCollectionCreateBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
 
 class CollectionCreateFragment : Fragment() {
     private lateinit var binding: FragmentCollectionCreateBinding
+
+    private val args: CollectionCreateFragmentArgs by navArgs()
 
     private val collectionCreateViewModel by lazy {
         CollectionCreateViewModel(
@@ -31,19 +35,22 @@ class CollectionCreateFragment : Fragment() {
     ): View {
         binding = FragmentCollectionCreateBinding.inflate(inflater, container, false)
 
-        setFragmentResultListener("icon") { requestKey, bundle ->
+        setFragmentResultListener("create_icon") { requestKey, bundle ->
             val result = bundle.getInt("bundleKey")
-            binding.collectonIconImageView.setImageResource(result)
+            binding.collectionCreateIconImageView.setImageResource(result)
+            setupOnCollectionCreateButtonClick(result)
         }
 
-        setupScreenStateObserver()
-        setupOnCollectionCreateButton()
+        setupOnCollectionCreateButtonClick(args.icon)
 
-        binding.backImageButton.setOnClickListener {
+        setupScreenStateObserver()
+
+
+        binding.collectionCreateBackImageButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        binding.selectIconButton.setOnClickListener {
+        binding.collectionCreateSelectIconButton.setOnClickListener {
             findNavController().navigate(R.id.action_collectionCreateFragment_to_collectionIconSelectFragment)
         }
 
@@ -51,19 +58,16 @@ class CollectionCreateFragment : Fragment() {
     }
 
     private fun setupScreenStateObserver() {
-        val collectionCreateScreenStateObserver = Observer<Event<Any>> {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    Navigation.findNavController(
-                        requireActivity(),
-                        R.id.activity_main_fragment_nav_host
-                    ).navigate(R.id.mainFragment)
+        val collectionCreateScreenStateObserver = Observer<Resource<Any>> {
+            when (it) {
+                is Resource.Success -> {
+                    findNavController().navigateUp()
                 }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), it.error!!, Toast.LENGTH_SHORT).show()
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), it.message!!, Toast.LENGTH_SHORT).show()
                 }
-                Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                is Resource.Loading -> {
+                    //Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -75,12 +79,16 @@ class CollectionCreateFragment : Fragment() {
         )
     }
 
-    private fun setupOnCollectionCreateButton() {
-        binding.collectionCreateButton.setOnClickListener {
+    private fun setupOnCollectionCreateButtonClick(icon: Int) {
+        binding.collectionCreateSaveButton.setOnClickListener {
             if (binding.collectionCreateNameEditText.text.toString().isBlank()) {
                 Toast.makeText(requireContext(), "Name must be filled", Toast.LENGTH_SHORT).show()
             } else {
-                collectionCreateViewModel.createCollection(binding.collectionCreateNameEditText.text.toString())
+                collectionCreateViewModel.createCollection(
+                    name = binding.collectionCreateNameEditText.text.toString(),
+                    icon = icon
+                )
+                //findNavController().navigateUp()
             }
         }
     }

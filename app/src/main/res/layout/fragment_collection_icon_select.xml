@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.main.collections.collection_icon_select.CollectionIconSelectActivity">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/iconSelectToolbar"
+        android:id="@+id/collectionIconSelectToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -16,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/backImageButton"
+            android:id="@+id/collectionIconSelectBackImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -26,7 +25,7 @@
             tools:layout_editor_absoluteY="18dp" />
 
         <TextView
-            android:id="@+id/selectIconTextView"
+            android:id="@+id/collectionIconSelectSelectIconTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
@@ -40,7 +39,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/iconsRecyclerView"
+        android:id="@+id/collectionIconSelectIconsRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingVertical="24dp"
@@ -48,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconSelectToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/collectionIconSelectToolbar"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_collection_icon_list" />
 

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.main.collections.collection_create.CollectionCreateActivity">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/collectionCreateToolbar"
@@ -16,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/backImageButton"
+            android:id="@+id/collectionCreateBackImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -61,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@id/collectionCreateToolbar" />
 
     <ImageView
-        android:id="@+id/collectonIconImageView"
+        android:id="@+id/collectionCreateIconImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -71,7 +70,7 @@
         app:srcCompat="@drawable/ic_heart" />
 
     <Button
-        android:id="@+id/selectIconButton"
+        android:id="@+id/collectionCreateSelectIconButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -85,13 +84,13 @@
         android:textFontWeight="600"
         android:textSize="14sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/collectonIconImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/collectionCreateIconImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/collectonIconImageView"
-        app:layout_constraintTop_toTopOf="@+id/collectonIconImageView" />
+        app:layout_constraintStart_toEndOf="@+id/collectionCreateIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/collectionCreateIconImageView" />
 
     <Button
-        android:id="@+id/collectionCreateButton"
+        android:id="@+id/collectionCreateSaveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -108,7 +107,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectonIconImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/collectionCreateIconImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

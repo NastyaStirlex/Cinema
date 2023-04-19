@@ -62,7 +62,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupOnBackButtonClick() {
-        binding.backImageButton.setOnClickListener {
+        binding.movieBackImageButton.setOnClickListener {
             findNavController().navigateUp()
         }
     }

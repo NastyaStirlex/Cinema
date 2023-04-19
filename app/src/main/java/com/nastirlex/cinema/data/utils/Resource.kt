@@ -1,7 +1,10 @@
 package com.nastirlex.cinema.data.utils
 
-sealed class Resource<T>(val data: T? = null, val message: String? = null) {
-    class Success<T>(data: T) : Resource<T>(data)
-    class Error<T>(message: String, data: T? = null) : Resource<T>(data)
-    class Loading<T>(data: T? = null) : Resource<T>(data)
+import androidx.annotation.StringRes
+
+sealed class Resource<T>(val data: T? = null, @StringRes val message: Int? = null) {
+    class Success<T>(data: T?) : Resource<T>(data)
+    class Error<T>(@StringRes message: Int?) : Resource<T>(message = message)
+    class Loading<T>() : Resource<T>()
+    class Default<T>: Resource<T>()
 }

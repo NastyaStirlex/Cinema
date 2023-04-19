@@ -18,33 +18,26 @@ import com.nastirlex.cinema.utils.dpToPixel
 class CollectionIconSelectFragment : Fragment() {
     private lateinit var binding: FragmentCollectionIconSelectBinding
 
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
-    private val collectionCreateViewModel by lazy {
-        CollectionCreateViewModel(
-            requireActivity().application
-        )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCollectionIconSelectBinding.inflate(inflater, container, false)
 
-        binding.backImageButton.setOnClickListener {
+        binding.collectionIconSelectBackImageButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        binding.iconsRecyclerView.layoutManager = GridLayoutManager(this.requireContext(), 4)
+        binding.collectionIconSelectIconsRecyclerView.layoutManager = GridLayoutManager(this.requireContext(), 4)
 
-        /* pass item data to activity / fragment when clicked */
-        binding.iconsRecyclerView.adapter = CollectionIconListAdapter { icon ->
-            setFragmentResult("icon", bundleOf("bundleKey" to icon))
+        binding.collectionIconSelectIconsRecyclerView.adapter = CollectionIconListAdapter { icon ->
+            setFragmentResult("create_icon", bundleOf("bundleKey" to icon))
+            setFragmentResult("change_icon", bundleOf("bundleKey" to icon))
 
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
-        binding.iconsRecyclerView.addItemDecoration(
+        binding.collectionIconSelectIconsRecyclerView.addItemDecoration(
             CollectionItemListSpacesItemDecoration(
                 bottom = this.requireContext().dpToPixel(
                     16f

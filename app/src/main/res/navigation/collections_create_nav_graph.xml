@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/collections_nested_nav_graph"
+    android:id="@+id/collections_create_nav_graph"
     app:startDestination="@id/collectionCreateFragment">
 
     <fragment
@@ -22,22 +22,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/collectionChangeFragment"
-        android:name="com.nastirlex.cinema.presentation.main.collections.collection_change.CollectionChangeFragment"
-        android:label="CollectionChangeFragment"
-        tools:layout="@layout/fragment_collection_change">
-    </fragment>
-
-    <fragment
         android:id="@+id/collectionIconSelectFragment"
         android:name="com.nastirlex.cinema.presentation.main.collections.collection_icon_select.CollectionIconSelectFragment"
         android:label="CollectionIconSelectFragment"
         tools:layout="@layout/fragment_collection_icon_select"/>
 
-    <fragment
-        android:id="@+id/collectionInfoFragment"
-        android:name="com.nastirlex.cinema.presentation.main.collections.collection_info.CollectionInfoFragment"
-        android:label="CollectionInfoFragment"
-        tools:layout="@layout/fragment_collection_info">
-    </fragment>
 </navigation>

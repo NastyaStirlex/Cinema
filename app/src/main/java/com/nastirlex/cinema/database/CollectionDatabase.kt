@@ -6,9 +6,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Collection::class], version = 1)
+@Database(entities = [Collection::class, Film::class], version = 1)
 abstract class CollectionDatabase: RoomDatabase() {
     abstract fun collectionDao(): CollectionDao
+
+    abstract fun filmDao(): FilmDao
 
     companion object {
         @Volatile

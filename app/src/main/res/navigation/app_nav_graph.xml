@@ -71,28 +71,32 @@
                 app:argType="string" />
 
         </action>
+
         <action
             android:id="@+id/action_mainFragment_to_collection_info_nav_graph"
-            app:destination="@id/collection_info_nav_graph">
+            app:destination="@id/collection_info_nav_graph"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true">
 
             <argument
                 android:name="collectionId"
-                app:argType="string" />
+                app:argType="long" />
 
             <argument
                 android:name="collectionName"
                 app:argType="string" />
 
+            <argument
+                android:name="collectionIcon"
+                app:argType="reference" />
+
         </action>
+
         <action
             android:id="@+id/action_mainFragment_to_collections_create_nav_graph"
-            app:destination="@id/collections_create_nav_graph">
+            app:destination="@id/collections_create_nav_graph"
+            app:popUpToInclusive="false" />
 
-            <argument
-                android:name="icon"
-                app:argType="integer" />
-
-        </action>
 
     </fragment>
 

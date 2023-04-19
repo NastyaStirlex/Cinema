@@ -215,35 +215,39 @@ class MainFragmentContainer : Fragment() {
     }
 
     private fun setupFreshRecyclerView(fresh: List<MovieDto>) {
-        binding.freshRecyclerView.layoutManager =
-            LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        if (fresh.isNotEmpty()) {
+            binding.freshRecyclerView.layoutManager =
+                LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 
-        binding.freshRecyclerView.adapter = FreshListAdapter(fresh) { movie ->
-            val action = MainFragmentDirections.actionMainFragmentToMovieNavGraph(
-                movieName = movie.name,
-                movieId = movie.movieId,
-                poster = movie.poster,
-                age = movie.age,
-                frames = movie.imageUrls.map { it }.toTypedArray(),
-                description = movie.description,
-                tags = movie.tags.map {
-                    it.tagName
-                }.toTypedArray()
+            binding.freshRecyclerView.adapter = FreshListAdapter(fresh) { movie ->
+                val action = MainFragmentDirections.actionMainFragmentToMovieNavGraph(
+                    movieName = movie.name,
+                    movieId = movie.movieId,
+                    poster = movie.poster,
+                    age = movie.age,
+                    frames = movie.imageUrls.map { it }.toTypedArray(),
+                    description = movie.description,
+                    tags = movie.tags.map {
+                        it.tagName
+                    }.toTypedArray()
+                )
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.activity_main_fragment_nav_host
+                ).navigate(action)
+            }
+
+            binding.freshRecyclerView.addItemDecoration(
+                FreshListSpacesItemDecoration(
+                    startFirst = requireContext().dpToPixel(16f).toInt(),
+                    bottom = requireContext().dpToPixel(8f).toInt(),
+                    start = requireContext().dpToPixel(8f).toInt(),
+                    end = requireContext().dpToPixel(8f).toInt(),
+                )
             )
-            Navigation.findNavController(
-                requireActivity(),
-                R.id.activity_main_fragment_nav_host
-            ).navigate(action)
+        } else {
+            binding.freshGroup.visibility = View.GONE
         }
-
-        binding.freshRecyclerView.addItemDecoration(
-            FreshListSpacesItemDecoration(
-                startFirst = requireContext().dpToPixel(16f).toInt(),
-                bottom = requireContext().dpToPixel(8f).toInt(),
-                start = requireContext().dpToPixel(8f).toInt(),
-                end = requireContext().dpToPixel(8f).toInt(),
-            )
-        )
     }
 
     private fun getForYou() {

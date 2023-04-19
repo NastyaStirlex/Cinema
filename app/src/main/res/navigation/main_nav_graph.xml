@@ -11,8 +11,6 @@
         android:name="com.nastirlex.cinema.presentation.main.MainFragmentContainer"
         tools:layout="@layout/fragment_main_container" >
 
-        <deepLink app:uri="www.example.com/main" />
-
     </fragment>
 
     <include app:graph="@navigation/compilation_nav_graph" />

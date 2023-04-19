@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/backImageButton"
+            android:id="@+id/collectionChangeBackImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -41,7 +41,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/collectionChangeEditText"
+        android:id="@+id/collectionChangeNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -61,17 +61,17 @@
         app:layout_constraintTop_toBottomOf="@id/collectionChangeToolbar" />
 
     <ImageView
-        android:id="@+id/collectonIconImageView"
+        android:id="@+id/collectionChangeIconImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectionChangeEditText"
+        app:layout_constraintTop_toBottomOf="@+id/collectionChangeNameEditText"
         app:srcCompat="@drawable/ic_heart" />
 
     <Button
-        android:id="@+id/selectIconButton"
+        android:id="@+id/collectionChangeSelectIconButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -85,13 +85,13 @@
         android:textFontWeight="600"
         android:textSize="14sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/collectonIconImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/collectionChangeIconImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/collectonIconImageView"
-        app:layout_constraintTop_toTopOf="@+id/collectonIconImageView" />
+        app:layout_constraintStart_toEndOf="@+id/collectionChangeIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/collectionChangeIconImageView" />
 
     <Button
-        android:id="@+id/collectionCreateButton"
+        android:id="@+id/collectionChangeSaveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -108,10 +108,10 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectonIconImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/collectionChangeIconImageView" />
 
     <Button
-        android:id="@+id/collectionDeletebutton"
+        android:id="@+id/collectionChangeDeleteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -127,7 +127,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collectionCreateButton" />
+        app:layout_constraintTop_toBottomOf="@+id/collectionChangeSaveButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

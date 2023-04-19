@@ -40,6 +40,7 @@
     <string name="error_repeat_user">Такой пользователь уже существует</string>
     <string name="error_invalid_field">Некорректные поля</string>
     <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="error_nonunique_fields">Коллекция с таким названием уже существует.</string>
 
     <!-- Collections fragment -->
     <string name="collections">Коллекции</string>

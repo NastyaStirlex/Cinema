@@ -27,7 +27,7 @@
                 app:srcCompat="@drawable/movie_banner_example" />
 
             <ImageButton
-                android:id="@+id/backImageButton"
+                android:id="@+id/movieBackImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"

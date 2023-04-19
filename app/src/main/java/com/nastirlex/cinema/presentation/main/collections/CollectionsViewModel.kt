@@ -1,35 +1,33 @@
 package com.nastirlex.cinema.presentation.main.collections
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nastirlex.cinema.data.callbacks.GetCollectionsCallback
-import com.nastirlex.cinema.data.dto.CollectionDto
+import com.nastirlex.cinema.data.repositoryImpl.CollectionDatabaseRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.database.Collection
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CollectionsViewModel : ViewModel() {
+class CollectionsViewModel(application: Application) : ViewModel() {
 
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+    private val collectionDatabaseRepositoryImpl by lazy { CollectionDatabaseRepositoryImpl(application) }
 
-    private val _collections = MutableLiveData<List<CollectionDto>>()
-    val collections: LiveData<List<CollectionDto>>
+    private val _collections = MutableLiveData<List<Collection>>()
+    val collections: LiveData<List<Collection>>
         get() = _collections
 
     init {
+        //viewModelScope.launch(Dispatchers.IO) { collectionDatabaseRepositoryImpl.cleanTable() }
         getCollections()
     }
 
-    private fun getCollections() = viewModelScope.launch {
-        collectionsRepositoryImpl.getCollections(
-            object : GetCollectionsCallback<List<CollectionDto>> {
-                override fun onSuccess(collections: List<CollectionDto>) {
-                    _collections.value = collections
-                }
 
-                override fun onError(error: String?) {}
-            }
-        )
+    fun getCollections() = viewModelScope.launch(Dispatchers.IO) {
+
+        _collections.postValue(collectionDatabaseRepositoryImpl.getCollections())
+
     }
 }
