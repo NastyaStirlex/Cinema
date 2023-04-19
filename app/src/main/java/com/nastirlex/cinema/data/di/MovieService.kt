@@ -5,8 +5,10 @@ import com.nastirlex.cinema.data.dto.EpisodeDto
 import com.nastirlex.cinema.data.dto.EpisodeViewDto
 import com.nastirlex.cinema.data.dto.MovieDto
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface MovieService {
@@ -28,9 +30,18 @@ interface MovieService {
     @GET("history")
     fun getHistory(@Header("Authorization") token: String): Call<List<EpisodeViewDto>>
 
+    @GET("movies?filter=compilation")
+    fun getCompilation(@Header("Authorization") token: String): Call<List<MovieDto>>
+
     @GET("movies/{movieId}/episodes")
     fun getEpisodes(
         @Header("Authorization") token: String,
         @Path("movieId") movieId: String
     ): Call<List<EpisodeDto>>
+
+    @POST("movies/{movieId}/dislike")
+    suspend fun deleteFilmFromCompilation(
+        @Header("Authorization") token: String,
+        @Path("movieId") movieId: String
+    ): Response<Void>
 }

@@ -97,4 +97,7 @@ dependencies {
 
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    // Card Swipe
+    implementation 'com.lorentzos.swipecards:library:1.0.9'
+
 }

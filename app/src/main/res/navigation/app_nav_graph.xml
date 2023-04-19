@@ -11,10 +11,6 @@
         tools:layout="@layout/fragment_main">
 
         <action
-            android:id="@+id/action_mainFragment_to_collections_nested_nav_graph"
-            app:destination="@id/collections_nested_nav_graph" />
-
-        <action
             android:id="@+id/action_mainFragment_to_authorization_nav_graph"
             app:destination="@id/authorization_nav_graph"
             app:launchSingleTop="false"
@@ -75,14 +71,36 @@
                 app:argType="string" />
 
         </action>
+        <action
+            android:id="@+id/action_mainFragment_to_collection_info_nav_graph"
+            app:destination="@id/collection_info_nav_graph">
+
+            <argument
+                android:name="collectionId"
+                app:argType="string" />
+
+            <argument
+                android:name="collectionName"
+                app:argType="string" />
+
+        </action>
+        <action
+            android:id="@+id/action_mainFragment_to_collections_create_nav_graph"
+            app:destination="@id/collections_create_nav_graph">
+
+            <argument
+                android:name="icon"
+                app:argType="integer" />
+
+        </action>
 
     </fragment>
-
-    <include app:graph="@navigation/collections_nested_nav_graph"/>
 
     <include app:graph="@navigation/authorization_nav_graph" />
 
     <include app:graph="@navigation/movie_nav_graph" />
     <include app:graph="@navigation/episode_nav_graph" />
+    <include app:graph="@navigation/collection_info_nav_graph" />
+    <include app:graph="@navigation/collections_create_nav_graph" />
 
 </navigation>

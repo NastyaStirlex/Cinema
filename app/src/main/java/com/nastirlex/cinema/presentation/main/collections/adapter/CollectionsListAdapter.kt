@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CollectionDto
-import com.nastirlex.cinema.data.dto.MovieDto
+import com.nastirlex.cinema.data.dto.EpisodeDto
 import com.nastirlex.cinema.databinding.ItemCollectionsListBinding
 
 class CollectionsListAdapter(
@@ -38,7 +38,7 @@ class CollectionsListAdapter(
 
     override fun onBindViewHolder(holder: CollectionsListViewHolder, position: Int) {
         holder.bind(
-            collection = collections[collections.size - 1 - position],
+            collections[collections.size - 1 - position],
             onClickListener = { onCollectionClick.invoke(collections[collections.size - 1 - position]) }
         )
     }
