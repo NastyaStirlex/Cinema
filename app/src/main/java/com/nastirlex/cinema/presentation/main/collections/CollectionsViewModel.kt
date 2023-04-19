@@ -9,7 +9,10 @@ import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import kotlinx.coroutines.launch
 
-class CollectionsViewModel(private var collectionsRepositoryImpl: CollectionsRepositoryImpl) : ViewModel() {
+class CollectionsViewModel : ViewModel() {
+
+    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
+
     private val _collections = MutableLiveData<List<CollectionDto>>()
     val collections: LiveData<List<CollectionDto>>
         get() = _collections

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -18,10 +19,9 @@ import com.nastirlex.cinema.presentation.main.Status
 class CollectionCreateFragment : Fragment() {
     private lateinit var binding: FragmentCollectionCreateBinding
 
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
     private val collectionCreateViewModel by lazy {
         CollectionCreateViewModel(
-            collectionsRepositoryImpl
+            application = requireActivity().application
         )
     }
 
@@ -31,6 +31,14 @@ class CollectionCreateFragment : Fragment() {
     ): View {
         binding = FragmentCollectionCreateBinding.inflate(inflater, container, false)
 
+        setFragmentResultListener("icon") { requestKey, bundle ->
+            val result = bundle.getInt("bundleKey")
+            binding.collectonIconImageView.setImageResource(result)
+        }
+
+        setupScreenStateObserver()
+        setupOnCollectionCreateButton()
+
         binding.backImageButton.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -39,23 +47,7 @@ class CollectionCreateFragment : Fragment() {
             findNavController().navigate(R.id.action_collectionCreateFragment_to_collectionIconSelectFragment)
         }
 
-
-
-
-
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        setupScreenStateObserver()
-        setupOnCollectionCreateButton()
-        val iconObserver = Observer<Int> {
-            binding.collectonIconImageView.setImageResource(it)
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-        }
-
-        collectionCreateViewModel.icon.observe(viewLifecycleOwner, iconObserver)
     }
 
     private fun setupScreenStateObserver() {

@@ -137,9 +137,10 @@ class MainFragmentContainer : Fragment() {
         }
     }
 
-    private fun getHistory(moviePoster: String) {
+    private fun getHistory(moviePoster: String?) {
         val historyObserver: Observer<List<EpisodeViewDto>> = Observer {
-            setupViewed(moviePoster, it.last())
+            if (moviePoster != null)
+                setupViewed(moviePoster, it.last())
         }
 
         mainViewModel.history.observe(viewLifecycleOwner, historyObserver)
@@ -147,7 +148,10 @@ class MainFragmentContainer : Fragment() {
 
     private fun getLastView() {
         val lastViewObserver = Observer<List<MovieDto>> {
-            getHistory(it.last().poster)
+            if (it.isEmpty())
+                binding.viewedGroup.visibility = View.GONE
+            else
+                getHistory(it.lastOrNull()?.poster)
         }
 
         mainViewModel.lastView.observe(viewLifecycleOwner, lastViewObserver)

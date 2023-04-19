@@ -19,7 +19,7 @@ import java.net.UnknownHostException
 class CollectionsRepositoryImpl : CollectionsRepository {
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxMjMzNzY1LCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.jsTN6TbLt4nzYqF95Onwv69WcSao-7Yj19S6vnK5hHk"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxODg2MTU0LCJLRVlfQ0xBSU1fVVNFUiI6ImI1MWZiZjNhLWNmMjYtNDQwYS05NGFhLWE3MmFmMTYwZjRhOSJ9.RmAfhnB0dTvk36iYC_YhezQmxr2_a08u0cnw5cmY9gE"
 
 
     private var callGetCollections: Call<List<CollectionDto>>? = null

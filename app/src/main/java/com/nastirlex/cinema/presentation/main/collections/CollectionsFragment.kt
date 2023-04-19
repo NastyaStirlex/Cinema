@@ -19,13 +19,8 @@ import com.nastirlex.cinema.utils.dpToPixel
 class CollectionsFragment : Fragment() {
     private lateinit var binding: FragmentCollectionsBinding
 
-    private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
-    private val collectionsViewModel by lazy { CollectionsViewModel(collectionsRepositoryImpl) }
+    private val collectionsViewModel by lazy { CollectionsViewModel() }
 
-//    private val action =
-//        CollectionsFragmentDirections.actionCollectionsFragmentToCollectionInfoActivity("")
-
-    // navController?.navigate(action)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,11 +38,6 @@ class CollectionsFragment : Fragment() {
         getCollections()
 
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        getCollections()
     }
 
     private fun getCollections() {
@@ -77,7 +67,9 @@ class CollectionsFragment : Fragment() {
             )
         )
 
-        binding.collectionsRecyclerView.adapter = CollectionsListAdapter(collections = collections)
+        binding.collectionsRecyclerView.adapter = CollectionsListAdapter(collections = collections) {
+
+        }
     }
 
 }
