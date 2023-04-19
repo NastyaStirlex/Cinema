@@ -88,4 +88,7 @@ dependencies {
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
+    // Card Swipe
+    implementation 'com.lorentzos.swipecards:library:1.0.9'
+
 }

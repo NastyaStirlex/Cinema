@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,9 +42,11 @@ class CollectionIconSelectFragment : Fragment() {
 
         /* pass item data to activity / fragment when clicked */
         binding.iconsRecyclerView.adapter = CollectionIconListAdapter { icon ->
-            collectionCreateViewModel.updateIcon(icon)
 
-            findNavController().popBackStack()
+            //collectionCreateViewModel.updateIcon(icon)
+            val result = icon
+            setFragmentResult("icon", bundleOf("bundleKey" to result))
+            findNavController().navigateUp()
         }
 
         binding.iconsRecyclerView.addItemDecoration(

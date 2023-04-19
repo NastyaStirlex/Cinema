@@ -22,5 +22,9 @@ interface MovieRepository {
 
     fun getHistory(callback: GetHistoryCallback<List<EpisodeViewDto>>)
 
+    fun getCompilation(callback: GetMoviesCallback<MovieDto>)
+
     fun getEpisodes(movieId: String, callback: GetEpisodesCallback<List<EpisodeDto>>)
+
+    suspend fun deleteFilmFromCompilation(movieId: String)
 }

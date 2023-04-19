@@ -193,7 +193,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/filled_button_background"
-                android:fontFamily="casual"
+                android:fontFamily="sans-serif"
                 android:letterSpacing="0"
                 android:text="@string/interests"
                 android:textAllCaps="false"
@@ -209,7 +209,7 @@
                 android:id="@+id/viewedGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="viewedNameTextView,viewedPosterImageView,viewedTitleTextView" />
+                app:constraint_referenced_ids="viewedNameTextView,viewedPosterImageView,viewedTitleTextView,polygonImageView" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/forYouGroup"

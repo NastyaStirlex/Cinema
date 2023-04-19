@@ -15,12 +15,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
+import java.net.SocketException
+import java.net.UnknownHostException
 
 class MovieRepositoryImpl : MovieRepository {
     private var callGetCover: Call<CoverDto>? = null
 
     private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxMjMzNzY1LCJLRVlfQ0xBSU1fVVNFUiI6ImViZTgwOTg2LTA4ZmQtNDE1Yi1hNzk0LWYyYWIwOTAwOTdkMCJ9.jsTN6TbLt4nzYqF95Onwv69WcSao-7Yj19S6vnK5hHk"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxODQwMDA4LCJLRVlfQ0xBSU1fVVNFUiI6ImI1MWZiZjNhLWNmMjYtNDQwYS05NGFhLWE3MmFmMTYwZjRhOSJ9.23plY0tM_R4NLEnizf0H8BoWWclIFb7LLkwAp1N_F-k"
 
     override fun getCover(callback: GetCoverCallback<CoverDto>) {
         callGetCover = ApiClient.movieApiService.getCover(token = "Bearer $token")
@@ -301,6 +303,54 @@ class MovieRepositoryImpl : MovieRepository {
         )
     }
 
+    private var callGetCompilation: Call<List<MovieDto>>? = null
+    override fun getCompilation(callback: GetMoviesCallback<MovieDto>) {
+        callGetCompilation = ApiClient.movieApiService.getCompilation(
+            token = "Bearer $token"
+        )
+        callGetCompilation?.enqueue(
+            object : Callback<List<MovieDto>> {
+                override fun onResponse(
+                    call: Call<List<MovieDto>>,
+                    response: Response<List<MovieDto>>
+                ) {
+                    if (response.code() == 400) {
+                        response.errorBody()?.let { Log.d("Error code 400", it.string()) }
+                        return
+                    }
+                    response.body()?.let { it ->
+                        if (response.isSuccessful) {
+                            callback.onSuccess(
+                                movies = it
+                            )
+                        } else {
+                            Log.d("Response Code", response.errorBody().toString())
+                            //when (response.code()) {
+                            try {
+                                val errorBody = response.errorBody()
+                                callback.onError(errorBody.toString())
+                            } catch (e: Exception) {
+                                when (e) {
+                                    is HttpException -> Log.d("Exception", "HTTP exception")
+                                    //e.printStackTrace()
+                                }
+                            }
+                            //callback.onError(response.code())
+                            Log.d("Error", "${callback.onError(response.errorBody().toString())}")
+                            return
+                            //}
+                            //callback.onError("Error")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<MovieDto>>, t: Throwable) {
+                    callback.onError(t.message)
+                }
+            }
+        )
+    }
+
     private var callGetEpisodes: Call<List<EpisodeDto>>? = null
     override fun getEpisodes(movieId: String, callback: GetEpisodesCallback<List<EpisodeDto>>) {
         callGetEpisodes = ApiClient.movieApiService.getEpisodes(
@@ -348,5 +398,24 @@ class MovieRepositoryImpl : MovieRepository {
                 }
             }
         )
+    }
+
+    override suspend fun deleteFilmFromCompilation(movieId: String) {
+        try {
+            ApiClient.movieApiService.deleteFilmFromCompilation(
+                token = "Bearer $token",
+                movieId = movieId
+            )
+        } catch (e: java.lang.Exception) {
+            when (e) {
+                is HttpException -> {
+                    //profileScreenState.value = Event.error(R.string.http_error)
+                }
+                is UnknownHostException, is SocketException -> {
+                    //profileScreenState.value = Event.error(R.string.unknown_error)
+                }
+            }
+            e.printStackTrace()
+        }
     }
 }

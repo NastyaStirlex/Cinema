@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/compilationFragment"
-        android:name="com.nastirlex.cinema.presentation.CompilationFragment"
+        android:name="com.nastirlex.cinema.presentation.main.compilation.CompilationFragment"
         android:label="fragment_compilation"
         tools:layout="@layout/fragment_compilation" />
 </navigation>

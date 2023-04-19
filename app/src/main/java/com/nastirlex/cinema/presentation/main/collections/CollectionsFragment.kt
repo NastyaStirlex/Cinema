@@ -12,6 +12,7 @@ import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.CollectionDto
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionsBinding
+import com.nastirlex.cinema.presentation.main.MainFragmentDirections
 import com.nastirlex.cinema.presentation.main.collections.adapter.CollectionsListAdapter
 import com.nastirlex.cinema.utils.CollectionsListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
@@ -34,10 +35,11 @@ class CollectionsFragment : Fragment() {
         binding = FragmentCollectionsBinding.inflate(inflater, container, false)
 
         binding.addButton.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToCollectionsCreateNavGraph(icon = R.drawable.ic_heart)
             Navigation.findNavController(
                 requireActivity(),
                 R.id.activity_main_fragment_nav_host
-            ).navigate(R.id.action_mainFragment_to_collections_nested_nav_graph)
+            ).navigate(action)
         }
 
         getCollections()
@@ -77,7 +79,16 @@ class CollectionsFragment : Fragment() {
             )
         )
 
-        binding.collectionsRecyclerView.adapter = CollectionsListAdapter(collections = collections)
+        binding.collectionsRecyclerView.adapter = CollectionsListAdapter(collections = collections) { collection ->
+            val action = MainFragmentDirections.actionMainFragmentToCollectionInfoNavGraph(
+                collectionId = collection.collectionId,
+                collectionName = collection.name
+            )
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(action)
+        }
     }
 
 }

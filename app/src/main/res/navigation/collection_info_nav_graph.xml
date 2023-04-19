@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/collection_info_nav_graph"
+    app:startDestination="@id/collectionInfoFragment">
+
+    <fragment
+        android:id="@+id/collectionInfoFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_info.CollectionInfoFragment"
+        android:label="CollectionInfoFragment">
+        <action
+            android:id="@+id/action_collectionInfoFragment_to_collectionChangeFragment"
+            app:destination="@id/collectionChangeFragment" />
+
+        <argument
+            android:name="collectionId"
+            app:argType="string" />
+
+        <argument
+            android:name="collectionName"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/collectionChangeFragment"
+        android:name="com.nastirlex.cinema.presentation.main.collections.collection_change.CollectionChangeFragment"
+        android:label="CollectionChangeFragment" />
+</navigation>

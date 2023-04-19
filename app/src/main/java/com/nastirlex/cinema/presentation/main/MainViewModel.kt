@@ -86,7 +86,7 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
         )
     }
 
-    private fun getLastView() = viewModelScope.launch {
+    fun getLastView() = viewModelScope.launch {
         movieRepositoryImpl.getLastView(
             object : GetMoviesCallback<MovieDto> {
                 override fun onSuccess(movies: List<MovieDto>) {
@@ -122,7 +122,7 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
         )
     }
 
-    private fun getHistory() = viewModelScope.launch {
+    fun getHistory() = viewModelScope.launch {
         movieRepositoryImpl.getHistory(
             object : GetHistoryCallback<List<EpisodeViewDto>> {
                 override fun onSuccess(episodesView: List<EpisodeViewDto>) {

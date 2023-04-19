@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionCreateBinding
@@ -17,6 +19,8 @@ import com.nastirlex.cinema.presentation.main.Status
 
 class CollectionCreateFragment : Fragment() {
     private lateinit var binding: FragmentCollectionCreateBinding
+
+    private val args: CollectionCreateFragmentArgs by navArgs()
 
     private val collectionsRepositoryImpl by lazy { CollectionsRepositoryImpl() }
     private val collectionCreateViewModel by lazy {
@@ -40,22 +44,22 @@ class CollectionCreateFragment : Fragment() {
         }
 
 
-
-
-
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setFragmentResultListener("icon") { icon, bundle ->
+            val result = bundle.getInt("bundleKey")
+            binding.collectonIconImageView.setImageResource(result)
+        }
     }
 
     override fun onStart() {
         super.onStart()
         setupScreenStateObserver()
         setupOnCollectionCreateButton()
-        val iconObserver = Observer<Int> {
-            binding.collectonIconImageView.setImageResource(it)
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-        }
-
-        collectionCreateViewModel.icon.observe(viewLifecycleOwner, iconObserver)
     }
 
     private fun setupScreenStateObserver() {

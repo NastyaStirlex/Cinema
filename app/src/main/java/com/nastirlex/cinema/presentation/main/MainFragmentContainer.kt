@@ -38,22 +38,21 @@ class MainFragmentContainer : Fragment() {
     ): View {
         binding = FragmentMainContainerBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
         setupMainScreenStateObserver()
         mainViewModel.getCover()
-        getInTrend()
-        getFresh()
-        getForYou()
-        getLastView()
+
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         binding.shimmer.startShimmerAnimation()
+        mainViewModel.getLastView()
+        mainViewModel.getHistory()
+        getInTrend()
+        getFresh()
+        getForYou()
+        getLastView()
     }
 
     private fun setupMainScreenStateObserver() {
@@ -137,9 +136,12 @@ class MainFragmentContainer : Fragment() {
         }
     }
 
-    private fun getHistory(moviePoster: String) {
+    private fun getHistory(moviePoster: String?) {
         val historyObserver: Observer<List<EpisodeViewDto>> = Observer {
-            setupViewed(moviePoster, it.last())
+            if (moviePoster != null)
+                setupViewed(moviePoster, it.last())
+            else
+                binding.viewedGroup.visibility = View.GONE
         }
 
         mainViewModel.history.observe(viewLifecycleOwner, historyObserver)
@@ -147,7 +149,7 @@ class MainFragmentContainer : Fragment() {
 
     private fun getLastView() {
         val lastViewObserver = Observer<List<MovieDto>> {
-            getHistory(it.last().poster)
+            getHistory(it.lastOrNull()?.poster)
         }
 
         mainViewModel.lastView.observe(viewLifecycleOwner, lastViewObserver)
