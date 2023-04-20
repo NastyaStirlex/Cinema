@@ -41,6 +41,7 @@ class CollectionInfoFragment : Fragment() {
 
         setupCollectionFilmsObserver()
         setupCollectionName()
+
         setupOnEditButtonClick()
 
         return binding.root
@@ -51,13 +52,18 @@ class CollectionInfoFragment : Fragment() {
     }
 
     private fun setupOnEditButtonClick() {
-        binding.collectionInfoEditImageButton.setOnClickListener {
-            val action = CollectionInfoFragmentDirections.actionCollectionInfoFragmentToCollectionChangeFragment(
-                collectionName = args.collectionName,
-                collectionId = args.collectionId,
-                collectionIcon = args.collectionIcon
-            )
-            findNavController().navigate(action)
+        if (args.collectionName == "Favourites") {
+            binding.collectionInfoEditImageButton.visibility = View.GONE
+        } else {
+            binding.collectionInfoEditImageButton.setOnClickListener {
+                val action =
+                    CollectionInfoFragmentDirections.actionCollectionInfoFragmentToCollectionChangeFragment(
+                        collectionName = args.collectionName,
+                        collectionId = args.collectionId,
+                        collectionIcon = args.collectionIcon
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 

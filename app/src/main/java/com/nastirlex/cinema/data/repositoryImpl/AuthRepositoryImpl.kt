@@ -1,5 +1,6 @@
 package com.nastirlex.cinema.data.repositoryImpl
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.di.ApiClient
@@ -7,6 +8,7 @@ import com.nastirlex.cinema.data.dto.LoginBodyDto
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repository.AuthRepository
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.presentation.main.Event
 import retrofit2.HttpException
 import java.net.SocketException
@@ -21,15 +23,15 @@ class AuthRepositoryImpl(
 
     override suspend fun login(
         loginBody: LoginBodyDto,
-        state: MutableLiveData<Event<TokenDto>>
+        state: MutableLiveData<Resource<TokenDto>>
     ) {
         try {
-            state.value = Event.loading()
+            state.value = Resource.Loading()
 
             val response = ApiClient.authApiService.login(loginBody = loginBody)
 
             if (response.isSuccessful) {
-                state.value = Event.success(response.body())
+                state.value = Resource.Success(response.body())
 //                response.body()?.accessToken?.let {
 //                    jwtRepositoryImpl.saveAccessToken(
 //                        context = context,
@@ -45,7 +47,7 @@ class AuthRepositoryImpl(
 
             } else if (response.errorBody() != null) {
                 if (response.code() == 401) {
-                    state.value = Event.error(R.string.error_incorrect_fields)
+                    state.value = Resource.Error(R.string.error_incorrect_fields)
                 }
             }
 
@@ -66,15 +68,15 @@ class AuthRepositoryImpl(
 
     override suspend fun register(
         registerBody: RegisterBodyDto,
-        state: MutableLiveData<Event<TokenDto>>
+        state: MutableLiveData<Resource<TokenDto>>
     ) {
         try {
-            state.value = Event.loading()
+            state.postValue(Resource.Loading())
 
             val response = ApiClient.authApiService.register(registerBody)
 
             if (response.isSuccessful) {
-                state.value = Event.success(response.body())
+                state.postValue(Resource.Success(response.body()))
 //                response.body()?.accessToken?.let {
 //                    jwtRepositoryImpl.saveAccessToken(
 //                        context = context,
@@ -90,9 +92,11 @@ class AuthRepositoryImpl(
 
             } else if (response.errorBody() != null) {
                 if (response.code() == 409) {
-                    state.value = Event.error(R.string.error_repeat_user)
+                    state.postValue(Resource.Error(R.string.error_repeat_user))
                 } else if (response.code() == 422) {
-                    state.value = Event.error(R.string.error_invalid_field)
+                    state.postValue(Resource.Error(R.string.error_invalid_field))
+                } else {
+                    state.postValue(Resource.Error(R.string.error_unknown))
                 }
             }
         }

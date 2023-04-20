@@ -5,7 +5,6 @@ import android.content.Context
 class JwtRepositoryImpl() {
 
     // ACCESS TOKEN
-
     fun saveAccessToken(context: Context, accessToken: String) {
         val sharedPref = context.getSharedPreferences("jwt", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
@@ -29,7 +28,6 @@ class JwtRepositoryImpl() {
 
 
     //REFRESH TOKEN
-
     fun saveRefreshToken(context: Context, refreshToken: String) {
         val sharedPref = context.getSharedPreferences("jwt", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {

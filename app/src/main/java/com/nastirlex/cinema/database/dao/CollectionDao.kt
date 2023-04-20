@@ -14,7 +14,7 @@ interface CollectionDao {
     @Update
     fun updateCollection(collection: Collection)
 
-    @Query("SELECT id FROM collections_table WHERE name = 'Избранное'")
+    @Query("SELECT id FROM collections_table WHERE name = 'Favourites'")
     fun getFavouritesId(): Long
 
     @Query("DELETE FROM collections_table WHERE id = :collectionId")

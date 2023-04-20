@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.RegisterBodyDto
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.databinding.FragmentSignUpBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
@@ -28,16 +31,22 @@ class SignUpFragment : Fragment() {
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
-        val signUpScreenStateObserver = Observer<Event<TokenDto>> { state ->
-            when (state.status) {
-                Status.SUCCESS -> {
-                    Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT).show()
+        val signUpScreenStateObserver = Observer<Resource<TokenDto>> { state ->
+            when (state) {
+                is Resource.Success -> {
+                    binding.registerProgressBar.visibility = View.GONE
+                    Navigation.findNavController(
+                        requireActivity(),
+                        R.id.activity_main_fragment_nav_host
+                    ).navigate(R.id.mainFragment)
                 }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), state.error!!, Toast.LENGTH_SHORT).show()
+                is Resource.Error -> {
+                    binding.registerProgressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message!!, Toast.LENGTH_SHORT).show()
+                    signUpViewModel.signUpScreenState.value = Resource.Default()
                 }
-                Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                is Resource.Loading -> {
+                    binding.registerProgressBar.visibility = View.VISIBLE
                 }
                 else -> {}
             }

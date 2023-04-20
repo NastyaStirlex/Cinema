@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.TokenDto
 import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.databinding.FragmentSignInBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
@@ -18,9 +19,9 @@ import com.nastirlex.cinema.presentation.main.Status
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
 
-    private val authRepositoryImpl by lazy { AuthRepositoryImpl() }
+
     private val signInViewModel by lazy {
-        SignInViewModel(authRepositoryImpl)
+        SignInViewModel()
     }
 
     override fun onCreateView(
@@ -29,17 +30,26 @@ class SignInFragment : Fragment() {
     ): View {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
 
-        val signInScreenStateObserver = Observer<Event<TokenDto>> { state ->
-            when (state.status) {
-                Status.SUCCESS -> {
-                    Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
+        setupOnLoginButtonClick()
+        setupOnToRegisterButtonClick()
+
+        val signInScreenStateObserver = Observer<Resource<TokenDto>> { state ->
+            when (state) {
+                is Resource.Success -> {
+                    binding.loginProgressBar.visibility = View.GONE
+                    findNavController().navigate(R.id.mainFragment)
                 }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), state.error!!, Toast.LENGTH_SHORT).show()
+
+                is Resource.Error -> {
+                    binding.loginProgressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message!!, Toast.LENGTH_SHORT).show()
+                    signInViewModel.signInScreenState.value = Resource.Default()
                 }
-                Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+
+                is Resource.Loading -> {
+                    binding.loginProgressBar.visibility = View.VISIBLE
                 }
+
                 else -> {}
             }
         }
@@ -49,20 +59,12 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupOnLoginButtonClick()
-        setupOnToRegisterButtonClick()
-    }
-
     private fun setupOnLoginButtonClick() {
         binding.loginButton.setOnClickListener {
-//            signInViewModel.onClickLogin(
-//                LoginBodyDto(
-//                    email = binding.emailEditText.text.toString(),
-//                    password = binding.passwordEditText.text.toString()
-//                )
-//            )
+            signInViewModel.onClickLogin(
+                email = binding.emailEditText.text.toString(),
+                password = binding.passwordEditText.text.toString()
+            )
         }
     }
 
