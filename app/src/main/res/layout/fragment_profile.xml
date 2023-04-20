@@ -25,7 +25,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/collectionNameTextView"
+        android:id="@+id/profileNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/emailTextView"
+        android:id="@+id/profileEmailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
         android:textColor="@color/gray"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/avatarCardView"
-        app:layout_constraintTop_toBottomOf="@id/collectionNameTextView" />
+        app:layout_constraintTop_toBottomOf="@id/profileNameTextView" />
 
 
     <TextView
@@ -131,7 +131,7 @@
                 android:src="@drawable/ic_settings" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/settingsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"

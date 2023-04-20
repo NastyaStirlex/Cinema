@@ -17,8 +17,6 @@ import java.net.UnknownHostException
 
 class AuthRepositoryImpl(private val application: Application) : AuthRepository {
 
-    //val context = application
-
     override suspend fun login(
         loginBody: LoginBodyDto,
         state: MutableLiveData<Resource<TokenDto>>
@@ -31,19 +29,6 @@ class AuthRepositoryImpl(private val application: Application) : AuthRepository 
 
             if (response.isSuccessful) {
                 state.value = Resource.Success(response.body())
-//                response.body()?.accessToken?.let {
-//                    jwtRepositoryImpl.saveAccessToken(
-//                        context = context,
-//                        accessToken = it
-//                    )
-//                }
-//                response.body()?.refreshToken?.let {
-//                    jwtRepositoryImpl.saveRefreshToken(
-//                        context = context,
-//                        refreshToken = it
-//                    )
-//                }
-
             } else if (response.errorBody() != null) {
                 if (response.code() == 401) {
                     state.value = Resource.Error(R.string.error_incorrect_fields)
@@ -79,19 +64,6 @@ class AuthRepositoryImpl(private val application: Application) : AuthRepository 
 
             if (response.isSuccessful) {
                 state.postValue(Resource.Success(response.body()))
-//                response.body()?.accessToken?.let {
-//                    jwtRepositoryImpl.saveAccessToken(
-//                        context = context,
-//                        accessToken = it
-//                    )
-//                }
-//                response.body()?.refreshToken?.let {
-//                    jwtRepositoryImpl.saveRefreshToken(
-//                        context = context,
-//                        refreshToken = it
-//                    )
-//                }
-
             } else if (response.errorBody() != null) {
                 if (response.code() == 409) {
                     state.postValue(Resource.Error(R.string.error_repeat_user))

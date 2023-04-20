@@ -20,6 +20,7 @@ import java.net.SocketException
 import java.net.UnknownHostException
 
 class MovieRepositoryImpl(private val application: Application) : MovieRepository {
+
     private var callGetCover: Call<CoverDto>? = null
 
     override fun getCover(callback: GetCoverCallback<CoverDto>) {

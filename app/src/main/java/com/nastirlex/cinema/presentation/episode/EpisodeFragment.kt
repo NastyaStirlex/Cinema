@@ -239,12 +239,12 @@ class EpisodeFragment : Fragment() {
             when (it) {
                 true -> {
                     binding.filledImageView.visibility = View.VISIBLE
-                    binding.emptyImageButton.visibility = View.GONE
+                    binding.emptyImageButton.visibility = View.INVISIBLE
                 }
 
                 false -> {
                     binding.emptyImageButton.visibility = View.VISIBLE
-                    binding.filledImageView.visibility = View.GONE
+                    binding.filledImageView.visibility = View.INVISIBLE
                 }
             }
         }

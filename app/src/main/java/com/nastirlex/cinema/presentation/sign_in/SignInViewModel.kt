@@ -43,19 +43,9 @@ class SignInViewModel(private val application: Application) : ViewModel() {
                     (_signInScreenState.value as Resource.Success<TokenDto>).data!!.accessToken
                 )
 
-                Log.d(
-                    "access token",
-                    jwtRepositoryImpl.getAccessToken(application.applicationContext).toString()
-                )
-
                 jwtRepositoryImpl.saveRefreshToken(
                     application.applicationContext,
                     (_signInScreenState.value as Resource.Success<TokenDto>).data!!.refreshToken
-                )
-
-                Log.d(
-                    "refresh token",
-                    jwtRepositoryImpl.getRefreshToken(application.applicationContext).toString()
                 )
 
             }
