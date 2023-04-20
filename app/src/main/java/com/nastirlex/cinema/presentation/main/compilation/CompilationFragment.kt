@@ -22,7 +22,7 @@ class CompilationFragment : Fragment() {
 
     private lateinit var binding: FragmentCompilationBinding
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl(requireActivity().application) }
     private val compilationViewModel by lazy { CompilationViewModel(movieRepositoryImpl) }
 
     override fun onCreateView(

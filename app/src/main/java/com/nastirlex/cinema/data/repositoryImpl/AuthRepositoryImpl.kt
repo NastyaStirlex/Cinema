@@ -1,5 +1,6 @@
 package com.nastirlex.cinema.data.repositoryImpl
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.nastirlex.cinema.R
@@ -14,10 +15,7 @@ import retrofit2.HttpException
 import java.net.SocketException
 import java.net.UnknownHostException
 
-class AuthRepositoryImpl(
-    //private val jwtRepositoryImpl: JwtRepositoryImpl,
-    //application: Context
-) : AuthRepository {
+class AuthRepositoryImpl(private val application: Application) : AuthRepository {
 
     //val context = application
 
@@ -28,7 +26,8 @@ class AuthRepositoryImpl(
         try {
             state.value = Resource.Loading()
 
-            val response = ApiClient.authApiService.login(loginBody = loginBody)
+            val response = ApiClient.getAuthApiService(application.applicationContext)
+                .login(loginBody = loginBody)
 
             if (response.isSuccessful) {
                 state.value = Resource.Success(response.body())
@@ -51,18 +50,20 @@ class AuthRepositoryImpl(
                 }
             }
 
-
         } catch (e: java.lang.Exception) {
             when (e) {
                 is HttpException -> {
-                    //signInScreenState.value = Event.error(R.string.http_error)
+                    state.postValue(Resource.Error(R.string.error_http))
                 }
+
                 is UnknownHostException, is SocketException -> {
-                    //signInScreenState.value = Event.error(R.string.unknown_error)
+                    state.postValue(Resource.Error(R.string.error_network))
+                }
+
+                else -> {
+                    state.postValue(Resource.Error(R.string.error_unknown))
                 }
             }
-            e.printStackTrace()
-            //signInScreenState.value = Event.error(error = null)
         }
     }
 
@@ -73,7 +74,8 @@ class AuthRepositoryImpl(
         try {
             state.postValue(Resource.Loading())
 
-            val response = ApiClient.authApiService.register(registerBody)
+            val response =
+                ApiClient.getAuthApiService(application.applicationContext).register(registerBody)
 
             if (response.isSuccessful) {
                 state.postValue(Resource.Success(response.body()))
@@ -95,22 +97,22 @@ class AuthRepositoryImpl(
                     state.postValue(Resource.Error(R.string.error_repeat_user))
                 } else if (response.code() == 422) {
                     state.postValue(Resource.Error(R.string.error_invalid_field))
-                } else {
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            when (e) {
+                is HttpException -> {
+                    state.postValue(Resource.Error(R.string.error_http))
+                }
+
+                is UnknownHostException, is SocketException -> {
+                    state.postValue(Resource.Error(R.string.error_network))
+                }
+
+                else -> {
                     state.postValue(Resource.Error(R.string.error_unknown))
                 }
             }
-        }
-        catch (e: java.lang.Exception) {
-            when (e) {
-                is HttpException -> {
-                    //signInScreenState.value = Event.error(R.string.http_error)
-                }
-                is UnknownHostException, is SocketException -> {
-                    //signInScreenState.value = Event.error(R.string.unknown_error)
-                }
-            }
-            e.printStackTrace()
-            //signInScreenState.value = Event.error(error = null)
         }
     }
 }

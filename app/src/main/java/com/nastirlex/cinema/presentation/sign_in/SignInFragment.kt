@@ -16,13 +16,14 @@ import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.databinding.FragmentSignInBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
+import com.nastirlex.cinema.utils.PurchaseConfirmationDialogFragment
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
 
 
     private val signInViewModel by lazy {
-        SignInViewModel()
+        SignInViewModel(requireActivity().application)
     }
 
     override fun onCreateView(
@@ -46,7 +47,8 @@ class SignInFragment : Fragment() {
 
                 is Resource.Error -> {
                     binding.loginProgressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), state.message!!, Toast.LENGTH_SHORT).show()
+                    PurchaseConfirmationDialogFragment(state.message!!).show(
+                        childFragmentManager, PurchaseConfirmationDialogFragment.TAG)
                     signInViewModel.signInScreenState.value = Resource.Default()
                 }
 

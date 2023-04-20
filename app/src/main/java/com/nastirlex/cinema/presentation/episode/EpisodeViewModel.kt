@@ -28,8 +28,8 @@ class EpisodeViewModel(
     private val episodeId: String
 ) : ViewModel() {
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
-    private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl() }
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl(application) }
+    private val episodesRepositoryImpl by lazy { EpisodesRepositoryImpl(application) }
 
     private val collectionDatabaseRepositoryImpl by lazy {
         CollectionDatabaseRepositoryImpl(

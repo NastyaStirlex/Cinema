@@ -21,7 +21,7 @@ import java.lang.Exception
 
 class SignUpViewModel(private val application: Application) : ViewModel() {
 
-    private val authRepositoryImpl by lazy { AuthRepositoryImpl() }
+    private val authRepositoryImpl by lazy { AuthRepositoryImpl(application) }
 
     private val collectionDatabaseRepositoryImpl by lazy {
         CollectionDatabaseRepositoryImpl(
@@ -33,21 +33,34 @@ class SignUpViewModel(private val application: Application) : ViewModel() {
     val signUpScreenState: MutableLiveData<Resource<TokenDto>>
         get() = _signUpScreenState
 
-    fun onClickRegister(registerBody: RegisterBodyDto) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            authRepositoryImpl.register(
-                registerBody = registerBody,
-                _signUpScreenState
-            )
-
-            collectionDatabaseRepositoryImpl.insertCollection(
-                Collection(
-                    name = "Favourites",
-                    icon = R.drawable.ic_heart
+    fun onClickRegister(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        repeatPassword: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        if (email.isBlank() || password.isBlank() || firstName.isBlank() || lastName.isBlank() || repeatPassword.isBlank()) {
+            _signUpScreenState.postValue(Resource.Error(R.string.validation_error_empty_fields))
+        } else if (!email.matches(Regex("^(([^-A-Z_<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-z0-9]+\\.)+[a-z]{2,}))\$"))) {
+            _signUpScreenState.postValue(Resource.Error(R.string.validation_error_invalid_email))
+        } else if (password != repeatPassword) {
+            _signUpScreenState.postValue(Resource.Error(R.string.validation_error_mismatched_passwords))
+        } else {
+            try {
+                authRepositoryImpl.register(
+                    registerBody = RegisterBodyDto(email, password, firstName, lastName),
+                    _signUpScreenState
                 )
-            )
 
-        } catch (e: Exception) {
+                collectionDatabaseRepositoryImpl.insertCollection(
+                    Collection(
+                        name = "Favourites",
+                        icon = R.drawable.ic_heart
+                    )
+                )
+
+            } catch (e: Exception) {}
         }
 
 

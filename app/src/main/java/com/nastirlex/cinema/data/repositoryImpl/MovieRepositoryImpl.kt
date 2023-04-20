@@ -1,5 +1,6 @@
 package com.nastirlex.cinema.data.repositoryImpl
 
+import android.app.Application
 import android.util.Log
 import com.nastirlex.cinema.data.callbacks.GetCoverCallback
 import com.nastirlex.cinema.data.callbacks.GetEpisodesCallback
@@ -18,14 +19,12 @@ import retrofit2.Response
 import java.net.SocketException
 import java.net.UnknownHostException
 
-class MovieRepositoryImpl : MovieRepository {
+class MovieRepositoryImpl(private val application: Application) : MovieRepository {
     private var callGetCover: Call<CoverDto>? = null
 
-    private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxOTk5NjIzLCJLRVlfQ0xBSU1fVVNFUiI6ImJhMzI0YjcyLTk5N2EtNDE0MS1hYTAyLTE5MDY4MWM0ODczNiJ9.sYpy9Eu9JDSefSh2_CXEVDcXtGzsgp2-FCZM3h4HxCE"
-
     override fun getCover(callback: GetCoverCallback<CoverDto>) {
-        callGetCover = ApiClient.movieApiService.getCover(token = "Bearer $token")
+        callGetCover = ApiClient.getMovieApiService(application.applicationContext)
+            .getCover()
         callGetCover?.enqueue(
             object : Callback<CoverDto> {
                 override fun onResponse(call: Call<CoverDto>, response: Response<CoverDto>) {
@@ -70,7 +69,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetInTrend: Call<List<MovieDto>>? = null
     override fun getInTrend(callback: GetMoviesCallback<MovieDto>) {
-        callGetInTrend = ApiClient.movieApiService.getInTrend(token = "Bearer $token")
+        callGetInTrend = ApiClient.getMovieApiService(application.applicationContext).getInTrend()
         callGetInTrend?.enqueue(
             object : Callback<List<MovieDto>> {
                 override fun onResponse(
@@ -118,7 +117,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetLastView: Call<List<MovieDto>>? = null
     override fun getLastView(callback: GetMoviesCallback<MovieDto>) {
-        callGetLastView = ApiClient.movieApiService.getLastView(token = "Bearer $token")
+        callGetLastView = ApiClient.getMovieApiService(application.applicationContext).getLastView()
         callGetLastView?.enqueue(
             object : Callback<List<MovieDto>> {
                 override fun onResponse(
@@ -166,7 +165,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetFresh: Call<List<MovieDto>>? = null
     override fun getFresh(callback: GetMoviesCallback<MovieDto>) {
-        callGetFresh = ApiClient.movieApiService.getFresh(token = "Bearer $token")
+        callGetFresh = ApiClient.getMovieApiService(application.applicationContext).getFresh()
         callGetFresh?.enqueue(
             object : Callback<List<MovieDto>> {
                 override fun onResponse(
@@ -213,7 +212,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetForYou: Call<List<MovieDto>>? = null
     override fun getForYou(callback: GetMoviesCallback<MovieDto>) {
-        callGetForYou = ApiClient.movieApiService.getForYou(token = "Bearer $token")
+        callGetForYou = ApiClient.getMovieApiService(application.applicationContext).getForYou()
         callGetForYou?.enqueue(
             object : Callback<List<MovieDto>> {
                 override fun onResponse(
@@ -259,7 +258,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetHistory: Call<List<EpisodeViewDto>>? = null
     override fun getHistory(callback: GetHistoryCallback<List<EpisodeViewDto>>) {
-        callGetHistory = ApiClient.movieApiService.getHistory(token = "Bearer $token")
+        callGetHistory = ApiClient.getMovieApiService(application.applicationContext).getHistory()
         callGetHistory?.enqueue(
             object : Callback<List<EpisodeViewDto>> {
                 override fun onResponse(
@@ -305,9 +304,8 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetCompilation: Call<List<MovieDto>>? = null
     override fun getCompilation(callback: GetMoviesCallback<MovieDto>) {
-        callGetCompilation = ApiClient.movieApiService.getCompilation(
-            token = "Bearer $token"
-        )
+        callGetCompilation =
+            ApiClient.getMovieApiService(application.applicationContext).getCompilation()
         callGetCompilation?.enqueue(
             object : Callback<List<MovieDto>> {
                 override fun onResponse(
@@ -353,8 +351,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     private var callGetEpisodes: Call<List<EpisodeDto>>? = null
     override fun getEpisodes(movieId: String, callback: GetEpisodesCallback<List<EpisodeDto>>) {
-        callGetEpisodes = ApiClient.movieApiService.getEpisodes(
-            token = "Bearer $token",
+        callGetEpisodes = ApiClient.getMovieApiService(application.applicationContext).getEpisodes(
             movieId = movieId
         )
         callGetEpisodes?.enqueue(
@@ -402,8 +399,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     override suspend fun deleteFilmFromCompilation(movieId: String) {
         try {
-            ApiClient.movieApiService.deleteFilmFromCompilation(
-                token = "Bearer $token",
+            ApiClient.getMovieApiService(application.applicationContext).deleteFilmFromCompilation(
                 movieId = movieId
             )
         } catch (e: java.lang.Exception) {
@@ -411,6 +407,7 @@ class MovieRepositoryImpl : MovieRepository {
                 is HttpException -> {
                     //profileScreenState.value = Event.error(R.string.http_error)
                 }
+
                 is UnknownHostException, is SocketException -> {
                     //profileScreenState.value = Event.error(R.string.unknown_error)
                 }

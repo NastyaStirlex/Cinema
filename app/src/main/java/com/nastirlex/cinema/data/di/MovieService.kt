@@ -13,35 +13,33 @@ import retrofit2.http.Path
 
 interface MovieService {
     @GET("cover")
-    fun getCover(@Header("Authorization") token: String): Call<CoverDto>
+    fun getCover(): Call<CoverDto>
 
     @GET("movies?filter=inTrend")
-    fun getInTrend(@Header("Authorization") token: String): Call<List<MovieDto>>
+    fun getInTrend(): Call<List<MovieDto>>
 
     @GET("movies?filter=lastView")
-    fun getLastView(@Header("Authorization") token: String): Call<List<MovieDto>>
+    fun getLastView(): Call<List<MovieDto>>
 
     @GET("movies?filter=new")
-    fun getFresh(@Header("Authorization") token: String): Call<List<MovieDto>>
+    fun getFresh(): Call<List<MovieDto>>
 
     @GET("movies?filter=forMe")
-    fun getForYou(@Header("Authorization") token: String): Call<List<MovieDto>>
+    fun getForYou(): Call<List<MovieDto>>
 
     @GET("history")
-    fun getHistory(@Header("Authorization") token: String): Call<List<EpisodeViewDto>>
+    fun getHistory(): Call<List<EpisodeViewDto>>
 
     @GET("movies?filter=compilation")
-    fun getCompilation(@Header("Authorization") token: String): Call<List<MovieDto>>
+    fun getCompilation(): Call<List<MovieDto>>
 
     @GET("movies/{movieId}/episodes")
     fun getEpisodes(
-        @Header("Authorization") token: String,
         @Path("movieId") movieId: String
     ): Call<List<EpisodeDto>>
 
     @POST("movies/{movieId}/dislike")
     suspend fun deleteFilmFromCompilation(
-        @Header("Authorization") token: String,
         @Path("movieId") movieId: String
     ): Response<Void>
 }

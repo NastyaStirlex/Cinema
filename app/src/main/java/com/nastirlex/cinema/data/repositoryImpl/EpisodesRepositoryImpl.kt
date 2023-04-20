@@ -1,5 +1,6 @@
 package com.nastirlex.cinema.data.repositoryImpl
 
+import android.app.Application
 import android.util.Log
 import com.nastirlex.cinema.data.callbacks.GetEpisodeTimeCallback
 import com.nastirlex.cinema.data.di.ApiClient
@@ -12,16 +13,11 @@ import retrofit2.Response
 import java.net.SocketException
 import java.net.UnknownHostException
 
-class EpisodesRepositoryImpl: EpisodesRepository {
-
-    private var token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMDc2ODQud2ViLmhvc3RpbmctcnVzc2lhLnJ1IiwiZXhwIjoxNjgxOTk5NjIzLCJLRVlfQ0xBSU1fVVNFUiI6ImJhMzI0YjcyLTk5N2EtNDE0MS1hYTAyLTE5MDY4MWM0ODczNiJ9.sYpy9Eu9JDSefSh2_CXEVDcXtGzsgp2-FCZM3h4HxCE"
-
+class EpisodesRepositoryImpl(private val application: Application) : EpisodesRepository {
 
     override suspend fun saveEpisodeTime(time: EpisodeTimeDto, episodeId: String) {
         try {
-            ApiClient.episodesApiService.saveEpisodeTime(
-                token = "Bearer $token",
+            ApiClient.getEpisodesApiService(application.applicationContext).saveEpisodeTime(
                 episodeId = episodeId,
                 time = time
             )
@@ -30,6 +26,7 @@ class EpisodesRepositoryImpl: EpisodesRepository {
                 is HttpException -> {
                     //profileScreenState.value = Event.error(R.string.http_error)
                 }
+
                 is UnknownHostException, is SocketException -> {
                     //profileScreenState.value = Event.error(R.string.unknown_error)
                 }
@@ -43,8 +40,7 @@ class EpisodesRepositoryImpl: EpisodesRepository {
         episodeId: String,
         callback: GetEpisodeTimeCallback<EpisodeTimeDto>
     ) {
-        callGetEpisodeTime = ApiClient.episodesApiService.getEpisodeTime(
-            token = "Bearer $token",
+        callGetEpisodeTime = ApiClient.getEpisodesApiService(application.applicationContext).getEpisodeTime(
             episodeId = episodeId
         )
         callGetEpisodeTime?.enqueue(

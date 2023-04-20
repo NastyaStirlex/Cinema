@@ -17,6 +17,7 @@ import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.databinding.FragmentSignUpBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
+import com.nastirlex.cinema.utils.PurchaseConfirmationDialogFragment
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
@@ -40,14 +41,18 @@ class SignUpFragment : Fragment() {
                         R.id.activity_main_fragment_nav_host
                     ).navigate(R.id.mainFragment)
                 }
+
                 is Resource.Error -> {
                     binding.registerProgressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), state.message!!, Toast.LENGTH_SHORT).show()
-                    signUpViewModel.signUpScreenState.value = Resource.Default()
+                    PurchaseConfirmationDialogFragment(state.message!!).show(
+                        childFragmentManager, PurchaseConfirmationDialogFragment.TAG
+                    )
                 }
+
                 is Resource.Loading -> {
                     binding.registerProgressBar.visibility = View.VISIBLE
                 }
+
                 else -> {}
             }
         }
@@ -66,12 +71,11 @@ class SignUpFragment : Fragment() {
     private fun setupOnRegisterButtonClick() {
         binding.registerButton.setOnClickListener {
             signUpViewModel.onClickRegister(
-                RegisterBodyDto(
-                    email = binding.emailEditText.text.toString(),
-                    password = binding.passwordEditText.text.toString(),
-                    firstName = binding.nameEditText.text.toString(),
-                    lastName = binding.surnameEditText.text.toString()
-                )
+                firstName = binding.nameEditText.text.toString(),
+                lastName = binding.surnameEditText.text.toString(),
+                email = binding.emailEditText.text.toString(),
+                password = binding.passwordEditText.text.toString(),
+                repeatPassword = binding.repeatPasswordEditText.text.toString()
             )
         }
     }

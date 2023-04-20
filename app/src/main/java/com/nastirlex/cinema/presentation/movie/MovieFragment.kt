@@ -31,7 +31,7 @@ class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
     private val args: MovieFragmentArgs by navArgs()
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl(requireActivity().application) }
     private val movieViewModel by lazy {
         MovieViewModel(
             movieId = args.movieId,
@@ -101,15 +101,19 @@ class MovieFragment : Fragment() {
             "18+" -> {
                 binding.ageTextView.setTextColor(resources.getColor(R.color.vivid_red))
             }
+
             "16+" -> {
                 binding.ageTextView.setTextColor(resources.getColor(R.color.chinese_orange))
             }
+
             "12+" -> {
                 binding.ageTextView.setTextColor(resources.getColor(R.color.somon))
             }
+
             "6+" -> {
                 binding.ageTextView.setTextColor(resources.getColor(R.color.purple_white))
             }
+
             "0+" -> {
                 binding.ageTextView.setTextColor(resources.getColor(R.color.white))
             }

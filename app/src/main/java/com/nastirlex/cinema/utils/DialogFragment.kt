@@ -14,6 +14,7 @@ class PurchaseConfirmationDialogFragment(private val message: Int) : DialogFragm
             .setPositiveButton(getString(R.string.ok)) { _,_ -> }
             .create()
 
+
     companion object {
         const val TAG = "PurchaseConfirmationDialog"
     }

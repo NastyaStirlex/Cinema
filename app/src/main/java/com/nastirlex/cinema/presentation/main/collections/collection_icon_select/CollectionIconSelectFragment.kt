@@ -9,9 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentCollectionIconSelectBinding
-import com.nastirlex.cinema.presentation.main.collections.collection_create.CollectionCreateViewModel
 import com.nastirlex.cinema.utils.CollectionItemListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
 

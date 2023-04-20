@@ -28,7 +28,7 @@ import com.nastirlex.cinema.utils.dpToPixel
 class MainFragmentContainer : Fragment() {
     private lateinit var binding: FragmentMainContainerBinding
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl() }
+    private val movieRepositoryImpl by lazy { MovieRepositoryImpl(requireActivity().application) }
     private val mainViewModel by lazy { MainViewModel(movieRepositoryImpl) }
 
     override fun onCreateView(

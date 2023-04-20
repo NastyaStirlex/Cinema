@@ -1,6 +1,10 @@
 package com.nastirlex.cinema.data.di
 
+import android.content.Context
+import com.nastirlex.cinema.data.di.interceptors.AuthorizationInterceptor
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,6 +13,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
     private const val BASE_URL = "http://107684.web.hosting-russia.ru:8000/api/"
+
 
     private fun interceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -22,36 +27,77 @@ object ApiClient {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(
-                GsonConverterFactory.create(
-                    //GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
-                )
+                GsonConverterFactory.create()
             )
-            //.addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(15, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
+
+                    //.addInterceptor(AuthorizationInterceptor())
                     .addInterceptor(interceptor())
                     .build()
             )
-            .build()
+        //.build()
     }
 
-    val authApiService: AuthService by lazy {
-        retrofit.create(AuthService::class.java)
+    private lateinit var movieService: MovieService
+    private lateinit var authService: AuthService
+    private lateinit var episodesService: EpisodesService
+
+    fun getAuthApiService(context: Context): AuthService {
+        if (!::authService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(
+                    GsonConverterFactory.create()
+                )
+                .client(
+                    OkHttpClient.Builder()
+                        .addInterceptor(interceptor())
+                        .connectTimeout(15, TimeUnit.SECONDS)
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS)
+                        .build()
+                )
+                .build()
+
+            authService = retrofit.create(AuthService::class.java)
+        }
+
+        return authService
     }
 
-    val movieApiService: MovieService by lazy {
-        retrofit.create(MovieService::class.java)
+    fun getMovieApiService(context: Context): MovieService {
+        if (!::movieService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(
+                    GsonConverterFactory.create()
+                )
+                .client(getOkHttpClient(context))
+                .build()
+
+            movieService = retrofit.create(MovieService::class.java)
+        }
+
+        return movieService
+
     }
 
-    val collectionsApiService: CollectionsService by lazy {
-        retrofit.create(CollectionsService::class.java)
-    }
 
-    val episodesApiService: EpisodesService by lazy {
-        retrofit.create(EpisodesService::class.java)
+    fun getEpisodesApiService(context: Context): EpisodesService {
+        if (!::episodesService.isInitialized) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(
+                    GsonConverterFactory.create()
+                )
+                .client(getOkHttpClient(context))
+                .build()
+
+            episodesService = retrofit.create(EpisodesService::class.java)
+        }
+
+        return episodesService
     }
 
 }
