@@ -3,8 +3,8 @@ package com.nastirlex.cinema.presentation.main.collections.collection_change
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nastirlex.cinema.data.repositoryImpl.CollectionDatabaseRepositoryImpl
-import com.nastirlex.cinema.database.Collection
+import com.nastirlex.cinema.database.repositoryImpl.CollectionDatabaseRepositoryImpl
+import com.nastirlex.cinema.database.entity.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

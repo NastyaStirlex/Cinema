@@ -1,4 +1,4 @@
-package com.nastirlex.cinema.database
+package com.nastirlex.cinema.database.entity
 
 import androidx.room.Entity
 import androidx.room.Index

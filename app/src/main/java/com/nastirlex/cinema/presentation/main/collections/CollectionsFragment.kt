@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.database.Collection
+import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.databinding.FragmentCollectionsBinding
 import com.nastirlex.cinema.presentation.main.MainFragmentDirections
 import com.nastirlex.cinema.presentation.main.collections.adapter.CollectionsListAdapter

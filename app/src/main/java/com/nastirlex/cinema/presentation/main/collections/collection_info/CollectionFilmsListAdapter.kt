@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.database.Film
+import com.nastirlex.cinema.database.entity.Film
 import com.nastirlex.cinema.databinding.ItemCollectionFilmsListBinding
 
 class CollectionFilmsListAdapter(private val collectionFilms: List<Film>) :

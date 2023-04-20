@@ -69,14 +69,16 @@
             <argument
                 android:name="filePath"
                 app:argType="string" />
+            <argument
+                android:name="description"
+                app:argType="string" />
 
         </action>
 
         <action
             android:id="@+id/action_mainFragment_to_collection_info_nav_graph"
             app:destination="@id/collection_info_nav_graph"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true">
+            app:popUpToInclusive="false">
 
             <argument
                 android:name="collectionId"

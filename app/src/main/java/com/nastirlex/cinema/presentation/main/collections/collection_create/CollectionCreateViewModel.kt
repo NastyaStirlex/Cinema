@@ -1,21 +1,15 @@
 package com.nastirlex.cinema.presentation.main.collections.collection_create
 
 import android.app.Application
-import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nastirlex.cinema.R
-import com.nastirlex.cinema.data.callbacks.GetCollectionCallback
-import com.nastirlex.cinema.data.dto.CollectionAbbreviateDto
-import com.nastirlex.cinema.data.dto.CollectionDto
-import com.nastirlex.cinema.data.repositoryImpl.CollectionDatabaseRepositoryImpl
-import com.nastirlex.cinema.data.repositoryImpl.CollectionsRepositoryImpl
+import com.nastirlex.cinema.database.repositoryImpl.CollectionDatabaseRepositoryImpl
 import com.nastirlex.cinema.data.utils.Resource
-import com.nastirlex.cinema.database.Collection
-import com.nastirlex.cinema.presentation.main.Event
+import com.nastirlex.cinema.database.entity.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception

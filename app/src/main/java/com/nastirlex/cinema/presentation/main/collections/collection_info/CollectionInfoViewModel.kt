@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nastirlex.cinema.data.repositoryImpl.CollectionDatabaseRepositoryImpl
-import com.nastirlex.cinema.database.Film
+import com.nastirlex.cinema.database.repositoryImpl.CollectionDatabaseRepositoryImpl
+import com.nastirlex.cinema.database.entity.Film
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
