@@ -1,6 +1,8 @@
 package com.nastirlex.cinema.presentation.episode
 
 import android.app.Application
+import android.database.sqlite.SQLiteConstraintException
+import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
 
 class EpisodeViewModel(
     application: Application,
-    movieId: String,
+    private val movieId: String,
     private val episodeId: String
 ) : ViewModel() {
 
@@ -34,6 +36,12 @@ class EpisodeViewModel(
             application
         )
     }
+
+    private var favouritesId: Long = 0
+
+    private val _isFavourite = MutableLiveData<Boolean>()
+    val isFavourite: LiveData<Boolean>
+        get() = _isFavourite
 
     private var _years = MutableLiveData<String>()
     val years: LiveData<String>
@@ -70,34 +78,38 @@ class EpisodeViewModel(
 
 
     init {
+        getFavouritesId()
+        isFavouriteFilm(movieId)
         getEpisodeTime()
         getEpisodeDetails(movieId, episodeId)
         getLastView()
         getCollections()
+
     }
 
-    private fun getEpisodeDetails(movieId: String, episodeId: String) = viewModelScope.launch {
-        movieRepositoryImpl.getEpisodes(
-            movieId = movieId,
-            object : GetEpisodesCallback<List<EpisodeDto>> {
-                override fun onSuccess(episodes: List<EpisodeDto>) {
-                    val episode = episodes.find { it.episodeId == episodeId }
-                    if (episode != null) {
-                        _name.value = episode.name
-                        _description.value = episode.description
-                        _filepath.value = episode.filePath
-                        _runtime.value = episode.runtime
-                        _years.value =
-                            episodes.minOfOrNull { it.year } + " - " + episodes.maxOfOrNull { it.year }
+    private fun getEpisodeDetails(movieId: String, episodeId: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            movieRepositoryImpl.getEpisodes(
+                movieId = movieId,
+                object : GetEpisodesCallback<List<EpisodeDto>> {
+                    override fun onSuccess(episodes: List<EpisodeDto>) {
+                        val episode = episodes.find { it.episodeId == episodeId }
+                        if (episode != null) {
+                            _name.value = episode.name
+                            _description.value = episode.description
+                            _filepath.value = episode.filePath
+                            _runtime.value = episode.runtime
+                            _years.value =
+                                episodes.minOfOrNull { it.year } + " - " + episodes.maxOfOrNull { it.year }
+                        }
                     }
+
+                    override fun onError(error: String?) {}
                 }
+            )
+        }
 
-                override fun onError(error: String?) {}
-            }
-        )
-    }
-
-    private fun getLastView() = viewModelScope.launch {
+    private fun getLastView() = viewModelScope.launch(Dispatchers.IO) {
         movieRepositoryImpl.getLastView(
             object : GetMoviesCallback<MovieDto> {
                 override fun onSuccess(movies: List<MovieDto>) {
@@ -113,7 +125,7 @@ class EpisodeViewModel(
         _collections.postValue(collectionDatabaseRepositoryImpl.getCollections())
     }
 
-    fun saveEpisodeTime(time: Int?) = viewModelScope.launch {
+    fun saveEpisodeTime(time: Int?) = viewModelScope.launch(Dispatchers.IO) {
         if (time != null) {
             episodesRepositoryImpl.saveEpisodeTime(
                 time = EpisodeTimeDto(time),
@@ -122,7 +134,7 @@ class EpisodeViewModel(
         }
     }
 
-    private fun getEpisodeTime() = viewModelScope.launch {
+    private fun getEpisodeTime() = viewModelScope.launch(Dispatchers.IO) {
         episodesRepositoryImpl.getEpisodeTime(
             episodeId = episodeId,
             object : GetEpisodeTimeCallback<EpisodeTimeDto> {
@@ -153,22 +165,66 @@ class EpisodeViewModel(
         )
     }
 
+    fun getFavouritesId() = viewModelScope.launch(Dispatchers.IO) {
+        favouritesId = collectionDatabaseRepositoryImpl.getFavouritesId()
+
+        Log.d("favouritesId", collectionDatabaseRepositoryImpl.getFavouritesId().toString())
+    }
+
     fun addFilmToFavourites(
         poster: String,
         name: String,
         description: String,
         id: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        val favouritesId = collectionDatabaseRepositoryImpl.getFavouritesId()
-        Log.d("favouritesId = ", favouritesId.toString())
-        collectionDatabaseRepositoryImpl.insertCollectionFilm(
+        try {
             Film(
                 poster = poster,
                 name = name,
                 description = description,
                 collectionId = favouritesId,
                 id = id
-            )
+            ).let {
+                collectionDatabaseRepositoryImpl.insertCollectionFilm(
+                    it
+                )
+            }
+        } catch (e: Exception) {
+            when (e) {
+                is SQLiteConstraintException -> {}
+            }
+        }
+    }
+
+    fun deleteFilmFromFavourites() = viewModelScope.launch(Dispatchers.IO) {
+        collectionDatabaseRepositoryImpl.deleteFilm(
+            movieId = movieId,
+            collectionId = favouritesId
         )
+    }
+
+    fun isFavouriteFilm(movieId: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _isFavourite.postValue(
+                if (
+                collectionDatabaseRepositoryImpl.isFilmInCollection(
+                    movieId = movieId,
+                    collectionId = favouritesId
+                ) != null) true else false
+            )
+            Log.d("my isfavourite", _isFavourite.value.toString())
+
+            Log.d(
+                "isfavourite", collectionDatabaseRepositoryImpl.isFilmInCollection(
+                    movieId = movieId,
+                    collectionId = favouritesId
+                ) ?: ""
+            )
+            Log.d("movieId ", movieId)
+            Log.d("colletionId", favouritesId.toString())
+        }
+
+    fun deleteFilmsTable() = viewModelScope.launch(Dispatchers.IO) {
+        collectionDatabaseRepositoryImpl.cleatFilmsTable()
     }
 }

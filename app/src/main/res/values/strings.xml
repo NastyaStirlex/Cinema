@@ -42,6 +42,8 @@
     <string name="error_unknown">Неизвестная ошибка</string>
     <string name="error_nonunique_fields">Коллекция с таким названием уже существует.</string>
 
+    <string name="ok">OK</string>
+
     <!-- Collections fragment -->
     <string name="collections">Коллекции</string>
     <string name="select_icon">Выбрать иконку</string>

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.TokenDto
@@ -33,6 +34,10 @@ class SignInFragment : Fragment() {
             when (state.status) {
                 Status.SUCCESS -> {
                     Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
+                    Navigation.findNavController(
+                        requireActivity(),
+                        R.id.activity_main_fragment_nav_host
+                    ).navigate(R.id.mainFragment)
                 }
                 Status.ERROR -> {
                     Toast.makeText(requireContext(), state.error!!, Toast.LENGTH_SHORT).show()
@@ -57,12 +62,10 @@ class SignInFragment : Fragment() {
 
     private fun setupOnLoginButtonClick() {
         binding.loginButton.setOnClickListener {
-//            signInViewModel.onClickLogin(
-//                LoginBodyDto(
-//                    email = binding.emailEditText.text.toString(),
-//                    password = binding.passwordEditText.text.toString()
-//                )
-//            )
+            signInViewModel.onClickLogin(
+                    email = binding.emailEditText.text.toString(),
+                    password = binding.passwordEditText.text.toString()
+            )
         }
     }
 

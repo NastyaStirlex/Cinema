@@ -10,9 +10,16 @@ import com.nastirlex.cinema.database.entity.Film
 interface FilmDao {
     @Insert
     fun insertFilm(film: Film)
-    @Delete
-    fun deleteFilm(film: Film)
+
+    @Query("DELETE FROM films_table WHERE id = :movieId AND collectionId = :collectionId")
+    fun deleteFilm(movieId: String, collectionId: Long)
 
     @Query("SELECT * FROM films_table WHERE collectionId = :collectionId")
     fun getFilms(collectionId: Long): List<Film>
+
+    @Query("SELECT name FROM films_table WHERE id = :movieId AND collectionId = :collectionId")
+    fun isFilmInCollection(movieId: String, collectionId: Long): String?
+
+    @Query("DELETE FROM films_table")
+    fun cleanFilmsTable()
 }

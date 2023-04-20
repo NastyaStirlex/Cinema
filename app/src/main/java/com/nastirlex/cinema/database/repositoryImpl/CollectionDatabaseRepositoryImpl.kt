@@ -49,8 +49,20 @@ class CollectionDatabaseRepositoryImpl(application: Application) :
         filmDao.insertFilm(film)
     }
 
+    override suspend fun deleteFilm(movieId: String, collectionId: Long) {
+        filmDao.deleteFilm(movieId, collectionId)
+    }
+
+    override suspend fun isFilmInCollection(movieId: String, collectionId: Long): String? {
+        return filmDao.isFilmInCollection(movieId, collectionId)
+    }
+
     override suspend fun cleanTable() {
         collectionDao.cleanTable()
+    }
+
+    override suspend fun cleatFilmsTable() {
+        filmDao.cleanFilmsTable()
     }
 
 }

@@ -14,6 +14,7 @@ import com.nastirlex.cinema.data.repositoryImpl.AuthRepositoryImpl
 import com.nastirlex.cinema.databinding.FragmentSignUpBinding
 import com.nastirlex.cinema.presentation.main.Event
 import com.nastirlex.cinema.presentation.main.Status
+import com.nastirlex.cinema.utils.PurchaseConfirmationDialogFragment
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
@@ -34,7 +35,9 @@ class SignUpFragment : Fragment() {
                     Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT).show()
                 }
                 Status.ERROR -> {
-                    Toast.makeText(requireContext(), state.error!!, Toast.LENGTH_SHORT).show()
+                    PurchaseConfirmationDialogFragment(state.error!!)
+                        .show(childFragmentManager, PurchaseConfirmationDialogFragment.TAG)
+                    //Toast.makeText(requireContext(), state.error!!, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
                     Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()

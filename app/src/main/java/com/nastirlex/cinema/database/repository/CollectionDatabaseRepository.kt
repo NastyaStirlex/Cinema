@@ -25,6 +25,8 @@ interface CollectionDatabaseRepository {
     @WorkerThread
     suspend fun getCollections(): List<Collection>
 
+
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun getCollectionFilms(collectionId: Long): List<Film>
@@ -35,5 +37,17 @@ interface CollectionDatabaseRepository {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun deleteFilm(movieId: String, collectionId: Long)
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun isFilmInCollection(movieId: String, collectionId: Long): String?
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun cleanTable()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun cleatFilmsTable()
 }

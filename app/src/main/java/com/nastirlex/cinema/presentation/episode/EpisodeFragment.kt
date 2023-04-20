@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ import com.google.android.exoplayer2.ForwardingPlayer
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.databinding.FragmentEpisodeBinding
+import kotlinx.coroutines.Dispatchers
 
 
 class EpisodeFragment : Fragment() {
@@ -36,6 +38,9 @@ class EpisodeFragment : Fragment() {
     ): View {
         binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
+        episodeViewModel.getFavouritesId()
+        episodeViewModel.isFavouriteFilm(args.movieId)
+
         setupPlayer()
         setupEpisodeName()
         setupFilmName()
@@ -48,11 +53,20 @@ class EpisodeFragment : Fragment() {
         setupOnAddToCollectionButtonClick()
         setupOnVideoClick()
         setupOnBackButtonClick()
-        setupOnAddToFavouritesButtonClick()
+
+        setupOnDeleteFromFavouritesClick()
+        setupOnAddToFavouritesClick()
 
         setupEpisodeTimeObserver()
+        setupIsFavouriteFilmObserver()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        episodeViewModel.getFavouritesId()
+        episodeViewModel.isFavouriteFilm(args.movieId)
     }
 
     private fun setupEpisodeName() {
@@ -178,14 +192,26 @@ class EpisodeFragment : Fragment() {
         }
     }
 
-    private fun setupOnAddToFavouritesButtonClick() {
-        binding.likeImageButton.setOnClickListener {
+    private fun setupOnDeleteFromFavouritesClick() {
+
+        binding.filledImageView.setOnClickListener {
+            episodeViewModel.deleteFilmFromFavourites()
+            binding.filledImageView.visibility = View.INVISIBLE
+            binding.emptyImageButton.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun setupOnAddToFavouritesClick() {
+        binding.emptyImageButton.setOnClickListener {
             episodeViewModel.addFilmToFavourites(
                 poster = args.moviePoster,
                 name = args.movieName,
                 description = args.description,
                 id = args.movieId
             )
+            binding.emptyImageButton.visibility = View.INVISIBLE
+            binding.filledImageView.visibility = View.VISIBLE
         }
     }
 
@@ -206,6 +232,24 @@ class EpisodeFragment : Fragment() {
         }
 
         episodeViewModel.episodeTime.observe(viewLifecycleOwner, episodeTimeObserver)
+    }
+
+    private fun setupIsFavouriteFilmObserver() {
+        val isFavouriteObserver: Observer<Boolean> = Observer {
+            when (it) {
+                true -> {
+                    binding.filledImageView.visibility = View.VISIBLE
+                    binding.emptyImageButton.visibility = View.GONE
+                }
+
+                false -> {
+                    binding.emptyImageButton.visibility = View.VISIBLE
+                    binding.filledImageView.visibility = View.GONE
+                }
+            }
+        }
+
+        episodeViewModel.isFavourite.observe(viewLifecycleOwner, isFavouriteObserver)
     }
 
 

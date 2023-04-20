@@ -17,9 +17,9 @@ class SignInViewModel (
     val signInScreenState: MutableLiveData<Event<TokenDto>>
         get() = _signInScreenState
 
-    fun onClickLogin(loginBody: LoginBodyDto) = viewModelScope.launch {
+    fun onClickLogin(email: String, password: String) = viewModelScope.launch {
         authRepositoryImpl.login(
-            loginBody = loginBody,
+            loginBody = LoginBodyDto(email, password),
             _signInScreenState
         )
 

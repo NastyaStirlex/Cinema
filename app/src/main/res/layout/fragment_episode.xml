@@ -122,7 +122,7 @@
             android:background="@color/transparent"
             android:src="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
-            app:layout_constraintEnd_toStartOf="@+id/likeImageButton"
+            app:layout_constraintEnd_toStartOf="@+id/emptyImageButton"
             app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
 
         <Spinner
@@ -137,12 +137,13 @@
             app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
 
         <ImageButton
-            android:id="@+id/likeImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/emptyImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="16dp"
             android:background="@color/transparent"
             android:src="@drawable/ic_heart_empty"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
@@ -178,6 +179,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionTitleTextView" />
+
+        <ImageView
+            android:id="@+id/filledImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:src="@drawable/heart_filled"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/episodeFilmImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/episodeFilmImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
