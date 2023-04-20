@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
