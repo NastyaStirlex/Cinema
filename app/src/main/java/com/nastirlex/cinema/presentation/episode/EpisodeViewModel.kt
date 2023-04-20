@@ -1,6 +1,7 @@
 package com.nastirlex.cinema.presentation.episode
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -159,6 +160,7 @@ class EpisodeViewModel(
         id: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         val favouritesId = collectionDatabaseRepositoryImpl.getFavouritesId()
+        Log.d("favouritesId = ", favouritesId.toString())
         collectionDatabaseRepositoryImpl.insertCollectionFilm(
             Film(
                 poster = poster,
