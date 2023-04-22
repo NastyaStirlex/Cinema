@@ -1,6 +1,7 @@
 package com.nastirlex.cinema.data.di.interceptors
 
 import android.content.Context
+import com.nastirlex.cinema.data.di.ApiClient
 import com.nastirlex.cinema.data.repositoryImpl.JwtRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.RefreshRepositoryImpl
 import kotlinx.coroutines.runBlocking
@@ -8,27 +9,24 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import java.lang.Exception
 
 class RefreshTokenAuthenticator(private val context: Context) : Authenticator {
-
-    private val jwtRepositoryImpl by lazy { JwtRepositoryImpl() }
     private val refreshRepositoryImpl by lazy { RefreshRepositoryImpl(context) }
+    private val jwtRepositoryImpl by lazy { JwtRepositoryImpl() }
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        val accessToken = jwtRepositoryImpl.getAccessToken(context)
-        val refreshToken = jwtRepositoryImpl.getRefreshToken(context)
-
         try {
-            runBlocking {
-                val response = refreshToken?.let { refreshRepositoryImpl.refresh(it) }
-                jwtRepositoryImpl.saveAccessToken(context, response?.accessToken!!)
-                jwtRepositoryImpl.saveRefreshToken(context, response.refreshToken)
-            }
+            val newToken =
+                runBlocking {
+                    refreshRepositoryImpl.refresh(jwtRepositoryImpl.getRefreshToken(context)!!)
+                }
+
+            jwtRepositoryImpl.saveAccessToken(context, newToken.accessToken)
+            jwtRepositoryImpl.saveRefreshToken(context, newToken.refreshToken)
 
         } catch (e: Exception) {
             return response.request.newBuilder()
-                .addHeader("Authorization", "Bearer $accessToken")
+                .header("Authorization", "Bearer ${jwtRepositoryImpl.getAccessToken(context)}")
                 .build()
         }
 
@@ -36,7 +34,7 @@ class RefreshTokenAuthenticator(private val context: Context) : Authenticator {
             null
         } else {
             response.request.newBuilder()
-                .addHeader("Authorization", "Bearer $accessToken")
+                .header("Authorization", "Bearer ${jwtRepositoryImpl.getAccessToken(context)}")
                 .build()
         }
 

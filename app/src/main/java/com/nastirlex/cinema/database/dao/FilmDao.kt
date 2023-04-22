@@ -21,5 +21,5 @@ interface FilmDao {
     fun isFilmInCollection(movieId: String, collectionId: Long): String?
 
     @Query("DELETE FROM films_table")
-    fun cleanFilmsTable()
+    fun cleanTable()
 }

@@ -76,9 +76,11 @@
         app:layout_constraintTop_toBottomOf="@+id/changeAvatarTextView">
 
         <TableRow
+            android:id="@+id/discussionsTableRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="12dp">
+            android:layout_marginVertical="12dp"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/discussionsImageView"

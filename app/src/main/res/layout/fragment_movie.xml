@@ -153,7 +153,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/framesTextView" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/movieEpisodesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -170,11 +170,17 @@
                 android:id="@+id/episodesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingTop="17dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/movieEpisodesTextView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/movieEpisodesGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="movieEpisodesTextView,episodesRecyclerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

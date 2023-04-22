@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.databinding.FragmentProfileBinding
@@ -26,13 +27,8 @@ class ProfileFragment : Fragment() {
         setupNameObserver()
         setupEmailObserver()
         avatarEmailObserver()
-
-        binding.logoutButton.setOnClickListener {
-            Navigation.findNavController(
-                requireActivity(),
-                R.id.activity_main_fragment_nav_host
-            ).navigate(R.id.action_mainFragment_to_authorization_nav_graph)
-        }
+        setupOnLogoutButtonClick()
+        setupOnDiscussionsTableRowClick()
 
         return binding.root
     }
@@ -58,10 +54,30 @@ class ProfileFragment : Fragment() {
             if (it != null)
                 Glide
                     .with(binding.root)
-                    .load(it).into(binding.avatarImageView)
-            else {}
+                    .load(it)
+                    .placeholder(R.drawable.default_user_avatar_image)
+                    .into(binding.avatarImageView)
+            else {
+                binding.avatarImageView.setImageResource(R.drawable.default_user_avatar_image)
+            }
         }
 
         profileViewModel.avatar.observe(viewLifecycleOwner, avatarObserver)
+    }
+
+    private fun setupOnLogoutButtonClick() {
+        binding.logoutButton.setOnClickListener {
+            profileViewModel.logout()
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.activity_main_fragment_nav_host
+            ).navigate(R.id.action_mainFragment_to_authorization_nav_graph)
+        }
+    }
+
+    private fun setupOnDiscussionsTableRowClick() {
+        binding.discussionsTableRow.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_chats_nav_graph)
+        }
     }
 }

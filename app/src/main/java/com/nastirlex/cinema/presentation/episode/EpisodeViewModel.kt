@@ -2,12 +2,12 @@ package com.nastirlex.cinema.presentation.episode
 
 import android.app.Application
 import android.database.sqlite.SQLiteConstraintException
-import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.callbacks.GetEpisodeTimeCallback
 import com.nastirlex.cinema.data.callbacks.GetEpisodesCallback
 import com.nastirlex.cinema.data.callbacks.GetMoviesCallback
@@ -17,6 +17,7 @@ import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.database.repositoryImpl.CollectionDatabaseRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.EpisodesRepositoryImpl
 import com.nastirlex.cinema.data.repositoryImpl.MovieRepositoryImpl
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.database.entity.Film
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,10 @@ class EpisodeViewModel(
             application
         )
     }
+
+    private val _episodeScreenState = MutableLiveData<Resource<Any>>(Resource.Default())
+    val episodeScreenState: MutableLiveData<Resource<Any>>
+        get() = _episodeScreenState
 
     private var favouritesId: Long = 0
 
@@ -154,15 +159,24 @@ class EpisodeViewModel(
         collectionId: Long,
         id: String
     ) = viewModelScope.launch(Dispatchers.IO) {
-        collectionDatabaseRepositoryImpl.insertCollectionFilm(
-            Film(
-                poster = poster,
-                name = name,
-                description = description,
-                collectionId = collectionId,
-                id = id
+        try {
+            collectionDatabaseRepositoryImpl.insertCollectionFilm(
+                Film(
+                    poster = poster,
+                    name = name,
+                    description = description,
+                    collectionId = collectionId,
+                    id = id
+                )
             )
-        )
+        } catch(e: java.lang.Exception) {
+            when (e) {
+                is SQLiteConstraintException -> {
+                    _episodeScreenState.value = Resource.Error(R.string.error_film_in_collectione_yet)
+                }
+            }
+        }
+
     }
 
     fun getFavouritesId() = viewModelScope.launch(Dispatchers.IO) {
@@ -191,7 +205,9 @@ class EpisodeViewModel(
             }
         } catch (e: Exception) {
             when (e) {
-                is SQLiteConstraintException -> {}
+                is SQLiteConstraintException -> {
+                    _episodeScreenState.value = Resource.Error(R.string.error_film_in_collectione_yet)
+                }
             }
         }
     }
@@ -212,16 +228,6 @@ class EpisodeViewModel(
                     collectionId = favouritesId
                 ) != null) true else false
             )
-            Log.d("my isfavourite", _isFavourite.value.toString())
-
-            Log.d(
-                "isfavourite", collectionDatabaseRepositoryImpl.isFilmInCollection(
-                    movieId = movieId,
-                    collectionId = favouritesId
-                ) ?: ""
-            )
-            Log.d("movieId ", movieId)
-            Log.d("colletionId", favouritesId.toString())
         }
 
     fun deleteFilmsTable() = viewModelScope.launch(Dispatchers.IO) {

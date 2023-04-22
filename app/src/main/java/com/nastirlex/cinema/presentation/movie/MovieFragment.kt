@@ -1,6 +1,7 @@
 package com.nastirlex.cinema.presentation.movie
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,16 +27,19 @@ import com.nastirlex.cinema.utils.EpisodesListSpacesItemDecoration
 import com.nastirlex.cinema.utils.FramesListSpacesItemDecoration
 import com.nastirlex.cinema.utils.TagsListSpacesItemDecoration
 import com.nastirlex.cinema.utils.dpToPixel
+import com.nastirlex.cinema.websocket.ChatWebSocketListener
 
 class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
     private val args: MovieFragmentArgs by navArgs()
 
-    private val movieRepositoryImpl by lazy { MovieRepositoryImpl(requireActivity().application) }
+    //private val chatWebSocketListener by lazy { ChatWebSocketListener() }
     private val movieViewModel by lazy {
         MovieViewModel(
-            movieId = args.movieId,
-            movieRepositoryImpl = movieRepositoryImpl
+            requireActivity().application,
+            args.movieId,
+            args.chatId,
+            //chatWebSocketListener
         )
     }
 
@@ -51,6 +55,7 @@ class MovieFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         setupOnBackButtonClick()
         setupFramesRecyclerView(args.frames)
         setupTagsRecyclerView(tags = args.tags)
@@ -59,6 +64,7 @@ class MovieFragment : Fragment() {
         setupPoster(args.poster)
         setupEpisodesObserver()
         setupFirstEpisodeObserver()
+        setupCommentsButtonClick()
     }
 
     private fun setupOnBackButtonClick() {
@@ -86,7 +92,8 @@ class MovieFragment : Fragment() {
                 movieName = args.movieName,
                 moviePoster = args.poster,
                 filePath = filePath,
-                description = args.description
+                description = args.description,
+                chatId = args.chatId
             )
             findNavController().navigate(action)
         }
@@ -172,7 +179,8 @@ class MovieFragment : Fragment() {
                     movieName = args.movieName,
                     moviePoster = args.poster,
                     filePath = it.filePath,
-                    description = args.description
+                    description = args.description,
+                    chatId = args.chatId
                 )
 
                 Navigation.findNavController(
@@ -187,20 +195,32 @@ class MovieFragment : Fragment() {
                     start = requireContext().dpToPixel(16f).toInt()
                 )
             )
+        } else {
+            binding.movieEpisodesGroup.visibility = View.GONE
         }
     }
 
     private fun setupFirstEpisodeObserver() {
-        val firstEpisodeObserver = Observer<EpisodeDto> {
-            setupOnWatchButtonClick(
-                it.preview,
-                it.episodeId,
-                it.name,
-                it.filePath
-            )
+        val firstEpisodeObserver = Observer<EpisodeDto?> {
+            if (it != null)
+                setupOnWatchButtonClick(
+                    it.preview,
+                    it.episodeId,
+                    it.name,
+                    it.filePath
+                )
         }
 
         movieViewModel.firstEpisode.observe(viewLifecycleOwner, firstEpisodeObserver)
+    }
+
+    private fun setupCommentsButtonClick() {
+        binding.commentsImageButton.setOnClickListener {
+            val action = MovieFragmentDirections.actionMovieFragmentToChatNavGraph(
+                id = args.chatId
+            )
+            findNavController().navigate(action)
+        }
     }
 
 

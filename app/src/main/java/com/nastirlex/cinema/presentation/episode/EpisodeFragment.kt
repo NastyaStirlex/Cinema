@@ -9,14 +9,17 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ForwardingPlayer
 import com.nastirlex.cinema.R
+import com.nastirlex.cinema.data.utils.Resource
 import com.nastirlex.cinema.database.entity.Collection
 import com.nastirlex.cinema.databinding.FragmentEpisodeBinding
+import com.nastirlex.cinema.utils.PurchaseConfirmationDialogFragment
 import kotlinx.coroutines.Dispatchers
 
 
@@ -38,6 +41,8 @@ class EpisodeFragment : Fragment() {
     ): View {
         binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
+        setupEpisodeScreenStateObserver()
+
         episodeViewModel.getFavouritesId()
         episodeViewModel.isFavouriteFilm(args.movieId)
 
@@ -50,6 +55,7 @@ class EpisodeFragment : Fragment() {
 
         setupCollectionsObserver()
 
+        setupOnCommentsButtonClick()
         setupOnAddToCollectionButtonClick()
         setupOnVideoClick()
         setupOnBackButtonClick()
@@ -67,6 +73,36 @@ class EpisodeFragment : Fragment() {
         super.onResume()
         episodeViewModel.getFavouritesId()
         episodeViewModel.isFavouriteFilm(args.movieId)
+    }
+
+    private fun setupEpisodeScreenStateObserver() {
+        val episodeScreenStateObserver: Observer<Resource<Any>> = Observer {
+            when (it) {
+                is Resource.Success -> {
+                    //binding.loginProgressBar.visibility = View.GONE
+//                    Navigation.findNavController(
+//                        requireActivity(),
+//                        R.id.activity_main_fragment_nav_host
+//                    ).navigate(R.id.mainFragment)
+                }
+
+                is Resource.Error -> {
+                    //binding.loginProgressBar.visibility = View.GONE
+                    PurchaseConfirmationDialogFragment(it.message!!).show(
+                        childFragmentManager, PurchaseConfirmationDialogFragment.TAG
+                    )
+                    episodeViewModel.episodeScreenState.value = Resource.Default()
+                }
+
+                is Resource.Loading -> {
+                    //binding.loginProgressBar.visibility = View.VISIBLE
+                }
+
+                else -> {}
+            }
+        }
+
+        episodeViewModel.episodeScreenState.observe(viewLifecycleOwner, episodeScreenStateObserver)
     }
 
     private fun setupEpisodeName() {
@@ -147,9 +183,6 @@ class EpisodeFragment : Fragment() {
             R.layout.item_collections_spinner,
             collectionsArray
         )
-
-        //val adapter = SpinnerAdapter(requireActivity().application, collectionsArray)
-        //binding.collectionsSpinner.prompt = "dfghjkjhgfddfghjkjhg"
 
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner)
 
@@ -250,6 +283,16 @@ class EpisodeFragment : Fragment() {
         }
 
         episodeViewModel.isFavourite.observe(viewLifecycleOwner, isFavouriteObserver)
+    }
+
+    private fun setupOnCommentsButtonClick() {
+        binding.commentsImageButton.setOnClickListener {
+            findNavController().navigate(
+                EpisodeFragmentDirections.actionEpisodeFragmentToChatNavGraph(
+                    id = args.chatId
+                )
+            )
+        }
     }
 
 

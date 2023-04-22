@@ -32,6 +32,9 @@
         <argument
             android:name="tags"
             app:argType="string[]" />
+        <argument
+            android:name="chatId"
+            app:argType="string"/>
 
         <action
             android:id="@+id/action_movieFragment_to_episode_nav_graph"
@@ -61,11 +64,24 @@
             <argument
                 android:name="description"
                 app:argType="string" />
+            <argument
+                android:name="chatId"
+                app:argType="string"/>
+
+        </action>
+        <action
+            android:id="@+id/action_movieFragment_to_chat_nav_graph"
+            app:destination="@id/chat_nav_graph" >
+
+            <argument
+                android:name="id"
+                app:argType="string" />
 
         </action>
 
     </fragment>
 
     <include app:graph="@navigation/episode_nav_graph" />
+    <include app:graph="@navigation/chat_nav_graph" />
 
 </navigation>

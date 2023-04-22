@@ -57,12 +57,12 @@ class CollectionDatabaseRepositoryImpl(application: Application) :
         return filmDao.isFilmInCollection(movieId, collectionId)
     }
 
-    override suspend fun cleanTable() {
-        collectionDao.cleanTable()
+    override suspend fun cleanCollectionsTable(favouritesId: Long) {
+        collectionDao.cleanTable(favouritesId)
     }
 
     override suspend fun cleatFilmsTable() {
-        filmDao.cleanFilmsTable()
+        filmDao.cleanTable()
     }
 
 }

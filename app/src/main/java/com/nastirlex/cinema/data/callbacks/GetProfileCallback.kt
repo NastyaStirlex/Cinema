@@ -1,6 +1,5 @@
 package com.nastirlex.cinema.data.callbacks
 
-import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.data.dto.ProfileDto
 
 interface GetProfileCallback<T> {

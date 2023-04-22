@@ -45,7 +45,7 @@ interface CollectionDatabaseRepository {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun cleanTable()
+    suspend fun cleanCollectionsTable(favouritesId: Long)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

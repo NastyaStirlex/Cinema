@@ -51,7 +51,6 @@ class MainViewModel(private var movieRepositoryImpl: MovieRepositoryImpl) : View
         get() = _episodes
 
     init {
-        //getCover()
         getTrends()
         getHistory()
         getLastView()

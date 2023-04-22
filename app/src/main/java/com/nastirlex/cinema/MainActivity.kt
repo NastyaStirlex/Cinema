@@ -1,6 +1,7 @@
 package com.nastirlex.cinema
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.nastirlex.cinema.data.di.interceptors.AuthorizationInterceptor
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         //val navController = this.findNavController(R.id.activity_main_fragment_nav_host)
 
         val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
+        Log.d("access in mainactivity", jwtRepositoryImpl.getAccessToken(this) ?: "null")
         navGraph.setStartDestination(
             if (jwtRepositoryImpl.getAccessToken(this) != null) R.id.mainFragment
             else R.id.authorization_nav_graph

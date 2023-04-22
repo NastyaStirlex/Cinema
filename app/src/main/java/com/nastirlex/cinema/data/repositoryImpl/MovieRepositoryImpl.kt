@@ -57,7 +57,6 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
                             //callback.onError("Error")
                         }
                     }
-
                 }
 
                 override fun onFailure(call: Call<CoverDto>, t: Throwable) {

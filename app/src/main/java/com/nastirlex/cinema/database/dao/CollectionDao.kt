@@ -23,6 +23,6 @@ interface CollectionDao {
     @Query("SELECT * FROM collections_table")
     fun getCollections(): List<Collection>
 
-    @Query("DELETE FROM collections_table")
-    fun cleanTable()
+    @Query("DELETE FROM collections_table WHERE id != :favouritesId")
+    fun cleanTable(favouritesId: Long)
 }

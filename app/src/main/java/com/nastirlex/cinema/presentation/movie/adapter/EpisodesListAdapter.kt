@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
 import com.nastirlex.cinema.data.dto.EpisodeDto
-import com.nastirlex.cinema.data.dto.MovieDto
 import com.nastirlex.cinema.databinding.ItemEpisodesListBinding
 
 class EpisodesListAdapter(

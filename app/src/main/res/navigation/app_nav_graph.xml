@@ -43,6 +43,9 @@
             <argument
                 android:name="tags"
                 app:argType="string[]" />
+            <argument
+                android:name="chatId"
+                app:argType="string"/>
         </action>
 
         <action
@@ -72,6 +75,9 @@
             <argument
                 android:name="description"
                 app:argType="string" />
+            <argument
+                android:name="chatId"
+                app:argType="string"/>
 
         </action>
 

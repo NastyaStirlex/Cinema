@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.nastirlex.cinema.R
@@ -120,7 +119,8 @@ class MainFragmentContainer : Fragment() {
                     age = movie.age,
                     frames = movie.imageUrls.map { it }.toTypedArray(),
                     description = movie.description,
-                    tags = movie.tags.map { it.tagName }.toTypedArray()
+                    tags = movie.tags.map { it.tagName }.toTypedArray(),
+                    chatId = movie.chatInfo.chatId
                 )
                 Navigation.findNavController(
                     requireActivity(),
@@ -160,6 +160,7 @@ class MainFragmentContainer : Fragment() {
                 setupViewed(
                     moviePoster = movie!!.poster,
                     description = movie.description,
+                    chatId = movie.chatInfo.chatId,
                     episodeView = episodeView
                 )
             }
@@ -171,6 +172,7 @@ class MainFragmentContainer : Fragment() {
     private fun setupViewed(
         moviePoster: String,
         description: String,
+        chatId: String,
         episodeView: EpisodeViewDto?
     ) {
         if (episodeView == null) {
@@ -190,6 +192,7 @@ class MainFragmentContainer : Fragment() {
                 episodeView.movieName,
                 moviePoster,
                 description,
+                chatId,
                 episodeView.filePath
             )
         }
@@ -203,6 +206,7 @@ class MainFragmentContainer : Fragment() {
         movieName: String,
         moviePoster: String,
         movieDescription: String,
+        chatId: String,
         filePath: String
     ) {
         binding.polygonImageView.setOnClickListener {
@@ -214,7 +218,8 @@ class MainFragmentContainer : Fragment() {
                 movieName = movieName,
                 moviePoster = moviePoster,
                 filePath = filePath,
-                description = movieDescription
+                description = movieDescription,
+                chatId = chatId
             )
 
             Navigation.findNavController(
@@ -247,7 +252,8 @@ class MainFragmentContainer : Fragment() {
                     description = movie.description,
                     tags = movie.tags.map {
                         it.tagName
-                    }.toTypedArray()
+                    }.toTypedArray(),
+                    chatId = movie.chatInfo.chatId
                 )
                 Navigation.findNavController(
                     requireActivity(),
@@ -293,7 +299,8 @@ class MainFragmentContainer : Fragment() {
                     description = movie.description,
                     tags = movie.tags.map {
                         it.tagName
-                    }.toTypedArray()
+                    }.toTypedArray(),
+                    chatId = movie.chatInfo.chatId
                 )
                 Navigation.findNavController(
                     requireActivity(),

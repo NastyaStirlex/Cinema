@@ -14,7 +14,8 @@ class JwtRepositoryImpl() {
     }
 
     fun getAccessToken(context: Context): String? {
-        return context.getSharedPreferences("jwt", Context.MODE_PRIVATE).getString("accessToken", null)
+        return context.getSharedPreferences("jwt", Context.MODE_PRIVATE)
+            .getString("accessToken", null)
     }
 
     fun deleteAccessToken(context: Context) {
@@ -24,7 +25,6 @@ class JwtRepositoryImpl() {
             apply()
         }
     }
-
 
 
     //REFRESH TOKEN
@@ -37,13 +37,35 @@ class JwtRepositoryImpl() {
     }
 
     fun getRefreshToken(context: Context): String? {
-        return context.getSharedPreferences("jwt", Context.MODE_PRIVATE).getString("refreshToken", null)
+        return context.getSharedPreferences("jwt", Context.MODE_PRIVATE)
+            .getString("refreshToken", null)
     }
 
     fun deleteRefreshToken(context: Context) {
         val sharedPref = context.getSharedPreferences("jwt", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("refreshToken", null)
+            apply()
+        }
+    }
+
+    // USER ID
+    fun saveUserId(context: Context, userId: String) {
+        val sharedPref = context.getSharedPreferences("jwt", Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString("userId", userId)
+            apply()
+        }
+    }
+
+    fun getUserId(context: Context): String? {
+        return context.getSharedPreferences("jwt", Context.MODE_PRIVATE).getString("userId", null)
+    }
+
+    fun deleteUserId(context: Context) {
+        val sharedPref = context.getSharedPreferences("jwt", Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString("userId", null)
             apply()
         }
     }
